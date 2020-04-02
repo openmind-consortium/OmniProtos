@@ -4,10 +4,12 @@ package openmind;
 option csharp_namespace = "OpenMind";
 
 service Bridge {
-  rpc List (ListRequest) returns (stream BridgeRef); // Already paired devices
-  rpc Scan (ScanRequest) returns (stream BridgeRef); // New unseen devices
+  rpc List (QueryRequest) returns (stream BridgeRef); // Already paired devices
+  rpc Scan (QueryRequest) returns (stream BridgeRef); // New unseen devices
+  rpc Connected (QueryRequest) returns (stream BridgeRef); // Currently connected devices
   rpc Connect (ConnectRequest) returns (ConnectResponse);
   rpc Describe (DescribeRequest) returns (DescribeResponse);
+  rpc Disconnect (DisconnectRequest) returns (DisconnectResponse);
 }
 
 enum BridgeType {
@@ -21,11 +23,7 @@ message BridgeRef {
   string id = 2;
 }
 
-message ListRequest {
-  BridgeType type = 1;
-}
-
-message ScanRequest {
+message QueryRequest {
   BridgeType type = 1;
 }
 
@@ -34,7 +32,8 @@ message ConnectRequest {
 }
 
 message ConnectResponse {
-  bool success = 1;
+  int32 code = 1;
+  string message = 2;
 }
 
 message DescribeRequest {
@@ -42,5 +41,13 @@ message DescribeRequest {
 }
 
 message DescribeResponse {
+  bool status = 1;
+}
+
+message DisconnectRequest {
+  BridgeRef bridge = 1;
+}
+
+message DisconnectResponse {
   bool status = 1;
 }
