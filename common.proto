@@ -1,0 +1,26 @@
+syntax = "proto3";
+package openmind;
+
+option csharp_namespace = "OpenMind";
+
+enum BridgeType {
+  BRIDGE_UNSPECIFIED = 0;
+  BRIDGE_SUMMIT = 1;
+  BRIDGE_DYNAMO = 2;
+}
+
+message BridgeRef {
+  BridgeType type = 1;
+  string id = 2;
+}
+
+message DeviceRef {
+  BridgeRef bridge = 1;
+  string id = 2;
+  bool isProximal = 3;
+}
+
+message Status {
+  int32 code = 1;
+  string message = 2;
+}

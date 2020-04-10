@@ -1,2 +1,14 @@
 syntax = "proto3";
 package openmind;
+
+option csharp_namespace = "OpenMind";
+
+import "common.proto";
+
+service Device {
+  rpc List (ListDeviceRequest) returns (stream DeviceRef);
+}
+
+message ListDeviceRequest {
+  BridgeRef bridge = 1;
+}

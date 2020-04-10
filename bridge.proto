@@ -3,7 +3,7 @@ package openmind;
 
 option csharp_namespace = "OpenMind";
 
-import "google/protobuf/any.proto";
+import "common.proto";
 
 service Bridge {
   rpc List (QueryRequest) returns (stream BridgeRef); // Already paired devices
@@ -14,28 +14,13 @@ service Bridge {
   rpc Disconnect (DisconnectRequest) returns (DisconnectResponse);
 }
 
-enum BridgeType {
-  BRIDGE_UNSPECIFIED = 0;
-  BRIDGE_SUMMIT = 1;
-  BRIDGE_DYNAMO = 2;
-}
-
-message BridgeRef {
-  BridgeType type = 1;
-  string id = 2;
-}
-
-message Status {
-  int32 code = 1;
-  string message = 2;
-}
-
 message QueryRequest {
   BridgeType type = 1;
 }
 
 message ConnectRequest {
   BridgeRef bridge = 1;
+  // TODO(BNR): Add extra connection params
 }
 
 message ConnectResponse {
@@ -48,6 +33,7 @@ message DescribeRequest {
 
 message DescribeResponse {
   Status status = 1;
+  map<string, string> data = 2;
 }
 
 message DisconnectRequest {
