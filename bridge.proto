@@ -3,6 +3,8 @@ package openmind;
 
 option csharp_namespace = "OpenMind";
 
+import "google/protobuf/any.proto";
+
 service Bridge {
   rpc List (QueryRequest) returns (stream BridgeRef); // Already paired devices
   rpc Scan (QueryRequest) returns (stream BridgeRef); // New unseen devices
@@ -23,6 +25,11 @@ message BridgeRef {
   string id = 2;
 }
 
+message Status {
+  int32 code = 1;
+  string message = 2;
+}
+
 message QueryRequest {
   BridgeType type = 1;
 }
@@ -32,8 +39,7 @@ message ConnectRequest {
 }
 
 message ConnectResponse {
-  int32 code = 1;
-  string message = 2;
+  Status status = 1;
 }
 
 message DescribeRequest {
@@ -41,7 +47,7 @@ message DescribeRequest {
 }
 
 message DescribeResponse {
-  bool status = 1;
+  Status status = 1;
 }
 
 message DisconnectRequest {
@@ -49,5 +55,5 @@ message DisconnectRequest {
 }
 
 message DisconnectResponse {
-  bool status = 1;
+  Status status = 1;
 }
