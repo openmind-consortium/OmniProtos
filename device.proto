@@ -7,8 +7,26 @@ import "common.proto";
 
 service Device {
   rpc List (ListDeviceRequest) returns (stream DeviceRef);
+  rpc Connect (ConnectDeviceRequest) returns (ConnectDeviceResponse);
+  rpc Disconnect (DisconnectDeviceRequest) returns (DisconnectDeviceResponse);
 }
 
 message ListDeviceRequest {
   BridgeRef bridge = 1;
+}
+
+message ConnectDeviceRequest {
+  DeviceRef device = 1;
+}
+
+message ConnectDeviceResponse {
+  Status status = 1;
+}
+
+message DisconnectDeviceRequest {
+  DeviceRef device = 1;
+}
+
+message DisconnectDeviceResponse {
+  Status status = 1;
 }
