@@ -9,7 +9,8 @@ service Device {
   rpc List (ListDeviceRequest) returns (stream DeviceRef);
   rpc Connect (ConnectDeviceRequest) returns (ConnectDeviceResponse);
   rpc Disconnect (DisconnectDeviceRequest) returns (DisconnectDeviceResponse);
-  rpc StreamAccel (stream AccelControlCommand) returns (stream AccelEvent);
+  rpc ConfigureAccelStream (AccelControlCommand) returns (AccelControlResponse);
+  rpc StreamData (AccelControlCommand) returns (stream AccelEvent);
 }
 
 message ListDeviceRequest {
@@ -45,12 +46,16 @@ message AccelControlCommand {
   }
   CommandType command = 2;
 
-  int32 SampleRate  = 3;
+  int32 sample_rate = 3;
+}
+
+message AccelControlResponse {
+  Status status = 1;
 }
 
 message AccelEvent {
-  int32 SampleRate = 1;
-  string Units = 2;
+  int32 sample_rate = 1;
+  string units = 2;
   repeated double XSamples = 3;
   repeated double YSamples = 4;
   repeated double ZSamples = 5;
