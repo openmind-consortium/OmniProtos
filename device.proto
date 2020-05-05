@@ -10,7 +10,7 @@ service Device {
   rpc Connect (ConnectDeviceRequest) returns (ConnectDeviceResponse);
   rpc Disconnect (DisconnectDeviceRequest) returns (DisconnectDeviceResponse);
   rpc ConfigureAccelStream (AccelControlCommand) returns (AccelControlResponse);
-  rpc StreamData (AccelControlCommand) returns (stream AccelEvent);
+  rpc StreamData (StreamDataRequest) returns (stream StreamEvent);
 }
 
 message ListDeviceRequest {
@@ -59,4 +59,45 @@ message AccelEvent {
   repeated double XSamples = 3;
   repeated double YSamples = 4;
   repeated double ZSamples = 5;
+}
+
+message FftEvent {
+  repeated double fft_output = 1;
+  int32 channel = 2;
+  int32 fft_size = 3;
+  int32 sample_rate = 4;
+  string units = 5;
+}
+
+message ChannelSamples {
+  int32 channel = 1;
+  repeated double samples = 2;
+}
+
+message TimeDomainEvent {
+  bytes debug_info = 1;
+  bytes included_channels = 2;
+  int32 sample_rate = 3;
+  repeated ChannelSamples channel_samples = 4;
+  string units = 5;
+}
+
+message PowerEvent {
+  repeated int32 bands = 1;
+  int32 fft_size = 2;
+  bool is_power_overrange = 3;
+  int32 sample_rate = 4;
+  bytes external_values_mask = 5;
+  bytes valid_data_mask = 6;
+}
+
+message StreamDataRequest {}
+
+message StreamEvent {
+  oneof event {
+    AccelEvent accel = 1;
+    FftEvent fft = 2;
+    TimeDomainEvent time_domain = 3;
+    PowerEvent power = 4;
+  }
 }
