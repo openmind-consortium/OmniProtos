@@ -91,7 +91,9 @@ message PowerEvent {
   bytes valid_data_mask = 6;
 }
 
-message StreamDataRequest {}
+message StreamDataRequest {
+  DeviceRef device = 1;
+}
 
 message StreamEvent {
   oneof event {
