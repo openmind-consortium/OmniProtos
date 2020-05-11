@@ -9,7 +9,7 @@ service Device {
   rpc List (ListDeviceRequest) returns (stream DeviceRef);
   rpc Connect (ConnectDeviceRequest) returns (ConnectDeviceResponse);
   rpc Disconnect (DisconnectDeviceRequest) returns (DisconnectDeviceResponse);
-  rpc ConfigureAccelStream (AccelControlCommand) returns (AccelControlResponse);
+  rpc ConfigureStream (ControlCommand) returns (ControlResponse);
   rpc StreamData (StreamDataRequest) returns (stream StreamEvent);
 }
 
@@ -36,7 +36,7 @@ message DisconnectDeviceResponse {
 /**
  * NOTE(BNR): Consider making this a union with `oneof` instead of sticking an enum in there.
  */
-message AccelControlCommand {
+message ControlCommand {
   DeviceRef device = 1;
 
   enum CommandType {
@@ -45,11 +45,9 @@ message AccelControlCommand {
     STOP = 2;
   }
   CommandType command = 2;
-
-  int32 sample_rate = 3;
 }
 
-message AccelControlResponse {
+message ControlResponse {
   Status status = 1;
 }
 
@@ -83,7 +81,7 @@ message TimeDomainEvent {
 }
 
 message PowerEvent {
-  repeated int32 bands = 1;
+  repeated uint32 bands = 1;
   int32 fft_size = 2;
   bool is_power_overrange = 3;
   int32 sample_rate = 4;
