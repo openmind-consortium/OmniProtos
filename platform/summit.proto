@@ -2,3 +2,154 @@ syntax = "proto3";
 package openmind;
 
 option csharp_namespace = "OpenMind";
+
+import "google/protobuf/wrappers.proto";
+
+/**
+ * Physical layer to use for connection to bridge
+ */
+enum SummitPhysicalLayer {
+  ANY = 0;
+  BLUETOOTH = 1;
+  BLUETOOTH_SERIAL_PORT = 2;
+  USB = 3;
+}
+
+/**
+ * Beep code controls for bridge
+ */
+enum SummitBeepConfig {
+  DEVICE_DISCOVERED = 0;
+  NO_DEVICE_DISCOVERED = 1;
+  TEL_M_COMPLETED = 2;
+  TEL_M_LOST = 3;
+  GENERAL_ALERT = 4;
+  NO_TONES_ENABLED = 5;
+}
+
+/**
+ * Platform specific bridge connection parameters
+ */
+message SummitConnectBridgeParams {
+  /**
+   * Physical connection to use for the connection
+   * (default ANY)
+   */
+  SummitPhysicalLayer physical_layer = 1;
+
+  /**
+   * Telemetry mode to use with the bridge
+   * (default 3)
+   */
+  google.protobuf.UInt32Value telemetry_mode = 2;
+
+  /**
+   * Telemetry uplink/downlink ratio to between device and bridge
+   * (default 4)
+   */
+  google.protobuf.UInt32Value telemetry_ratio = 3;
+
+  /**
+   * Beep config for the bridge
+   * (default DEVICE_DISCOVERED)
+   */
+  SummitBeepConfig beep_config = 4;
+}
+
+/**
+ * Possible bridge connection statuses
+ */
+enum SummitBridgeConnectStatus {
+  UNCONNECTED = 0;
+  SUCCESS = 1;
+  FAILED_INVALID_TELEMETRY = 2;
+  FAILED_CONNECT = 3;
+  FAILED_TIME_OUT = 4;
+  FAILED_CTM_VERSION_CHECK = 5;
+  FAILED_INCOMPATIBLE_CTM = 6;
+  FAILED_CTM_SILENCE = 7;
+}
+
+/**
+ * Platform specific bridge connection details
+ */
+message SummitConnectBridgeDetails {
+  /**
+   * Connection status of the bridge
+   */
+  SummitBridgeConnectStatus connection_status = 1;
+}
+
+/**
+ * Platform specific describe bridge details
+ */
+message SummitDescribeBridgeDetails {
+  string module_type = 1;
+  string wire_type = 2;
+  string serial_number = 3;
+  uint32 firmware_version = 4;
+  uint32 battery_level = 5;
+  string battery_status = 6;
+  string telemetry_mode = 7;
+  uint32 telemetry_ratio = 8;
+  SummitPhysicalLayer physical_layer = 9;
+  SummitBeepConfig beep_enables = 10;
+}
+
+/**
+ * API error codes
+ */
+enum SummitApiErrorCode {
+  NO_ERROR = 0;
+  NULL_ARGUMENT = 1;
+  INVALID_PARAMETER = 2;
+  UNCLONABLE_PARAMETER = 3;
+  UNABLE_TO_SYNC_REQUIRED_INFO = 4;
+  NO_VALID_SENSE_FRIENDLY_RATE = 5;
+  UNSUPPORTED_STIM_RATE = 6;
+  BAD_COMMAND_LIB_CAST = 7;
+  UNEXPECTED_EXCEPTION = 8;
+  IS_DISPOSED = 9;
+  NO_INS_CONNECTED = 10;
+  API_INITIALIZATION_NOT_DONE = 11;
+  INS_CONNECTION_ATTEMPTS_EXCEEDED = 12;
+  INS_INIT_ID_COMM_FAILED = 19;
+  INS_INIT_ID_FAILED = 20;
+  INS_DEVICE_ID_MISMATCH = 21;
+  INS_DEVICE_NOT_OLYMPUS = 22;
+  INS_SYNC_FAILED_AFTER_CHECKPOINT_RESTORE = 23;
+  INS_BAD_RESPONSE_CONSUME_BYTES_ERROR = 25;
+  INS_INIT_INCOMPATIBLE_FIRMWARE = 26;
+  INS_INIT_BAD_SUBJECT_INFO_CRC = 27;
+  INS_INIT_FLASH_CRC_MISMATCH = 28;
+  INS_INIT_FLASH_FORMAT_CAST_ERROR = 29;
+  INS_INIT_BAD_COMM_SUBJECT = 30;
+  INS_INIT_BAD_COMM_SUBJECT_CRC = 31;
+  INS_INIT_BAD_SUBJECT_CAST = 32;
+  NO_CTM_CONNECTED = 40;
+  INS_ALREADY_CONNECTED = 41;
+  CTM_COMMAND_TIMEOUT = 42;
+  CTM_UNEXPECTED_DISCONNECT = 43;
+  INS_UNEXPECTED_FLASH_FORMAT = 50;
+  INS_BAD_RTM_PTM_BLOCK = 51;
+  INS_BAD_SUBJECT_INFO_BLOCK = 52;
+  LOGS_NOT_STARTED = 60;
+  ORCA_REGISTRATION_FAILED = 61;
+  INS_BAD_LATENCY_TEST = 62;
+  INS_BAD_LEAD_INTEGRITY_TEST = 63;
+  INS_COMMAND_NOT_EXECUTED_DUE_TO_BATCH_ERROR = 64;
+  ADAPTIVE_STATE_WRITE_CLOCK_ERROR = 66;
+  TD_CHANNEL_HPF_NOT_CONSISTENT = 67;
+  FFT_1024_MAX_UPDATE_RATE_EXCEEDED = 68;
+  FFT_64_WINDOW_NOT_HANN_100 = 69;
+  FFT_BINS_REQUESTED_OUTSIDE_VALID_RANGE = 70;
+  GROUP_SWITCH_FAILED_NO_VALID_PROGRAM = 71;
+  ORCA_IMPROPERLY_CONFIGURED = 72;
+}
+
+/**
+ * Platform specific API errors
+ */
+message SummitApiError {
+  
+}
