@@ -3,6 +3,7 @@ package openmind;
 
 option csharp_namespace = "OpenMind";
 
+import "google/protobuf/timestamp.proto";
 import "google/protobuf/wrappers.proto";
 
 /**
@@ -84,15 +85,54 @@ message SummitConnectBridgeDetails {
  * Platform specific describe bridge details
  */
 message SummitDescribeBridgeDetails {
+  /**
+   * The type of device that is connected, for Summit it will always be "CTM2"
+   */
   string module_type = 1;
+
+  /**
+   * The type of connection to the bridge, may be wired or wireless
+   */
   string wire_type = 2;
+
+  /**
+   * Serial number of the bridge
+   */
   string serial_number = 3;
+
+  /**
+   * Firmware version of the bridge
+   */
   uint32 firmware_version = 4;
+
+  /**
+   * Battery level of the bridge in percent
+   */
   uint32 battery_level = 5;
+
+  /**
+   * Overall battery status of the bridge
+   */
   string battery_status = 6;
+
+  /**
+   * Telemetry mode of the bridge
+   */
   string telemetry_mode = 7;
+
+  /**
+   * The uplink/downlink ratio between device and bridge
+   */
   uint32 telemetry_ratio = 8;
+
+  /**
+   * Physical layer between bridge and computer
+   */
   SummitPhysicalLayer physical_layer = 9;
+
+  /**
+   * Beep config of the bridge
+   */
   SummitBeepConfig beep_enables = 10;
 }
 
@@ -147,9 +187,165 @@ enum SummitApiErrorCode {
   ORCA_IMPROPERLY_CONFIGURED = 72;
 }
 
+enum SummitDeviceCommandCode {
+  Unused00 = 0;
+  Id = 1;
+  ReadMemory = 2;
+  WriteMemory = 3;
+  EraseFlashSector = 4;
+  ReadDeviceTime = 5;
+  WriteDeviceTime = 6;
+  ResetStatus = 7;
+  Unused08 = 8;
+  PreventAppFromRunningAfterReset = 9;
+  WriteConfigFile = 10;
+  ReadConfigFile = 11;
+  Authenticate = 12;
+  WriteApplication = 13;
+  Echo = 14;
+  Por = 15;
+  GetFlashMirrorInfo = 16;
+  ReadFlashMirror = 17;
+  ResetFlashMirror = 18;
+  GetLogInfo = 19;
+  ResetLogReadPointer = 20;
+  ReadLogEntry = 21;
+  Unused16 = 22;
+  Unused17 = 23;
+  Unused18 = 24;
+  Unused19 = 25;
+  Unused1A = 26;
+  Unused1B = 27;
+  Unused1C = 28;
+  ReadInstrumentData = 29;
+  WriteInstrumentData = 30;
+  CrcInstrumentData = 31;
+  ChangeTherapyState = 32;
+  WriteDeviceParameters = 33;
+  WriteSlotParameters = 34;
+  WriteVersionParameters = 35;
+  ClearSettings = 36;
+  SaveTherapyCheckpoint = 37;
+  ReadTherapySettings = 38;
+  RestoreTherapyCheckpoint = 39;
+  ModifyDeviceSettings = 40;
+  ModifySlotSettings = 41;
+  ModifyVersionSettings = 42;
+  IncrementDecrement = 43;
+  GlobalAmplitudeIncrementDecrement = 44;
+  ResetStacks = 45;
+  ChangeActiveDevice = 46;
+  ModifyRechargeSettings = 47;
+  ModifySlotAmplitudeLimits = 48;
+  ReadSlotAmplitudeLimits = 49;
+  AdaptiveChangeMode = 50;
+  AdaptiveWriteDeltaLimits = 51;
+  AdaptiveWriteDeltas = 52;
+  AdaptiveWriteState = 53;
+  AdaptiveGoToState = 54;
+  AdaptiveClearSettings = 55;
+  AdaptiveReadSettings = 56;
+  AdaptiveForceStateChange = 63;
+  WriteAccelerometerTrimData = 64;
+  ReadAccelerometerTrimData = 65;
+  WriteAccelerometerLowPowerStatus = 66;
+  ReadAccelerometerLowerPowerStatus = 67;
+  StartAccelerometerTest = 68;
+  ReadAccelerometerTestData = 69;
+  AccelEnable = 72;
+  StartLeadIntegrityTest = 96;
+  ReadLeadIntegrityTestResults = 97;
+  ResetStimTimeDiagnostic = 112;
+  NonRechargeBatteryStatus = 128;
+  MeasureAlternativeChargeCurrent = 129;
+  Unused82 = 130;
+  RechargeStatus = 131;
+  ClearOverchargeStatus = 132;
+  SetBatterySOCValues = 133;
+  SetLockedMode = 134;
+  StartLoadMeasurements = 135;
+  ReadLoadMeasurements = 136;
+  ChangeSensingState = 144;
+  ReadSensingConfiguration = 145;
+  WriteSdcConfiguration = 146;
+  WriteFftConfiguration = 147;
+  WritePowerConfiguration = 148;
+  WriteSensingParameters = 149;
+  WriteDetectionParameters = 150;
+  ReadLrData = 151;
+  LogExternalEvent = 152;
+  WriteReadSensingBlanking = 153;
+  WriteReadChopClockSettings = 154;
+  WriteTestDetectionPowerValues = 159;
+  InstrumentCommunicationId = 192;
+  StartCPSession = 193;
+  EndCPSession = 194;
+  Interrogate = 208;
+  SetImplantDate = 209;
+  UnusedD2 = 210;
+  ManageERIAndEOS = 211;
+  StreamControl = 217;
+}
+
+enum SummitBridgeCommandCode {
+  None = 0;
+  GetVersions = 1;
+  IdentifyDevice = 3;
+  StartDeviceSession = 4;
+  EndDeviceSession = 5;
+  TelemetryDownlink = 6;
+  ChangeDeviceSession = 7;
+  GetStatusInformation = 8;
+  DeviceIdentificationComplete = 9;
+  ButtonActivated = 11;
+  TelemetryUplink = 12;
+  CtmOperation = 13;
+  DeviceIdentified = 14;
+  LogCtmMessage = 15;
+  PreviousDeviceIdentified = 30;
+}
+
 /**
  * Platform specific API errors
  */
 message SummitApiError {
-  
+  /**
+   * Error code for the API call
+   */
+  SummitApiErrorCode reject_code = 1;
+
+  /**
+   * The device command code that caused the error
+   */
+  SummitDeviceCommandCode device_command_code = 2;
+
+  /**
+   * The bridge command code that caused the error
+   */
+  SummitBridgeCommandCode bridge_command_code = 3;
+
+  /**
+   * Human readable error string
+   */
+  string message = 4;
+
+  /**
+   * Timestamp of when the packet was sent
+   */
+  google.protobuf.Timestamp tx_time = 5;
+
+  /**
+   * Timestamp of when the response was received
+   */
+  google.protobuf.Timestamp rx_time = 6;
+
+  /**
+   * Number of attempts to receive a response within timeout
+   */
+  int32 transmit_attempts = 7;
+
+  /**
+   * Link status byte from the telemetry layer
+   */
+   bytes link_status = 8;
 }
