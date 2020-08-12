@@ -10,22 +10,22 @@ import "google/protobuf/wrappers.proto";
  * Physical layer to use for connection to bridge
  */
 enum SummitPhysicalLayer {
-  ANY = 0;
+  USB = 0;
   BLUETOOTH = 1;
   BLUETOOTH_SERIAL_PORT = 2;
-  USB = 3;
+  ANY = 3;
 }
 
 /**
  * Beep code controls for bridge
  */
 enum SummitBeepConfig {
-  DEVICE_DISCOVERED = 0;
-  NO_DEVICE_DISCOVERED = 1;
+  NO_TONES_ENABLED = 0;
+  GENERAL_ALERT = 1;
   TEL_M_COMPLETED = 2;
-  TEL_M_LOST = 3;
-  GENERAL_ALERT = 4;
-  NO_TONES_ENABLED = 5;
+  DEVICE_DISCOVERED = 4;
+  NO_DEVICE_DISCOVERED = 8;
+  TEL_M_LOST = 16;
 }
 
 /**
