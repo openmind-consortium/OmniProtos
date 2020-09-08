@@ -61,7 +61,7 @@ message Bridge {
 message QueryBridgesRequest {
   /**
    * The partial scheme-less URI for the resource. For example,
-   * '//summit/bridge/123' will search for all bridge devices whose
+   * '//summit/bridge/123' will search for all bridges whose
    * serial number begins with 123.
    */
   string query = 1;
