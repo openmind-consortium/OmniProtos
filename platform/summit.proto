@@ -31,7 +31,7 @@ enum SummitBeepConfig {
 /**
  * Platform specific bridge connection parameters
  */
-message SummitConnectBridgeParams {
+message SummitConnectBridgeParameters {
   /**
    * Physical connection to use for the connection
    * (default ANY)
@@ -60,7 +60,7 @@ message SummitConnectBridgeParams {
 /**
  * Possible bridge connection statuses
  */
-enum SummitBridgeConnectStatus {
+enum SummitConnectBridgeStatus {
   UNCONNECTED = 0;
   SUCCESS = 1;
   FAILED_INVALID_TELEMETRY = 2;
@@ -78,7 +78,47 @@ message SummitConnectBridgeDetails {
   /**
    * Connection status of the bridge
    */
-  SummitBridgeConnectStatus connection_status = 1;
+  SummitConnectBridgeStatus connection_status = 1;
+}
+
+/**
+ * Platform specific device connection parameters
+ */
+message SummitConnectDeviceParameters {
+  /**
+   * A request to disable or enable annotations for this session.
+   * Human-use devices can not have annotations disabled.
+   */
+  bool disable_annotations = 1;
+}
+
+/**
+ * Possible device connectin statuses
+ */
+enum SummitConnectDeviceStatus {
+  UNKNOWN = 0;
+  SUCCESS =	1;
+  CRITICAL_ERROR = 2;
+  INITIALIZATION_ERROR = 4;
+  WARNING_NO_SUBJECT_ID = 8;
+  WARNING_UNEXPECTED_SUBJECT_INFO_FORMAT = 16;
+  WARNING_BAD_SUBJECT_INFO_CRC = 32;
+  WARNING_MEMORY_CORRUPTION_CHECK_FAILED = 64;
+  WARNING_CORRUPTED_MEMORY = 128;
+  WARNING_UNEXPECTED_FLASH_FORMAT_HEADER = 256;
+  WARNING_BAD_FLASH_HEADER_CRC = 512;
+  WARNING_BAD_PTM_BLOCK_CRC = 1024;
+  WARNING_BAD_PTM_BLOCK_READ = 2048;
+}
+
+/**
+ * Platform specific device connection details
+ */
+message SummitConnctDeviceDetails {
+  /**
+   * Connection status of the device.
+   */
+  SummitConnectDeviceStats connection_status = 1;
 }
 
 /**
@@ -188,121 +228,121 @@ enum SummitApiErrorCode {
 }
 
 enum SummitDeviceCommandCode {
-  Unused00 = 0;
-  Id = 1;
-  ReadMemory = 2;
-  WriteMemory = 3;
-  EraseFlashSector = 4;
-  ReadDeviceTime = 5;
-  WriteDeviceTime = 6;
-  ResetStatus = 7;
-  Unused08 = 8;
-  PreventAppFromRunningAfterReset = 9;
-  WriteConfigFile = 10;
-  ReadConfigFile = 11;
-  Authenticate = 12;
-  WriteApplication = 13;
-  Echo = 14;
-  Por = 15;
-  GetFlashMirrorInfo = 16;
-  ReadFlashMirror = 17;
-  ResetFlashMirror = 18;
-  GetLogInfo = 19;
-  ResetLogReadPointer = 20;
-  ReadLogEntry = 21;
-  Unused16 = 22;
-  Unused17 = 23;
-  Unused18 = 24;
-  Unused19 = 25;
-  Unused1A = 26;
-  Unused1B = 27;
-  Unused1C = 28;
-  ReadInstrumentData = 29;
-  WriteInstrumentData = 30;
-  CrcInstrumentData = 31;
-  ChangeTherapyState = 32;
-  WriteDeviceParameters = 33;
-  WriteSlotParameters = 34;
-  WriteVersionParameters = 35;
-  ClearSettings = 36;
-  SaveTherapyCheckpoint = 37;
-  ReadTherapySettings = 38;
-  RestoreTherapyCheckpoint = 39;
-  ModifyDeviceSettings = 40;
-  ModifySlotSettings = 41;
-  ModifyVersionSettings = 42;
-  IncrementDecrement = 43;
-  GlobalAmplitudeIncrementDecrement = 44;
-  ResetStacks = 45;
-  ChangeActiveDevice = 46;
-  ModifyRechargeSettings = 47;
-  ModifySlotAmplitudeLimits = 48;
-  ReadSlotAmplitudeLimits = 49;
-  AdaptiveChangeMode = 50;
-  AdaptiveWriteDeltaLimits = 51;
-  AdaptiveWriteDeltas = 52;
-  AdaptiveWriteState = 53;
-  AdaptiveGoToState = 54;
-  AdaptiveClearSettings = 55;
-  AdaptiveReadSettings = 56;
-  AdaptiveForceStateChange = 63;
-  WriteAccelerometerTrimData = 64;
-  ReadAccelerometerTrimData = 65;
-  WriteAccelerometerLowPowerStatus = 66;
-  ReadAccelerometerLowerPowerStatus = 67;
-  StartAccelerometerTest = 68;
-  ReadAccelerometerTestData = 69;
-  AccelEnable = 72;
-  StartLeadIntegrityTest = 96;
-  ReadLeadIntegrityTestResults = 97;
-  ResetStimTimeDiagnostic = 112;
-  NonRechargeBatteryStatus = 128;
-  MeasureAlternativeChargeCurrent = 129;
-  Unused82 = 130;
-  RechargeStatus = 131;
-  ClearOverchargeStatus = 132;
-  SetBatterySOCValues = 133;
-  SetLockedMode = 134;
-  StartLoadMeasurements = 135;
-  ReadLoadMeasurements = 136;
-  ChangeSensingState = 144;
-  ReadSensingConfiguration = 145;
-  WriteSdcConfiguration = 146;
-  WriteFftConfiguration = 147;
-  WritePowerConfiguration = 148;
-  WriteSensingParameters = 149;
-  WriteDetectionParameters = 150;
-  ReadLrData = 151;
-  LogExternalEvent = 152;
-  WriteReadSensingBlanking = 153;
-  WriteReadChopClockSettings = 154;
-  WriteTestDetectionPowerValues = 159;
-  InstrumentCommunicationId = 192;
-  StartCPSession = 193;
-  EndCPSession = 194;
-  Interrogate = 208;
-  SetImplantDate = 209;
-  UnusedD2 = 210;
-  ManageERIAndEOS = 211;
-  StreamControl = 217;
+  UNUSED_00 = 0;
+  ID = 1;
+  READ_MEMORY = 2;
+  WRITE_MEMORY = 3;
+  ERASE_FLASH_SECTOR = 4;
+  READ_DEVICE_TIME = 5;
+  WRITE_DEVICE_TIME = 6;
+  RESET_STATUS = 7;
+  UNUSED_08 = 8;
+  PREVENT_APP_FROM_RUNNING_AFTER_RESET = 9;
+  WRITE_CONFIG_FILE = 10;
+  READ_CONFIG_FILE = 11;
+  AUTHENTICATE = 12;
+  WRITE_APPLICATION = 13;
+  ECHO = 14;
+  POR = 15;
+  GET_FLASH_MIRROR_INFO = 16;
+  READ_FLASH_MIRROR = 17;
+  RESET_FLASH_MIRROR = 18;
+  GET_LOG_INFO = 19;
+  RESET_LOG_READ_POINTER = 20;
+  READ_LOG_ENTRY = 21;
+  UNUSED_16 = 22;
+  UNUSED_17 = 23;
+  UNUSED_18 = 24;
+  UNUSED_19 = 25;
+  UNUSED_1A = 26;
+  UNUSED_1B = 27;
+  UNUSED_1C = 28;
+  READ_INSTRUMENT_DATA = 29;
+  WRITE_INSTRUMENT_DATA = 30;
+  CRC_INSTRUMENT_DATA = 31;
+  CHANGE_THERAPY_STATE = 32;
+  WRITE_DEVICE_PARAMETERS = 33;
+  WRITE_SLOT_PARAMETERS = 34;
+  WRITE_VERSION_PARAMETERS = 35;
+  CLEAR_SETTINGS = 36;
+  SAVE_THERAPY_CHECKPOINT = 37;
+  READ_THERAPY_SETTINGS = 38;
+  RESTORE_THERAPY_CHECKPOINT = 39;
+  MODIFY_DEVICE_SETTINGS = 40;
+  MODIFY_SLOT_SETTINGS = 41;
+  MODIFY_VERSION_SETTINGS = 42;
+  INCREMENT_DECREMENT = 43;
+  GLOBAL_AMPLITUDE_INCREMENT_DECREMENT = 44;
+  RESET_STACKS = 45;
+  CHANGE_ACTIVE_DEVICE = 46;
+  MODIFY_RECHARGE_SETTINGS = 47;
+  MODIFY_SLOT_AMPLITUDE_LIMITS = 48;
+  READ_SLOT_AMPLITUDE_LIMITS = 49;
+  ADAPTIVE_CHANGE_MODE = 50;
+  ADAPTIVE_WRITE_DELTA_LIMITS = 51;
+  ADAPTIVE_WRITE_DELTAS = 52;
+  ADAPTIVE_WRITE_STATE = 53;
+  ADAPTIVE_GO_TO_STATE = 54;
+  ADAPTIVE_CLEAR_SETTINGS = 55;
+  ADAPTIVE_READ_SETTINGS = 56;
+  ADAPTIVE_FORCE_STATE_CHANGE = 63;
+  WRITE_ACCELEROMETER_TRIM_DATA = 64;
+  READ_ACCELEROMETER_TRIM_DATA = 65;
+  WRITE_ACCELEROMETER_LOW_POWER_STATUS = 66;
+  READ_ACCELEROMETER_LOWER_POWER_STATUS = 67;
+  START_ACCELEROMETER_TEST = 68;
+  READ_ACCELEROMETER_TEST_DATA = 69;
+  ACCEL_ENABLE = 72;
+  START_LEAD_INTEGRITY_TEST = 96;
+  READ_LEAD_INTEGRITY_TEST_RESULTS = 97;
+  RESET_STIM_TIME_DIAGNOSTIC = 112;
+  NONRECHARGE_BATTERY_STATUS = 128;
+  MEASURE_ALTERNATIVE_CHARGE_CURRENT = 129;
+  UNUSED_82 = 130;
+  RECHARGE_STATUS = 131;
+  CLEAR_OVERCHARGE_STATUS = 132;
+  SET_BATTERY_SOC_VALUES = 133;
+  SET_LOCKED_MODE = 134;
+  START_LOAD_MEASUREMENTS = 135;
+  READ_LOAD_MEASUREMENTS = 136;
+  CHANGE_SENSING_STATE = 144;
+  READ_SENSING_CONFIGURATION = 145;
+  WRITE_SDC_CONFIGURATION = 146;
+  WRITE_FFT_CONFIGURATION = 147;
+  WRITE_POWER_CONFIGURATION = 148;
+  WRITE_SENSING_PARAMETERS = 149;
+  WRITE_DETECTION_PARAMETERS = 150;
+  READ_LR_DATA = 151;
+  LOG_EXTERNAL_EVENT = 152;
+  WRITE_READ_SENSING_BLANKING = 153;
+  WRITE_READ_CHOP_CLOCK_SETTINGS = 154;
+  WRITE_TEST_DETECTION_POWER_VALUES = 159;
+  INSTRUMENT_COMMUNICATION_ID = 192;
+  START_CP_SESSION = 193;
+  END_CP_SESSION = 194;
+  INTERROGATE = 208;
+  SET_IMPLANT_DATE = 209;
+  UNUSED_D2 = 210;
+  MANAGE_ERI_AND_EOS = 211;
+  STREAM_CONTROL = 217;
 }
 
 enum SummitBridgeCommandCode {
-  None = 0;
-  GetVersions = 1;
-  IdentifyDevice = 3;
-  StartDeviceSession = 4;
-  EndDeviceSession = 5;
-  TelemetryDownlink = 6;
-  ChangeDeviceSession = 7;
-  GetStatusInformation = 8;
-  DeviceIdentificationComplete = 9;
-  ButtonActivated = 11;
-  TelemetryUplink = 12;
-  CtmOperation = 13;
-  DeviceIdentified = 14;
-  LogCtmMessage = 15;
-  PreviousDeviceIdentified = 30;
+  NONE = 0;
+  GET_VERSIONS = 1;
+  IDENTIFY_DEVICE = 3;
+  START_DEVICE_SESSION = 4;
+  END_DEVICE_SESSION = 5;
+  TELEMETRY_DOWNLINK = 6;
+  CHANGE_DEVICE_SESSION = 7;
+  GET_STATUS_INFORMATION = 8;
+  DEVICE_IDENTIFICATION_COMPLETE = 9;
+  BUTTON_ACTIVATED = 11;
+  TELEMETRY_UPLINK = 12;
+  CTM_OPERATION = 13;
+  DEVICE_IDENTIFIED = 14;
+  LOG_CTM_MESSAGE = 15;
+  PREVIOUS_DEVICE_IDENTIFIED = 30;
 }
 
 /**

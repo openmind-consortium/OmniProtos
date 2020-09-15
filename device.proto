@@ -3,6 +3,9 @@ package openmind;
 
 option csharp_namespace = "OpenMind";
 
+import "google/protobuf/any.proto";
+import "google/protobuf/empty.proto";
+
 service DeviceService {
   /**
    * List devices.
@@ -16,11 +19,12 @@ service DeviceService {
 
   /**
    * Disconnect from a device.
+   * NOTE (Summit): This will disconnect the bridge also.
    */
-  rpc DisconnectDevice (DisconnectDeviceRequest) returns (DisconnectDeviceResponse);
+  rpc DisconnectDevice (DisconnectDeviceRequest) returns (google.protobuf.Empty);
 }
 
-message Bridge {
+message Device {
   /**
    * Scheme-less URI describing the device resource.
    * For example, '//summit/bridge/xxxxxxxxx/device/yyyyyyyyy' where
@@ -43,4 +47,68 @@ message ListDeviceRequest {
    * devices whose serial number begins with 123.
    */
   string query = 1;
+}
+
+message ListDeviceResponse {
+  /**
+   * List of devices.
+   */
+   repeated Device devices = 1;
+}
+
+message ConnectDeviceRequest {
+  /**
+   * Scheme-less URI describing the device resource. For example,
+   * '//summit/bridge/xxxxxx/device/yyyyyy' where 'xxxxxx' is the
+   * serial number of the bridge and 'yyyyyy' is the serial number
+   * of the device.
+   */
+  string name = 1;
+
+  /**
+   * Additional platform specific arguments. These are defined in separate
+   * protobuf files, one per device manufacturer.
+   */
+  google.protobuf.Any parameters = 2;
+}
+
+/**
+ * Common connection states for Bridges, additional details provide by manufacturer
+ * specific connection status codes.
+ */
+enum ConnectDeviceStatus {
+  CONNECT_DEVICE_STATUS_UNSPECIFIED = 0;
+  CONNECTION_SUCCESS = 1;
+  CONNECTION_FAILURE = 2;
+}
+
+message ConnectDeviceResponse {
+  /**
+   * Scheme-less URI describing the device resource. For example,
+   * '//summit/bridge/xxxxxx/device/yyyyyy' where 'xxxxxx' is the
+   * serial number of the bridge and 'yyyyyy' is the serial number
+   * of the device.
+   */
+  string name = 1;
+
+  /**
+   * Status of the connection attempt.
+   */
+  ConnectDeviceStatus connection_status = 2;
+
+  /**
+   * Additional platform specific details. These are defined in a separate
+   * protobuf files, one per device manufacturer.
+   */
+  google.protobuf.Any details = 3;
+}
+
+message DisconnectDeviceRequest {
+  /**
+   * Scheme-less URI describing the device resource. For example,
+   * '//summit/bridge/xxxxxx/device/yyyyyy' where 'xxxxxx' is the
+   * serial number of the bridge and 'yyyyyy' is the serial number
+   * of the device.
+   */
+  string name = 1;
 }

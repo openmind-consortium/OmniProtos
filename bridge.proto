@@ -74,7 +74,7 @@ message QueryBridgesRequest {
  */
 message QueryBridgesResponse {
   /**
-   * List of bridges up to the size specified by the list request.
+   * List of bridges.
    */
   repeated Bridge bridges = 1;
 }
