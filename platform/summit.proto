@@ -62,7 +62,7 @@ message SummitConnectBridgeParameters {
  */
 enum SummitConnectBridgeStatus {
   UNCONNECTED = 0;
-  SUCCESS = 1;
+  CONNECT_BRIDGE_SUCCESS = 1;
   FAILED_INVALID_TELEMETRY = 2;
   FAILED_CONNECT = 3;
   FAILED_TIME_OUT = 4;
@@ -82,8 +82,7 @@ message SummitConnectBridgeDetails {
 }
 
 /**
- * Platform specific device connection parameters
- */
+ * Platform specific device connection parameters */
 message SummitConnectDeviceParameters {
   /**
    * A request to disable or enable annotations for this session.
@@ -97,7 +96,7 @@ message SummitConnectDeviceParameters {
  */
 enum SummitConnectDeviceStatus {
   UNKNOWN = 0;
-  SUCCESS =	1;
+  CONNECT_DEVICE_SUCCESS = 1;
   CRITICAL_ERROR = 2;
   INITIALIZATION_ERROR = 4;
   WARNING_NO_SUBJECT_ID = 8;
@@ -118,7 +117,7 @@ message SummitConnctDeviceDetails {
   /**
    * Connection status of the device.
    */
-  SummitConnectDeviceStats connection_status = 1;
+  SummitConnectDeviceStatus connection_status = 1;
 }
 
 /**
