@@ -12,6 +12,7 @@ service Bridge {
   rpc Connect (ConnectRequest) returns (ConnectResponse);
   rpc Describe (DescribeRequest) returns (DescribeResponse);
   rpc Disconnect (DisconnectRequest) returns (DisconnectResponse);
+  rpc NewFunction (FunctionRequest) returns (FunctionResponse);
 }
 
 message QueryRequest {
