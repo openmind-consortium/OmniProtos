@@ -10,7 +10,7 @@ service DeviceService {
   /**
    * List devices.
    */
-  rpc ListDevices (ListDeviceRequest) returns (stream ListDeviceResponse);
+  rpc ListDevices (ListDeviceRequest) returns (ListDeviceResponse);
 
   /**
    * Connect to device.
