@@ -1,0 +1,390 @@
+syntax = "proto3";
+package openmind;
+
+option csharp_namespace = "OpenMind";
+
+import "google/protobuf/timestamp.proto";
+import "google/protobuf/wrappers.proto";
+
+/**
+ * Physical layer to use for connection to bridge
+ */
+enum SummitPhysicalLayer {
+  USB = 0;
+  BLUETOOTH = 1;
+  BLUETOOTH_SERIAL_PORT = 2;
+  ANY = 3;
+}
+
+/**
+ * Beep code controls for bridge
+ */
+enum SummitBeepConfig {
+  NO_TONES_ENABLED = 0;
+  GENERAL_ALERT = 1;
+  TEL_M_COMPLETED = 2;
+  DEVICE_DISCOVERED = 4;
+  NO_DEVICE_DISCOVERED = 8;
+  TEL_M_LOST = 16;
+}
+
+/**
+ * Platform specific bridge connection parameters
+ */
+message SummitConnectBridgeParameters {
+  /**
+   * Physical connection to use for the connection
+   * (default ANY)
+   */
+  SummitPhysicalLayer physical_layer = 1;
+
+  /**
+   * Telemetry mode to use with the bridge
+   * (default 3)
+   */
+  google.protobuf.UInt32Value telemetry_mode = 2;
+
+  /**
+   * Telemetry uplink/downlink ratio to between device and bridge
+   * (default 4)
+   */
+  google.protobuf.UInt32Value telemetry_ratio = 3;
+
+  /**
+   * Beep config for the bridge
+   * (default DEVICE_DISCOVERED)
+   */
+  SummitBeepConfig beep_config = 4;
+}
+
+/**
+ * Possible bridge connection statuses
+ */
+enum SummitConnectBridgeStatus {
+  UNCONNECTED = 0;
+  CONNECT_BRIDGE_SUCCESS = 1;
+  FAILED_INVALID_TELEMETRY = 2;
+  FAILED_CONNECT = 3;
+  FAILED_TIME_OUT = 4;
+  FAILED_CTM_VERSION_CHECK = 5;
+  FAILED_INCOMPATIBLE_CTM = 6;
+  FAILED_CTM_SILENCE = 7;
+}
+
+/**
+ * Platform specific bridge connection details
+ */
+message SummitConnectBridgeDetails {
+  /**
+   * Connection status of the bridge
+   */
+  SummitConnectBridgeStatus connection_status = 1;
+}
+
+/**
+ * Platform specific device connection parameters */
+message SummitConnectDeviceParameters {
+  /**
+   * A request to disable or enable annotations for this session.
+   * Human-use devices can not have annotations disabled.
+   */
+  bool disable_annotations = 1;
+}
+
+/**
+ * Possible device connectin statuses
+ */
+enum SummitConnectDeviceStatus {
+  UNKNOWN = 0;
+  CONNECT_DEVICE_SUCCESS = 1;
+  CRITICAL_ERROR = 2;
+  INITIALIZATION_ERROR = 4;
+  WARNING_NO_SUBJECT_ID = 8;
+  WARNING_UNEXPECTED_SUBJECT_INFO_FORMAT = 16;
+  WARNING_BAD_SUBJECT_INFO_CRC = 32;
+  WARNING_MEMORY_CORRUPTION_CHECK_FAILED = 64;
+  WARNING_CORRUPTED_MEMORY = 128;
+  WARNING_UNEXPECTED_FLASH_FORMAT_HEADER = 256;
+  WARNING_BAD_FLASH_HEADER_CRC = 512;
+  WARNING_BAD_PTM_BLOCK_CRC = 1024;
+  WARNING_BAD_PTM_BLOCK_READ = 2048;
+}
+
+/**
+ * Platform specific device connection details
+ */
+message SummitConnctDeviceDetails {
+  /**
+   * Connection status of the device.
+   */
+  SummitConnectDeviceStatus connection_status = 1;
+}
+
+/**
+ * Platform specific describe bridge details
+ */
+message SummitDescribeBridgeDetails {
+  /**
+   * The type of device that is connected, for Summit it will always be "CTM2"
+   */
+  string module_type = 1;
+
+  /**
+   * The type of connection to the bridge, may be wired or wireless
+   */
+  string wire_type = 2;
+
+  /**
+   * Serial number of the bridge
+   */
+  string serial_number = 3;
+
+  /**
+   * Firmware version of the bridge
+   */
+  uint32 firmware_version = 4;
+
+  /**
+   * Battery level of the bridge in percent
+   */
+  uint32 battery_level = 5;
+
+  /**
+   * Overall battery status of the bridge
+   */
+  string battery_status = 6;
+
+  /**
+   * Telemetry mode of the bridge
+   */
+  string telemetry_mode = 7;
+
+  /**
+   * The uplink/downlink ratio between device and bridge
+   */
+  uint32 telemetry_ratio = 8;
+
+  /**
+   * Physical layer between bridge and computer
+   */
+  SummitPhysicalLayer physical_layer = 9;
+
+  /**
+   * Beep config of the bridge
+   */
+  SummitBeepConfig beep_enables = 10;
+}
+
+/**
+ * API error codes
+ */
+enum SummitApiErrorCode {
+  NO_ERROR = 0;
+  NULL_ARGUMENT = 1;
+  INVALID_PARAMETER = 2;
+  UNCLONABLE_PARAMETER = 3;
+  UNABLE_TO_SYNC_REQUIRED_INFO = 4;
+  NO_VALID_SENSE_FRIENDLY_RATE = 5;
+  UNSUPPORTED_STIM_RATE = 6;
+  BAD_COMMAND_LIB_CAST = 7;
+  UNEXPECTED_EXCEPTION = 8;
+  IS_DISPOSED = 9;
+  NO_INS_CONNECTED = 10;
+  API_INITIALIZATION_NOT_DONE = 11;
+  INS_CONNECTION_ATTEMPTS_EXCEEDED = 12;
+  INS_INIT_ID_COMM_FAILED = 19;
+  INS_INIT_ID_FAILED = 20;
+  INS_DEVICE_ID_MISMATCH = 21;
+  INS_DEVICE_NOT_OLYMPUS = 22;
+  INS_SYNC_FAILED_AFTER_CHECKPOINT_RESTORE = 23;
+  INS_BAD_RESPONSE_CONSUME_BYTES_ERROR = 25;
+  INS_INIT_INCOMPATIBLE_FIRMWARE = 26;
+  INS_INIT_BAD_SUBJECT_INFO_CRC = 27;
+  INS_INIT_FLASH_CRC_MISMATCH = 28;
+  INS_INIT_FLASH_FORMAT_CAST_ERROR = 29;
+  INS_INIT_BAD_COMM_SUBJECT = 30;
+  INS_INIT_BAD_COMM_SUBJECT_CRC = 31;
+  INS_INIT_BAD_SUBJECT_CAST = 32;
+  NO_CTM_CONNECTED = 40;
+  INS_ALREADY_CONNECTED = 41;
+  CTM_COMMAND_TIMEOUT = 42;
+  CTM_UNEXPECTED_DISCONNECT = 43;
+  INS_UNEXPECTED_FLASH_FORMAT = 50;
+  INS_BAD_RTM_PTM_BLOCK = 51;
+  INS_BAD_SUBJECT_INFO_BLOCK = 52;
+  LOGS_NOT_STARTED = 60;
+  ORCA_REGISTRATION_FAILED = 61;
+  INS_BAD_LATENCY_TEST = 62;
+  INS_BAD_LEAD_INTEGRITY_TEST = 63;
+  INS_COMMAND_NOT_EXECUTED_DUE_TO_BATCH_ERROR = 64;
+  ADAPTIVE_STATE_WRITE_CLOCK_ERROR = 66;
+  TD_CHANNEL_HPF_NOT_CONSISTENT = 67;
+  FFT_1024_MAX_UPDATE_RATE_EXCEEDED = 68;
+  FFT_64_WINDOW_NOT_HANN_100 = 69;
+  FFT_BINS_REQUESTED_OUTSIDE_VALID_RANGE = 70;
+  GROUP_SWITCH_FAILED_NO_VALID_PROGRAM = 71;
+  ORCA_IMPROPERLY_CONFIGURED = 72;
+}
+
+enum SummitDeviceCommandCode {
+  UNUSED_00 = 0;
+  ID = 1;
+  READ_MEMORY = 2;
+  WRITE_MEMORY = 3;
+  ERASE_FLASH_SECTOR = 4;
+  READ_DEVICE_TIME = 5;
+  WRITE_DEVICE_TIME = 6;
+  RESET_STATUS = 7;
+  UNUSED_08 = 8;
+  PREVENT_APP_FROM_RUNNING_AFTER_RESET = 9;
+  WRITE_CONFIG_FILE = 10;
+  READ_CONFIG_FILE = 11;
+  AUTHENTICATE = 12;
+  WRITE_APPLICATION = 13;
+  ECHO = 14;
+  POR = 15;
+  GET_FLASH_MIRROR_INFO = 16;
+  READ_FLASH_MIRROR = 17;
+  RESET_FLASH_MIRROR = 18;
+  GET_LOG_INFO = 19;
+  RESET_LOG_READ_POINTER = 20;
+  READ_LOG_ENTRY = 21;
+  UNUSED_16 = 22;
+  UNUSED_17 = 23;
+  UNUSED_18 = 24;
+  UNUSED_19 = 25;
+  UNUSED_1A = 26;
+  UNUSED_1B = 27;
+  UNUSED_1C = 28;
+  READ_INSTRUMENT_DATA = 29;
+  WRITE_INSTRUMENT_DATA = 30;
+  CRC_INSTRUMENT_DATA = 31;
+  CHANGE_THERAPY_STATE = 32;
+  WRITE_DEVICE_PARAMETERS = 33;
+  WRITE_SLOT_PARAMETERS = 34;
+  WRITE_VERSION_PARAMETERS = 35;
+  CLEAR_SETTINGS = 36;
+  SAVE_THERAPY_CHECKPOINT = 37;
+  READ_THERAPY_SETTINGS = 38;
+  RESTORE_THERAPY_CHECKPOINT = 39;
+  MODIFY_DEVICE_SETTINGS = 40;
+  MODIFY_SLOT_SETTINGS = 41;
+  MODIFY_VERSION_SETTINGS = 42;
+  INCREMENT_DECREMENT = 43;
+  GLOBAL_AMPLITUDE_INCREMENT_DECREMENT = 44;
+  RESET_STACKS = 45;
+  CHANGE_ACTIVE_DEVICE = 46;
+  MODIFY_RECHARGE_SETTINGS = 47;
+  MODIFY_SLOT_AMPLITUDE_LIMITS = 48;
+  READ_SLOT_AMPLITUDE_LIMITS = 49;
+  ADAPTIVE_CHANGE_MODE = 50;
+  ADAPTIVE_WRITE_DELTA_LIMITS = 51;
+  ADAPTIVE_WRITE_DELTAS = 52;
+  ADAPTIVE_WRITE_STATE = 53;
+  ADAPTIVE_GO_TO_STATE = 54;
+  ADAPTIVE_CLEAR_SETTINGS = 55;
+  ADAPTIVE_READ_SETTINGS = 56;
+  ADAPTIVE_FORCE_STATE_CHANGE = 63;
+  WRITE_ACCELEROMETER_TRIM_DATA = 64;
+  READ_ACCELEROMETER_TRIM_DATA = 65;
+  WRITE_ACCELEROMETER_LOW_POWER_STATUS = 66;
+  READ_ACCELEROMETER_LOWER_POWER_STATUS = 67;
+  START_ACCELEROMETER_TEST = 68;
+  READ_ACCELEROMETER_TEST_DATA = 69;
+  ACCEL_ENABLE = 72;
+  START_LEAD_INTEGRITY_TEST = 96;
+  READ_LEAD_INTEGRITY_TEST_RESULTS = 97;
+  RESET_STIM_TIME_DIAGNOSTIC = 112;
+  NONRECHARGE_BATTERY_STATUS = 128;
+  MEASURE_ALTERNATIVE_CHARGE_CURRENT = 129;
+  UNUSED_82 = 130;
+  RECHARGE_STATUS = 131;
+  CLEAR_OVERCHARGE_STATUS = 132;
+  SET_BATTERY_SOC_VALUES = 133;
+  SET_LOCKED_MODE = 134;
+  START_LOAD_MEASUREMENTS = 135;
+  READ_LOAD_MEASUREMENTS = 136;
+  CHANGE_SENSING_STATE = 144;
+  READ_SENSING_CONFIGURATION = 145;
+  WRITE_SDC_CONFIGURATION = 146;
+  WRITE_FFT_CONFIGURATION = 147;
+  WRITE_POWER_CONFIGURATION = 148;
+  WRITE_SENSING_PARAMETERS = 149;
+  WRITE_DETECTION_PARAMETERS = 150;
+  READ_LR_DATA = 151;
+  LOG_EXTERNAL_EVENT = 152;
+  WRITE_READ_SENSING_BLANKING = 153;
+  WRITE_READ_CHOP_CLOCK_SETTINGS = 154;
+  WRITE_TEST_DETECTION_POWER_VALUES = 159;
+  INSTRUMENT_COMMUNICATION_ID = 192;
+  START_CP_SESSION = 193;
+  END_CP_SESSION = 194;
+  INTERROGATE = 208;
+  SET_IMPLANT_DATE = 209;
+  UNUSED_D2 = 210;
+  MANAGE_ERI_AND_EOS = 211;
+  STREAM_CONTROL = 217;
+}
+
+enum SummitBridgeCommandCode {
+  NONE = 0;
+  GET_VERSIONS = 1;
+  IDENTIFY_DEVICE = 3;
+  START_DEVICE_SESSION = 4;
+  END_DEVICE_SESSION = 5;
+  TELEMETRY_DOWNLINK = 6;
+  CHANGE_DEVICE_SESSION = 7;
+  GET_STATUS_INFORMATION = 8;
+  DEVICE_IDENTIFICATION_COMPLETE = 9;
+  BUTTON_ACTIVATED = 11;
+  TELEMETRY_UPLINK = 12;
+  CTM_OPERATION = 13;
+  DEVICE_IDENTIFIED = 14;
+  LOG_CTM_MESSAGE = 15;
+  PREVIOUS_DEVICE_IDENTIFIED = 30;
+}
+
+/**
+ * Platform specific API errors
+ */
+message SummitApiError {
+  /**
+   * Error code for the API call
+   */
+  SummitApiErrorCode reject_code = 1;
+
+  /**
+   * The device command code that caused the error
+   */
+  SummitDeviceCommandCode device_command_code = 2;
+
+  /**
+   * The bridge command code that caused the error
+   */
+  SummitBridgeCommandCode bridge_command_code = 3;
+
+  /**
+   * Human readable error string
+   */
+  string message = 4;
+
+  /**
+   * Timestamp of when the packet was sent
+   */
+  google.protobuf.Timestamp tx_time = 5;
+
+  /**
+   * Timestamp of when the response was received
+   */
+  google.protobuf.Timestamp rx_time = 6;
+
+  /**
+   * Number of attempts to receive a response within timeout
+   */
+  int32 transmit_attempts = 7;
+
+  /**
+   * Link status byte from the telemetry layer
+   */
+   bytes link_status = 8;
+}

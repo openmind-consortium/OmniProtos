@@ -3,101 +3,124 @@ package openmind;
 
 option csharp_namespace = "OpenMind";
 
-import "common.proto";
+import "google/protobuf/any.proto";
+import "google/protobuf/empty.proto";
 
-service Device {
-  rpc List (ListDeviceRequest) returns (stream DeviceRef);
-  rpc Connect (ConnectDeviceRequest) returns (ConnectDeviceResponse);
-  rpc Disconnect (DisconnectDeviceRequest) returns (DisconnectDeviceResponse);
-  rpc ConfigureStream (ControlCommand) returns (ControlResponse);
-  rpc StreamData (StreamDataRequest) returns (stream StreamEvent);
+service DeviceService {
+  /**
+   * List devices.
+   */
+  rpc ListDevices (ListDeviceRequest) returns (ListDeviceResponse);
+
+  /**
+   * Connect to device.
+   */
+  rpc ConnectDevice (ConnectDeviceRequest) returns (ConnectDeviceResponse);
+
+  /**
+   * Disconnect from a device.
+   * NOTE (Summit): This will disconnect the bridge also.
+   */
+  rpc DisconnectDevice (DisconnectDeviceRequest) returns (google.protobuf.Empty);
+}
+
+message Device {
+  /**
+   * Scheme-less URI describing the device resource.
+   * For example, '//summit/bridge/xxxxxxxxx/device/yyyyyyyyy' where
+   * 'xxxxxxxxx' is the serial number of the bridge and 'yyyyyyyyy' is
+   * the serial number of the device.
+   */
+  string name = 1;
+
+  /**
+   * Additional platform specific details. These are defined in a separate
+   * protobuf files, one per device manufacturer.
+   */
+  google.protobuf.Any details = 2;
 }
 
 message ListDeviceRequest {
-  BridgeRef bridge = 1;
+  /**
+   * The partial scheme-less URI for the resource. For example,
+   * '//summit/bridge/xxxxxxxxxx/device/123' will search for all
+   * devices whose serial number begins with 123.
+   */
+  string query = 1;
+}
+
+message ListDeviceResponse {
+  /**
+   * List of devices.
+   */
+  repeated Device devices = 1;
+
+  /**
+   * Additional platform specific error details. These are defined in a separate
+   * protobuf files, one per manufacturer.
+   */
+  google.protobuf.Any error = 2;
 }
 
 message ConnectDeviceRequest {
-  DeviceRef device = 1;
-}
+  /**
+   * Scheme-less URI describing the device resource. For example,
+   * '//summit/bridge/xxxxxx/device/yyyyyy' where 'xxxxxx' is the
+   * serial number of the bridge and 'yyyyyy' is the serial number
+   * of the device.
+   */
+  string name = 1;
 
-message ConnectDeviceResponse {
-  Status status = 1;
-}
-
-message DisconnectDeviceRequest {
-  DeviceRef device = 1;
-}
-
-message DisconnectDeviceResponse {
-  Status status = 1;
+  /**
+   * Additional platform specific arguments. These are defined in separate
+   * protobuf files, one per device manufacturer.
+   */
+  google.protobuf.Any parameters = 2;
 }
 
 /**
- * NOTE(BNR): Consider making this a union with `oneof` instead of sticking an enum in there.
+ * Common connection states for Bridges, additional details provide by manufacturer
+ * specific connection status codes.
  */
-message ControlCommand {
-  DeviceRef device = 1;
-
-  enum CommandType {
-    UNSPECIFIED = 0;
-    START = 1;
-    STOP = 2;
-  }
-  CommandType command = 2;
+enum ConnectDeviceStatus {
+  CONNECT_DEVICE_STATUS_UNSPECIFIED = 0;
+  CONNECTION_SUCCESS = 1;
+  CONNECTION_FAILURE = 2;
 }
 
-message ControlResponse {
-  Status status = 1;
+message ConnectDeviceResponse {
+  /**
+   * Scheme-less URI describing the device resource. For example,
+   * '//summit/bridge/xxxxxx/device/yyyyyy' where 'xxxxxx' is the
+   * serial number of the bridge and 'yyyyyy' is the serial number
+   * of the device.
+   */
+  string name = 1;
+
+  /**
+   * Status of the connection attempt.
+   */
+  ConnectDeviceStatus connection_status = 2;
+
+  /**
+   * Additional platform specific details. These are defined in a separate
+   * protobuf files, one per device manufacturer.
+   */
+  google.protobuf.Any details = 3;
+
+  /**
+   * Additional platform specific error details. These are defined in a separate
+   * protobuf files, one per manufacturer.
+   */
+  google.protobuf.Any error = 4;
 }
 
-message AccelEvent {
-  int32 sample_rate = 1;
-  string units = 2;
-  repeated double XSamples = 3;
-  repeated double YSamples = 4;
-  repeated double ZSamples = 5;
-}
-
-message FftEvent {
-  repeated double fft_output = 1;
-  int32 channel = 2;
-  int32 fft_size = 3;
-  int32 sample_rate = 4;
-  string units = 5;
-}
-
-message ChannelSamples {
-  int32 channel = 1;
-  repeated double samples = 2;
-}
-
-message TimeDomainEvent {
-  bytes debug_info = 1;
-  bytes included_channels = 2;
-  int32 sample_rate = 3;
-  repeated ChannelSamples channel_samples = 4;
-  string units = 5;
-}
-
-message PowerEvent {
-  repeated uint32 bands = 1;
-  int32 fft_size = 2;
-  bool is_power_overrange = 3;
-  int32 sample_rate = 4;
-  bytes external_values_mask = 5;
-  bytes valid_data_mask = 6;
-}
-
-message StreamDataRequest {
-  DeviceRef device = 1;
-}
-
-message StreamEvent {
-  oneof event {
-    AccelEvent accel = 1;
-    FftEvent fft = 2;
-    TimeDomainEvent time_domain = 3;
-    PowerEvent power = 4;
-  }
+message DisconnectDeviceRequest {
+  /**
+   * Scheme-less URI describing the device resource. For example,
+   * '//summit/bridge/xxxxxx/device/yyyyyy' where 'xxxxxx' is the
+   * serial number of the bridge and 'yyyyyy' is the serial number
+   * of the device.
+   */
+  string name = 1;
 }

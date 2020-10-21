@@ -3,43 +3,168 @@ package openmind;
 
 option csharp_namespace = "OpenMind";
 
-import "common.proto";
+import "google/protobuf/any.proto";
+import "google/protobuf/empty.proto";
 
-service Bridge {
-  rpc List (QueryRequest) returns (stream BridgeRef); // Already paired devices
-  rpc Scan (QueryRequest) returns (stream BridgeRef); // New unseen devices
-  rpc Connected (QueryRequest) returns (stream BridgeRef); // Currently connected devices
-  rpc Connect (ConnectRequest) returns (ConnectResponse);
-  rpc Describe (DescribeRequest) returns (DescribeResponse);
-  rpc Disconnect (DisconnectRequest) returns (DisconnectResponse);
+service BridgeService {
+  /**
+   * List already known bridges.
+   */
+  rpc ListBridges(QueryBridgesRequest) returns (QueryBridgesResponse);
+
+  /**
+   * Scan for new bridges.
+   */
+  rpc ScanBridges(QueryBridgesRequest) returns (QueryBridgesResponse);
+
+  /**
+   * List already connected bridges.
+   */
+  rpc ConnectedBridges(QueryBridgesRequest) returns (QueryBridgesResponse);
+
+  /**
+   * Connect to a given bridge.
+   */
+  rpc ConnectBridge(ConnectBridgeRequest) returns (ConnectBridgeResponse);
+
+  /**
+   * Dumps bridge configuration. 
+   */
+  rpc DescribeBridge(DescribeBridgeRequest) returns (DescribeBridgeResponse);
+
+  /**
+   * Disconnects a given bridge.
+   */
+  rpc DisconnectBridge(DisconnectBridgeRequest) returns (google.protobuf.Empty);
 }
 
-message QueryRequest {
-  BridgeType type = 1;
+message Bridge {
+  /**
+   * Scheme-less URI describing the bridge resource.
+   * For example, '//summit/bridge/xxxxxxxxx' where
+   * 'xxxxxxxxx' is the serial number of the bridge.
+   */
+  string name = 1;
+
+  /**
+   * Additional platform specific details. These are defined in a separate
+   * protobuf files, one per device manufacturer.
+   */
+  google.protobuf.Any details = 2;
 }
 
-message ConnectRequest {
-  BridgeRef bridge = 1;
-  // TODO(BNR): Add extra connection params
+/**
+ * This message is used for all of the query functions on the BridgeService.
+ * All the query functions have the same shape if there's a need we can split
+ * out different messages later.
+ */
+message QueryBridgesRequest {
+  /**
+   * The partial scheme-less URI for the resource. For example,
+   * '//summit/bridge/123' will search for all bridges whose
+   * serial number begins with 123.
+   */
+  string query = 1;
 }
 
-message ConnectResponse {
-  Status status = 1;
+/**
+ * This message is used for all of the query functions on the BridgeService.
+ * All the query functions have the same shape if there's a need we can split
+ * out different messages later.
+ */
+message QueryBridgesResponse {
+  /**
+   * List of bridges.
+   */
+  repeated Bridge bridges = 1;
 }
 
-message DescribeRequest {
-  BridgeRef bridge = 1;
+message ConnectBridgeRequest {
+  /**
+   * Scheme-less URI describing the bridge resource.
+   * For example, '//summit/bridge/xxxxxxxxx' where
+   * 'xxxxxxxxx' is the serial number of the bridge.
+   */
+  string name = 1;
+
+  /**
+   * Additional platform specific arguments. These are defined in separate
+   * protobuf files, one per device manufacturer.
+   */
+  google.protobuf.Any parameters = 2;
 }
 
-message DescribeResponse {
-  Status status = 1;
-  map<string, string> data = 2;
+/**
+ * Common connection states for Bridges, additional details provide by manufacturer
+ * specific connection status codes.
+ */
+enum ConnectBridgeStatus {
+  CONNECT_BRIDGE_STATUS_UNSPECIFIED = 0;
+  CONNECTION_SUCCESS = 1;
+  CONNECTION_FAILURE = 2;
 }
 
-message DisconnectRequest {
-  BridgeRef bridge = 1;
+message ConnectBridgeResponse {
+  /**
+   * Scheme-less URI describing the bridge resource.
+   * For example, '//summit/bridge/xxxxxxxxx' where
+   * 'xxxxxxxxx' is the serial number of the bridge.
+   */
+  string name = 1;  
+
+  /**
+   * Status of the connection attempt.
+   */
+  ConnectBridgeStatus connection_status = 2;
+
+  /**
+   * Additional platform specific details. These are defined in a separate
+   * protobuf files, one per device manufacturer.
+   */
+  google.protobuf.Any details = 3;
 }
 
-message DisconnectResponse {
-  Status status = 1;
+message DescribeBridgeRequest {
+  /**
+   * Scheme-less URI describing the bridge resource.
+   * For example, '//summit/bridge/xxxxxxxxx' where
+   * 'xxxxxxxxx' is the serial number of the bridge.
+   */
+  string name = 1;  
+
+  /**
+   * Additional platform specific arguments. These are defined in separate
+   * protobuf files, one per device manufacturer.
+   */
+  google.protobuf.Any parameters = 2;
+}
+
+message DescribeBridgeResponse {
+  /**
+   * Scheme-less URI describing the bridge resource.
+   * For example, '//summit/bridge/xxxxxxxxx' where
+   * 'xxxxxxxxx' is the serial number of the bridge.
+   */
+  string name = 1;  
+
+  /**
+   * Additional platform specific bridge information. These are defined in a separate
+   * protobuf files, one per device manufacturer.
+   */
+  google.protobuf.Any details = 2;
+
+  /**
+   * Additional platform specific error details. These are defined in a separate
+   * protobuf files, one per manufacturer.
+   */
+  google.protobuf.Any error = 3;
+}
+
+message DisconnectBridgeRequest {
+  /**
+   * Scheme-less URI describing the bridge resource.
+   * For example, '//summit/bridge/xxxxxxxxx' where
+   * 'xxxxxxxxx' is the serial number of the bridge.
+   */
+  string name = 1;
 }
