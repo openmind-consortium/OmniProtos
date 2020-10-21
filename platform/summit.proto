@@ -117,7 +117,7 @@ message SummitConnctDeviceDetails {
   /**
    * Connection status of the device.
    */
-  SummitConnectDeviceStatus connection_status = 1;
+  uint32 connection_status = 1;
 }
 
 /**
