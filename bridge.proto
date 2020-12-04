@@ -6,7 +6,7 @@ option csharp_namespace = "OpenMind";
 import "google/protobuf/any.proto";
 import "google/protobuf/empty.proto";
 
-service BridgeService {
+service BridgeManagerService {
   /**
    * List already known bridges.
    */
@@ -54,7 +54,7 @@ message Bridge {
 }
 
 /**
- * This message is used for all of the query functions on the BridgeService.
+ * This message is used for all of the query functions on the BridgeManagerService.
  * All the query functions have the same shape if there's a need we can split
  * out different messages later.
  */
@@ -68,7 +68,7 @@ message QueryBridgesRequest {
 }
 
 /**
- * This message is used for all of the query functions on the BridgeService.
+ * This message is used for all of the query functions on the BridgeManagerService.
  * All the query functions have the same shape if there's a need we can split
  * out different messages later.
  */
