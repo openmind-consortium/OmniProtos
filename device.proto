@@ -6,7 +6,7 @@ option csharp_namespace = "OpenMind";
 import "google/protobuf/any.proto";
 import "google/protobuf/empty.proto";
 
-service DeviceService {
+service DeviceManagerService {
   /**
    * List devices.
    */
