@@ -36,6 +36,11 @@ service BridgeManagerService {
    * Disconnects a given bridge.
    */
   rpc DisconnectBridge(DisconnectBridgeRequest) returns (google.protobuf.Empty);
+
+  /**
+   * Can be used to initiate or end a stream of conneciton status events
+   */
+  rpc ConnectionStatusStream(SetStreamEnable) returns (stream ConnectionUpdate);
 }
 
 message Bridge {
@@ -167,4 +172,31 @@ message DisconnectBridgeRequest {
    * 'xxxxxxxxx' is the serial number of the bridge.
    */
   string name = 1;
+}
+
+message SetStreamEnable {
+  /**
+   * Scheme-less URI describing the bridge resource.
+   * For example, '//summit/bridge/xxxxxxxxx' where
+   * 'xxxxxxxxx' is the serial number of the bridge.
+   */
+  string name = 1;
+  /**
+   * Boolean flag indicating if stream should be
+   * started or stopped.
+   */
+  bool enable_stream = 2;
+}
+
+message ConnectionUpdate {
+  /**
+   * Scheme-less URI describing the bridge resource.
+   * For example, '//summit/bridge/xxxxxxxxx' where
+   * 'xxxxxxxxx' is the serial number of the bridge.
+   */
+  string name = 1;
+  /**
+   * String indicating current connection status
+   */
+  string connection_status = 2;
 }
