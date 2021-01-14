@@ -13,11 +13,6 @@ service BridgeManagerService {
   rpc ListBridges(QueryBridgesRequest) returns (QueryBridgesResponse);
 
   /**
-   * Scan for new bridges.
-   */
-  rpc ScanBridges(QueryBridgesRequest) returns (QueryBridgesResponse);
-
-  /**
    * List already connected bridges.
    */
   rpc ConnectedBridges(QueryBridgesRequest) returns (QueryBridgesResponse);
