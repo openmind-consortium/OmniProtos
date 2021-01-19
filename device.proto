@@ -250,7 +250,19 @@ message TimeDomainChannelData {
   /**
    * currently summit-specific but may be a good idea to represent at a generic level
    */
-  repeated uint32 stimulation_pulse_indeces = 5;
+  repeated TimeDomainChannelStimTiming stimulation_pulse_indeces = 5;
+}
+
+message TimeDomainChannelStimTiming {
+  /**
+   * 
+   */
+  int32 data_index = 1;
+
+  /**
+   * 
+   */
+  int32 time_before_in_microseconds = 2;
 }
 
 message FourierTransformUpdate {
