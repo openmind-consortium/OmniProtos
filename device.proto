@@ -174,6 +174,38 @@ message SetDataStreamEnable {
   bool enable_stream = 2;
 }
 
+message DataPacketHeader {
+  /**
+   * 
+   */
+  uint32 global_sequence_number = 1;
+
+  /**
+   * 
+   */
+  uint32 data_type_sequence_number = 2;
+
+  /**
+   * 
+   */
+  uint32 ins_timestamp = 3;
+
+  /**
+   * 
+   */
+  uint32 ins_tick = 4;
+
+  /**
+   * 
+   */
+  uint32 system_rx_time = 5;
+
+  /**
+   * 
+   */
+  uint32 system_est_device_tx_time = 6;
+}
+
 message TimeDomainUpdate {
   /**
    * Scheme-less URI describing the device resource. For example,
@@ -186,7 +218,12 @@ message TimeDomainUpdate {
   /**
    * 
    */
-  repeated TimeDomainChannelData data = 2;
+  DataPacketHeader header = 2;
+
+  /**
+   * 
+   */
+  repeated TimeDomainChannelData data = 3;
 }
 
 message TimeDomainChannelData {
@@ -228,7 +265,12 @@ message FourierTransformUpdate {
   /**
    * 
    */
-  repeated FourierTransformChannelData data = 2;
+  DataPacketHeader header = 2;
+
+  /**
+   * 
+   */
+  repeated FourierTransformChannelData data = 3;
 }
 
 message FourierTransformChannelData {
@@ -270,7 +312,12 @@ message BandPowerUpdate {
   /**
    * 
    */
-  repeated BandPowerChannelData data = 2;
+  DataPacketHeader header = 2;
+
+  /**
+   * 
+   */
+  repeated BandPowerChannelData data = 3;
 }
 
 message BandPowerChannelData {
@@ -312,7 +359,12 @@ message InertialUpdate {
   /**
    * 
    */
-  repeated InertialChannelData data = 2;
+  DataPacketHeader header = 2;
+
+  /**
+   * 
+   */
+  repeated InertialChannelData data = 3;
 }
 
 message InertialChannelData {
@@ -355,57 +407,62 @@ message AdaptiveUpdate {
   /**
    * 
    */
-  uint32 current_state = 2;
+  DataPacketHeader header = 2;
+
+  /**
+   * 
+   */
+  uint32 current_state = 3;
   
   /**
    * 
    */
-  uint32 current_state_count = 3;
+  uint32 current_state_count = 4;
 
   /**
    * 
    */
-  uint32 current_state_total_time = 4;
+  uint32 current_state_total_time = 5;
 
   /**
    * 
    */
-  uint32 previous_state = 5;
+  uint32 previous_state = 6;
 
   /**
    * 
    */
-  repeated double current_amplitudes = 6;
+  repeated double current_amplitudes = 7;
 
   /**
    * 
    */
-  double current_frequency = 7;
+  double current_frequency = 8;
   
   /**
    * 
    */
-  bool in_holdoff = 8;
+  bool in_holdoff = 9;
 
   /**
    * 
    */
-  repeated DetectorState detector_state = 9;
+  repeated DetectorState detector_state = 10;
 
   /**
    * 
    */
-   repeated DetectorStatus detector_status = 10;
+   repeated DetectorStatus detector_status = 11;
 
   /**
    * 
    */
-   repeated SensingEnables sensors_enabled = 11;
+   repeated SensingEnables sensors_enabled = 12;
 
   /**
    * 
    */
-   repeated AdaptiveRampingFlags adaptive_stim_ramping = 12;
+   repeated AdaptiveRampingFlags adaptive_stim_ramping = 13;
 }
 
 enum DetectorState {
@@ -478,12 +535,17 @@ message LoopRecordUpdate {
   /**
    * 
    */
-   repeated LoopRecordTriggers triggers = 2;
+  DataPacketHeader header = 2;
 
   /**
    * 
    */
-   repeated LoopRecordFlags flags = 3;
+   repeated LoopRecordTriggers triggers = 3;
+
+  /**
+   * 
+   */
+   repeated LoopRecordFlags flags = 4;
 }
 
 enum LoopRecordTriggers {
@@ -520,5 +582,10 @@ message EchoUpdate {
   /**
    * 
    */
-  uint32 echo_byte = 2;
+  DataPacketHeader header = 2;
+
+  /**
+   * 
+   */
+  uint32 echo_byte = 3;
 }
