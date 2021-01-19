@@ -198,12 +198,12 @@ message DataPacketHeader {
   /**
    * 
    */
-  uint32 system_rx_time = 5;
+  int64 system_rx_time = 5;
 
   /**
    * 
    */
-  uint32 system_est_device_tx_time = 6;
+  int64 system_est_device_tx_time = 6;
 }
 
 message TimeDomainUpdate {
@@ -235,12 +235,12 @@ message TimeDomainChannelData {
   /**
    * 
    */
-   repeated string units = 2;
+   string units = 2;
 
   /**
    * 
    */
-  uint32 sampling_rate = 3;
+  double sampling_rate = 3;
 
   /**
    * 
@@ -282,12 +282,12 @@ message FourierTransformChannelData {
   /**
    * 
    */
-   repeated string units = 2;
+   string units = 2;
   
   /**
    * 
    */
-  uint32 sampling_rate = 3;
+  double sampling_rate = 3;
 
   /**
    * 
@@ -329,12 +329,12 @@ message BandPowerChannelData {
   /**
    * 
    */
-   repeated string units = 2;
+   string units = 2;
   
   /**
    * 
    */
-  uint32 sampling_rate = 3;
+  double sampling_rate = 3;
 
   /**
    * 
@@ -376,12 +376,12 @@ message InertialChannelData {
   /**
    * 
    */
-   repeated string units = 2;
+   string units = 2;
   
   /**
    * 
    */
-  uint32 sampling_rate = 3;
+  double sampling_rate = 3;
 
   /**
    * 
