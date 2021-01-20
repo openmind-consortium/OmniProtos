@@ -82,16 +82,6 @@ message SummitConnectBridgeDetails {
 }
 
 /**
- * Platform specific device connection parameters */
-message SummitConnectDeviceParameters {
-  /**
-   * A request to disable or enable annotations for this session.
-   * Human-use devices can not have annotations disabled.
-   */
-  bool disable_annotations = 1;
-}
-
-/**
  * Possible device connectin statuses
  */
 enum SummitConnectDeviceStatus {
