@@ -22,6 +22,31 @@ service DeviceManagerService {
    * NOTE (Summit): This will disconnect the bridge also.
    */
   rpc DisconnectDevice (DisconnectDeviceRequest) returns (google.protobuf.Empty);
+
+  /**
+   * Configure time domain streams
+   */
+  rpc ConfigureTimeDomainStream (ConfigureTimeDomainStreamRequest) returns (ConfigureTimeDomainStreamResponse);
+
+  /**
+   * Configure FFT stream
+   */
+  rpc ConfigureFastFourierTransformStream (ConfigureFastFourierTransformStreamRequest) returns (ConfigureFastFourierTransformStreamResponse);
+
+  /**
+   * Configure power stream
+   */
+  rpc ConfigurePowerStream (ConfigurePowerStreamRequest) returns (ConfigurePowerStreamResponse);
+
+  /**
+   * Configure miscellaneous stream settings
+   */
+  rpc ConfigureMiscellaneousStream (ConfigureMiscellaneousStreamRequest) returns (ConfigureMiscellaneousStreamResponse);
+
+  /**
+   * Configure accelerometer stream settings
+   */
+  rpc ConfigureAccelerometerStream (ConfigureAccelerometerStreamRequest) returns (ConfigureAccelerometerStreamResponse);
 }
 
 message Device {
@@ -123,4 +148,237 @@ message DisconnectDeviceRequest {
    * of the device.
    */
   string name = 1;
+}
+
+enum StreamConfigureStatus {
+  STREAM_CONFIGURE_STATUS_UNKNOWN = 0;
+  STREAM_CONFIGURE_STATUS_SUCCESS = 1;
+  STREAM_CONFIGURE_STATUS_FAILURE = 2;
+}
+
+message TimeDomainChannelConfig {
+  /**
+   * Additional platform specific arguments. These are defined in separate
+   * protobuf files, one per device manufacturer.
+   */
+  google.protobuf.Any parameters = 1;
+}
+
+message ConfigureTimeDomainStreamRequest {
+  /**
+   * Scheme-less URI describing the device resource. For example,
+   * '//summit/bridge/xxxxxx/device/yyyyyy' where 'xxxxxx' is the
+   * serial number of the bridge and 'yyyyyy' is the serial number
+   * of the device.
+   */
+  string name = 1;
+
+  /**
+   * Sample rate of the time domain stream
+   */
+  int32 sample_rate = 1;
+
+  /**
+   * Configuration of the individual time domain channels
+   */
+  repeated TimeDomainChannelConfig channels = 2;
+}
+
+message ConfigureTimeDomainStreamResponse {
+  /**
+   * Scheme-less URI describing the device resource. For example,
+   * '//summit/bridge/xxxxxx/device/yyyyyy' where 'xxxxxx' is the
+   * serial number of the bridge and 'yyyyyy' is the serial number
+   * of the device.
+   */
+  string name = 1;
+
+  /**
+   * Status of the configuration attempt.
+   */
+  StreamConfigureStatus configure_status = 2;
+
+  /**
+   * Additional platform specific details. These are defined in a separate
+   * protobuf files, one per device manufacturer.
+   */
+  google.protobuf.Any details = 3;
+
+  /**
+   * Additional platform specific error details. These are defined in a separate
+   * protobuf files, one per manufacturer.
+   */
+  google.protobuf.Any error = 4;
+}
+
+message ConfigureFastFourierTransformStreamRequest {
+  /**
+   * Scheme-less URI describing the device resource. For example,
+   * '//summit/bridge/xxxxxx/device/yyyyyy' where 'xxxxxx' is the
+   * serial number of the bridge and 'yyyyyy' is the serial number
+   * of the device.
+   */
+  string name = 1;
+
+  /**
+   * Additional platform specific arguments. These are defined in separate
+   * protobuf files, one per device manufacturer.
+   */
+  google.protobuf.Any FastFourierTransformStreamConfiguration = 2;
+}
+
+message ConfigureFastFourierTransformStreamResponse {
+  /**
+   * Scheme-less URI describing the device resource. For example,
+   * '//summit/bridge/xxxxxx/device/yyyyyy' where 'xxxxxx' is the
+   * serial number of the bridge and 'yyyyyy' is the serial number
+   * of the device.
+   */
+  string name = 1;
+
+  /**
+   * Status of the configuration attempt.
+   */
+  StreamConfigureStatus configure_status = 2;
+
+  /**
+   * Additional platform specific details. These are defined in a separate
+   * protobuf files, one per device manufacturer.
+   */
+  google.protobuf.Any details = 3;
+
+  /**
+   * Additional platform specific error details. These are defined in a separate
+   * protobuf files, one per manufacturer.
+   */
+  google.protobuf.Any error = 4;
+}
+
+message ConfigurePowerStreamRequest {
+  /**
+   * Scheme-less URI describing the device resource. For example,
+   * '//summit/bridge/xxxxxx/device/yyyyyy' where 'xxxxxx' is the
+   * serial number of the bridge and 'yyyyyy' is the serial number
+   * of the device.
+   */
+  string name = 1;
+
+  /**
+   * Additional platform specific arguments. These are defined in separate
+   * protobuf files, one per device manufacturer.
+   */
+  google.protobuf.Any PowerStreamConfiguration = 2;
+}
+
+message ConfigurePowerStreamResponse {
+  /**
+   * Scheme-less URI describing the device resource. For example,
+   * '//summit/bridge/xxxxxx/device/yyyyyy' where 'xxxxxx' is the
+   * serial number of the bridge and 'yyyyyy' is the serial number
+   * of the device.
+   */
+  string name = 1;
+
+  /**
+   * Status of the configuration attempt.
+   */
+  StreamConfigureStatus configure_status = 2;
+
+  /**
+   * Additional platform specific details. These are defined in a separate
+   * protobuf files, one per device manufacturer.
+   */
+  google.protobuf.Any details = 3;
+
+  /**
+   * Additional platform specific error details. These are defined in a separate
+   * protobuf files, one per manufacturer.
+   */
+  google.protobuf.Any error = 4;
+}
+
+message ConfigureMiscellaneousStreamRequest {
+  /**
+   * Scheme-less URI describing the device resource. For example,
+   * '//summit/bridge/xxxxxx/device/yyyyyy' where 'xxxxxx' is the
+   * serial number of the bridge and 'yyyyyy' is the serial number
+   * of the device.
+   */
+  string name = 1;
+
+  /**
+   * Additional platform specific arguments. These are defined in separate
+   * protobuf files, one per device manufacturer.
+   */
+  google.protobuf.Any MiscellaneousStreamConfiguration = 2;
+}
+
+message ConfigureMiscellaneousStreamResponse {
+  /**
+   * Scheme-less URI describing the device resource. For example,
+   * '//summit/bridge/xxxxxx/device/yyyyyy' where 'xxxxxx' is the
+   * serial number of the bridge and 'yyyyyy' is the serial number
+   * of the device.
+   */
+  string name = 1;
+
+  /**
+   * Status of the configuration attempt.
+   */
+  StreamConfigureStatus configure_status = 2;
+
+  /**
+   * Additional platform specific details. These are defined in a separate
+   * protobuf files, one per device manufacturer.
+   */
+  google.protobuf.Any details = 3;
+
+  /**
+   * Additional platform specific error details. These are defined in a separate
+   * protobuf files, one per manufacturer.
+   */
+  google.protobuf.Any error = 4;
+}
+
+message ConfigureAccelerometerStreamRequest {
+  /**
+   * Scheme-less URI describing the device resource. For example,
+   * '//summit/bridge/xxxxxx/device/yyyyyy' where 'xxxxxx' is the
+   * serial number of the bridge and 'yyyyyy' is the serial number
+   * of the device.
+   */
+  string name = 1;
+
+  /**
+   * Additional platform specific arguments. These are defined in separate
+   * protobuf files, one per device manufacturer.
+   */
+  google.protobuf.Any AccelerometerStreamConfiguration = 2;
+}
+
+message ConfigureAccelerometerStreamResponse {
+  /**
+   * Scheme-less URI describing the device resource. For example,
+   * '//summit/bridge/xxxxxx/device/yyyyyy' where 'xxxxxx' is the
+   * serial number of the bridge and 'yyyyyy' is the serial number
+   * of the device.
+   */
+  string name = 1;
+
+  /**
+   * Status of the configuration attempt.
+   */
+  StreamConfigureStatus configure_status = 2;
+
+  /**
+   * Additional platform specific details. These are defined in a separate
+   * protobuf files, one per device manufacturer.
+   */
+  google.protobuf.Any details = 3;
+
+  /**
+   * Additional platform specific error details. These are defined in a separate
+   * protobuf files, one per manufacturer.
+   */
+  google.protobuf.Any error = 4;
 }
