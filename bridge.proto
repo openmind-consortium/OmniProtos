@@ -5,6 +5,7 @@ option csharp_namespace = "OpenMind";
 
 import "google/protobuf/any.proto";
 import "google/protobuf/empty.proto";
+import "google/protobuf/wrappers.proto";
 
 service BridgeManagerService {
   /**
@@ -92,6 +93,12 @@ message ConnectBridgeRequest {
    * protobuf files, one per device manufacturer.
    */
   google.protobuf.Any parameters = 2;
+
+  /**
+   * Number of retry attempts, default 3. A value of
+   * of -1 means retry infinitely.
+   */
+  google.protobuf.Int32Value retries = 3;
 }
 
 /**
