@@ -216,7 +216,7 @@ message TimeDomainUpdate {
   string name = 1;
   
   /**
-   * 
+   * MOVE TO DETAILS
    */
   DataPacketHeader header = 2;
 
@@ -248,8 +248,9 @@ message TimeDomainChannelData {
   repeated double channel_data = 4;
 
   /**
-   * currently summit-specific but may be a good idea to represent at a generic level
+   * currently summit-specific but may be a good idea to represent at a generic level 
    */
+   // move to "details"
   repeated TimeDomainChannelStimTiming stimulation_pulse_indeces = 5;
 }
 
@@ -399,6 +400,11 @@ message InertialChannelData {
    * 
    */
    imu_axis channel_axis = 4;
+
+  /**
+   * 
+   */
+   repeated double channel_data = 5;
 }
 
 enum imu_axis {
@@ -407,6 +413,7 @@ enum imu_axis {
 	z = 2;
 }
 
+// POTENTIALLY RENAME TO CLASSIFIER UPDATE
 message AdaptiveUpdate {
   /**
    * Scheme-less URI describing the device resource. For example,
