@@ -676,7 +676,7 @@ message LinearDiscriminantFeature {
   fixed32 weight_vector = 3;
 }
 
-message SummitLocalFieldPotentialDetectorConfiguration {
+message SummitLinearDetectorConfiguration {
   /**
    * Which detector to apply the parameters to
    */
