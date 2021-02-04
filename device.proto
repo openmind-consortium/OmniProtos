@@ -181,12 +181,12 @@ message ConfigureTimeDomainStreamRequest {
   /**
    * Sample rate of the time domain stream
    */
-  int32 sample_rate = 1;
+  int32 sample_rate = 2;
 
   /**
    * Configuration of the individual time domain channels
    */
-  repeated TimeDomainChannelConfig channels = 2;
+  repeated TimeDomainChannelConfig channels = 3;
 }
 
 message ConfigureTimeDomainStreamResponse {
