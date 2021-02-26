@@ -22,6 +22,11 @@ service DeviceManagerService {
    * NOTE (Summit): This will disconnect the bridge also.
    */
   rpc DisconnectDevice (DisconnectDeviceRequest) returns (google.protobuf.Empty);
+  
+  /**
+   * Device Status
+   */
+  rpc DeviceStatus (DeviceStatusRequest) returns (DeviceStatusResponse);
 }
 
 message Device {
@@ -123,4 +128,34 @@ message DisconnectDeviceRequest {
    * of the device.
    */
   string name = 1;
+}
+
+message DeviceStatusRequest {
+  /**
+   * Scheme-less URI describing the device resource. For example,
+   * '//summit/bridge/xxxxxx/device/yyyyyy' where 'xxxxxx' is the
+   * serial number of the bridge and 'yyyyyy' is the serial number
+   * of the device.
+   */
+  string name = 1;
+}
+
+message DeviceStatusResponse {
+  /**
+   * Scheme-less URI describing the device resource. For example,
+   * '//summit/bridge/xxxxxx/device/yyyyyy' where 'xxxxxx' is the
+   * serial number of the bridge and 'yyyyyy' is the serial number
+   * of the device.
+   */
+  string name = 1;
+
+  /**
+   * Battery Level Percent
+   */
+  uint32 battery_level_percent = 2;
+  
+  /**
+   * Battery Level Voltage
+   */
+  uint32 battery_level_voltage = 3;
 }
