@@ -150,12 +150,49 @@ message DeviceStatusResponse {
   string name = 1;
 
   /**
-   * Battery Level Percent
+   * Battery Status
    */
-  uint32 battery_level_percent = 2;
+  BatteryStatusResult battery_status_result = 2;
+}
+
+message BatteryStatusResult {
+  /**
+   * battery level percent
+   */
+  uint32 battery_level_percent = 1;
   
   /**
-   * Battery Level Voltage
+   * battery voltage measurement (mV)
    */
-  uint32 battery_level_voltage = 3;
+  uint32 battery_level_voltage = 2;
+  
+  /**
+   * battery state of charge (mAh)
+   */
+  uint32 battery_soc = 3;
+  
+  /**
+   * state of charge uncertainty (mAh)
+   */
+  uint32 soc_uncertainty = 4;
+  
+  /**
+   * manufactured battery capacity (mAh).
+   */
+  uint32 manufactured_capacity = 5;
+  
+  /**
+   * estimated battery capacity (mAh).
+   */
+  uint32 estimated_capacity = 6;
+  
+  /**
+   * therapy unavailable state of charge value (mAh)
+   */
+  uint32 therapy_unavailable_soc = 7;
+  
+  /**
+   * battery full state of change value (mAh)
+   */
+  uint32 full_soc = 8;
 }
