@@ -148,51 +148,26 @@ message DeviceStatusResponse {
    * of the device.
    */
   string name = 1;
-
-  /**
-   * Battery Status
-   */
-  BatteryStatusResponse battery_status_result = 2;
-}
-
-message BatteryStatusResponse {
+  
   /**
    * battery level percent
    */
-  uint32 battery_level_percent = 1;
+  uint32 battery_level_percent = 2;
   
   /**
    * battery voltage measurement (mV)
    */
-  uint32 battery_level_voltage = 2;
+  uint32 battery_level_voltage = 3;
   
   /**
-   * battery state of charge (mAh)
+   * Additional platform specific details. These are defined in a separate
+   * protobuf files, one per device manufacturer.
    */
-  uint32 battery_soc = 3;
-  
+  google.protobuf.Any details = 4;
+
   /**
-   * state of charge uncertainty (mAh)
+   * Additional platform specific error details. These are defined in a separate
+   * protobuf files, one per manufacturer.
    */
-  uint32 soc_uncertainty = 4;
-  
-  /**
-   * manufactured battery capacity (mAh).
-   */
-  uint32 manufactured_capacity = 5;
-  
-  /**
-   * estimated battery capacity (mAh).
-   */
-  uint32 estimated_capacity = 6;
-  
-  /**
-   * therapy unavailable state of charge value (mAh)
-   */
-  uint32 therapy_unavailable_soc = 7;
-  
-  /**
-   * battery full state of change value (mAh)
-   */
-  uint32 full_soc = 8;
+  google.protobuf.Any error = 5;
 }
