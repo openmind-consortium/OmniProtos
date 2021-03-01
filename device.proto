@@ -152,10 +152,10 @@ message DeviceStatusResponse {
   /**
    * Battery Status
    */
-  BatteryStatusResult battery_status_result = 2;
+  BatteryStatusResponse battery_status_result = 2;
 }
 
-message BatteryStatusResult {
+message BatteryStatusResponse {
   /**
    * battery level percent
    */
