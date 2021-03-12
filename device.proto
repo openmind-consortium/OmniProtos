@@ -22,6 +22,41 @@ service DeviceManagerService {
    * NOTE (Summit): This will disconnect the bridge also.
    */
   rpc DisconnectDevice (DisconnectDeviceRequest) returns (google.protobuf.Empty);
+
+  /**
+   * Can be used to initiate or end a stream of sensed time domain data events
+   */
+  rpc TimeDomainStream(SetDataStreamEnable) returns (stream TimeDomainUpdate);
+
+  /**
+   * Can be used to initiate or end a stream of calculated fourier transform data events
+   */
+  rpc FourierTransformStream(SetDataStreamEnable) returns (stream FourierTransformUpdate);
+
+  /**
+   * Can be used to initiate or end a stream of summed band power data events
+   */
+  rpc BandPowerStream(SetDataStreamEnable) returns (stream BandPowerUpdate);
+
+  /**
+   * Can be used to initiate or end a stream of sensed accelerometer data events
+   */
+  rpc InertialStream(SetDataStreamEnable) returns (stream InertialUpdate);
+
+  /**
+   * Can be used to initiate or end a stream of conneciton status events
+   */
+  rpc AdaptiveStream(SetDataStreamEnable) returns (stream AdaptiveUpdate);
+
+  /**
+   * Can be used to initiate or end a stream of loop record update events
+   */
+  rpc LoopRecordUpdateStream(SetDataStreamEnable) returns (stream LoopRecordUpdate);
+
+  /**
+   * Can be used to initiate or end a stream of echo events
+   */
+  rpc EchoStream(SetDataStreamEnable) returns (stream EchoUpdate);
 }
 
 message Device {
@@ -123,4 +158,453 @@ message DisconnectDeviceRequest {
    * of the device.
    */
   string name = 1;
+}
+
+message SetDataStreamEnable {
+  /**
+   * Scheme-less URI describing the bridge resource.
+   * For example, '//summit/bridge/xxxxxxxxx' where
+   * 'xxxxxxxxx' is the serial number of the bridge.
+   */
+  string name = 1;
+  /**
+   * Boolean flag indicating if stream should be
+   * started or stopped.
+   */
+  bool enable_stream = 2;
+}
+
+message DataPacketHeader {
+  /**
+   * 
+   */
+  uint32 global_sequence_number = 1;
+
+  /**
+   * 
+   */
+  uint32 data_type_sequence_number = 2;
+
+  /**
+   * 
+   */
+  uint32 ins_timestamp = 3;
+
+  /**
+   * 
+   */
+  uint32 ins_tick = 4;
+
+  /**
+   * 
+   */
+  int64 system_rx_time = 5;
+
+  /**
+   * 
+   */
+  int64 system_est_device_tx_time = 6;
+}
+
+message TimeDomainUpdate {
+  /**
+   * Scheme-less URI describing the device resource. For example,
+   * '//summit/bridge/xxxxxx/device/yyyyyy' where 'xxxxxx' is the
+   * serial number of the bridge and 'yyyyyy' is the serial number
+   * of the device.
+   */
+  string name = 1;
+  
+  /**
+   * MOVE TO DETAILS
+   */
+  DataPacketHeader header = 2;
+
+  /**
+   * 
+   */
+  repeated TimeDomainChannelData data = 3;
+}
+
+message TimeDomainChannelData {
+  /**
+   * 
+   */
+  string channel_id = 1;
+
+  /**
+   * 
+   */
+   string units = 2;
+
+  /**
+   * 
+   */
+  double sampling_rate = 3;
+
+  /**
+   * 
+   */
+  repeated double channel_data = 4;
+
+  /**
+   * currently summit-specific but may be a good idea to represent at a generic level 
+   */
+   // move to "details"
+  repeated TimeDomainChannelStimTiming stimulation_pulse_indeces = 5;
+}
+
+message TimeDomainChannelStimTiming {
+  /**
+   * 
+   */
+  int32 data_index = 1;
+
+  /**
+   * 
+   */
+  int32 time_before_in_microseconds = 2;
+}
+
+message FourierTransformUpdate {
+  /**
+   * Scheme-less URI describing the device resource. For example,
+   * '//summit/bridge/xxxxxx/device/yyyyyy' where 'xxxxxx' is the
+   * serial number of the bridge and 'yyyyyy' is the serial number
+   * of the device.
+   */
+  string name = 1;
+
+  /**
+   * 
+   */
+  DataPacketHeader header = 2;
+
+  /**
+   * 
+   */
+  repeated FourierTransformChannelData data = 3;
+}
+
+message FourierTransformChannelData {
+  /**
+   * 
+   */
+  string channel_id = 1;
+
+  /**
+   * 
+   */
+   string units = 2;
+  
+  /**
+   * 
+   */
+  double sampling_rate = 3;
+
+  /**
+   * 
+   */
+  uint32 fourier_length = 4;
+
+  /**
+   * 
+   */
+  repeated double channel_data = 5;
+}
+
+message BandPowerUpdate {
+  /**
+   * Scheme-less URI describing the device resource. For example,
+   * '//summit/bridge/xxxxxx/device/yyyyyy' where 'xxxxxx' is the
+   * serial number of the bridge and 'yyyyyy' is the serial number
+   * of the device.
+   */
+  string name = 1;
+
+  /**
+   * 
+   */
+  DataPacketHeader header = 2;
+
+  /**
+   * 
+   */
+  repeated BandPowerChannelData data = 3;
+}
+
+message BandPowerChannelData {
+  /**
+   * 
+   */
+  string channel_id = 1;
+
+  /**
+   * 
+   */
+   string units = 2;
+  
+  /**
+   * 
+   */
+  double sampling_rate = 3;
+
+  /**
+   * 
+   */
+  uint32 fourier_length = 4;
+
+  /**
+   * 
+   */
+  uint32 channel_data = 5;
+}
+
+message InertialUpdate {
+  /**
+   * Scheme-less URI describing the device resource. For example,
+   * '//summit/bridge/xxxxxx/device/yyyyyy' where 'xxxxxx' is the
+   * serial number of the bridge and 'yyyyyy' is the serial number
+   * of the device.
+   */
+  string name = 1;
+
+  /**
+   * 
+   */
+  DataPacketHeader header = 2;
+
+  /**
+   * 
+   */
+  repeated InertialChannelData data = 3;
+}
+
+message InertialChannelData {
+  /**
+   * 
+   */
+  string channel_id = 1;
+
+  /**
+   * 
+   */
+   string units = 2;
+  
+  /**
+   * 
+   */
+  double sampling_rate = 3;
+
+  /**
+   * 
+   */
+   imu_axis channel_axis = 4;
+
+  /**
+   * 
+   */
+   repeated double channel_data = 5;
+}
+
+enum imu_axis {
+	x = 0;
+	y = 1;
+	z = 2;
+}
+
+// POTENTIALLY RENAME TO CLASSIFIER UPDATE
+message AdaptiveUpdate {
+  /**
+   * Scheme-less URI describing the device resource. For example,
+   * '//summit/bridge/xxxxxx/device/yyyyyy' where 'xxxxxx' is the
+   * serial number of the bridge and 'yyyyyy' is the serial number
+   * of the device.
+   */
+  string name = 1;
+
+  /**
+   * 
+   */
+  DataPacketHeader header = 2;
+
+  /**
+   * 
+   */
+  uint32 current_state = 3;
+  
+  /**
+   * 
+   */
+  uint32 current_state_count = 4;
+
+  /**
+   * 
+   */
+  uint32 current_state_total_time = 5;
+
+  /**
+   * 
+   */
+  uint32 previous_state = 6;
+
+  /**
+   * 
+   */
+  repeated double current_amplitudes = 7;
+
+  /**
+   * 
+   */
+  double current_frequency = 8;
+  
+  /**
+   * 
+   */
+  bool in_holdoff = 9;
+
+  /**
+   * 
+   */
+  repeated DetectorState detector_state = 10;
+
+  /**
+   * 
+   */
+   repeated DetectorStatus detector_status = 11;
+
+  /**
+   * 
+   */
+   repeated SensingEnables sensors_enabled = 12;
+
+  /**
+   * 
+   */
+   repeated AdaptiveRampingFlags adaptive_stim_ramping = 13;
+}
+
+enum DetectorState {
+  NoState = 0;
+  lowImmediateDetect = 1;
+  highImmediateDetect = 2;
+  lowDetect = 4;
+  highDetect = 8;
+  outputOverRange = 16;
+  blanked = 32;
+  inputOverRange = 64;
+  inHoldOff = 128;
+}
+
+message DetectorStatus {
+  /**
+   * 
+   */
+  repeated uint32 feature_inputs = 1;
+
+  /**
+   * 
+   */
+  uint32 output = 2;
+
+  /**
+   * 
+   */
+  uint32 low_threshold = 3;
+
+  /**
+   * 
+   */
+  uint32 high_threshold = 4;
+
+  /**
+   * 
+   */
+  uint32 fixed_decimal_setpoint = 5;
+}
+
+enum SensingEnables {
+  SensingNone = 0;
+  LfpTimeDomain = 1;
+  Fourier = 2;
+  PowerBand = 4;
+  LD0 = 16;
+  LD1 = 32;
+  LoopRecord = 64;
+  Adaptive = 128;
+}
+
+enum AdaptiveRampingFlags {
+  RampingNone = 0;
+  Prog0AmpRamping = 1;
+  Prog1AmpRamping = 2;
+  Prog2AmpRamping = 4;
+  Prog3AmpRamping = 8;
+}
+
+message LoopRecordUpdate {
+  /**
+   * Scheme-less URI describing the device resource. For example,
+   * '//summit/bridge/xxxxxx/device/yyyyyy' where 'xxxxxx' is the
+   * serial number of the bridge and 'yyyyyy' is the serial number
+   * of the device.
+   */
+  string name = 1;
+
+  /**
+   * 
+   */
+  DataPacketHeader header = 2;
+
+  /**
+   * 
+   */
+   repeated LoopRecordTriggers triggers = 3;
+
+  /**
+   * 
+   */
+   repeated LoopRecordFlags flags = 4;
+}
+
+enum LoopRecordTriggers {
+  NoTrigger = 0;
+  state0 = 1;
+  state1 = 2;
+  state2 = 4;
+  state3 = 8;
+  state4 = 16;
+  state5 = 32;
+  state6 = 64;
+  state7 = 128;
+  state8 = 256;
+}
+
+enum LoopRecordFlags {
+  NoFlags = 0;
+  wrap = 1;
+  triggered = 2;
+  completed = 4;
+  stopped = 8;
+  enable = 128;
+}
+
+message EchoUpdate {
+  /**
+   * Scheme-less URI describing the device resource. For example,
+   * '//summit/bridge/xxxxxx/device/yyyyyy' where 'xxxxxx' is the
+   * serial number of the bridge and 'yyyyyy' is the serial number
+   * of the device.
+   */
+  string name = 1;
+
+  /**
+   * 
+   */
+  DataPacketHeader header = 2;
+
+  /**
+   * 
+   */
+  uint32 echo_byte = 3;
 }
