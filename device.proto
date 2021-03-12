@@ -281,28 +281,6 @@ message FourierTransformUpdate {
   string name = 1;
   
   /**
-   * battery level percent
-   */
-  uint32 battery_level_percent = 2;
-  
-  /**
-   * battery voltage measurement (mV)
-   */
-  uint32 battery_level_voltage = 3;
-  
-  /**
-   * Additional platform specific details. These are defined in a separate
-   * protobuf files, one per device manufacturer.
-   */
-  google.protobuf.Any details = 4;
-
-  /**
-   * Additional platform specific error details. These are defined in a separate
-   * protobuf files, one per manufacturer.
-   */
-  google.protobuf.Any error = 5;
-
-  /**
    * 
    */
   DataPacketHeader header = 2;
