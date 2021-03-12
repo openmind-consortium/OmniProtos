@@ -383,30 +383,30 @@ message BatteryStatusResponse {
   /**
    * battery state of charge (mAh)
    */
-  uint32 battery_soc = 1;
+  google.protobuf.UInt32Value battery_soc = 1;
   
   /**
    * state of charge uncertainty (mAh)
    */
-  uint32 soc_uncertainty = 2;
+  google.protobuf.UInt32Value soc_uncertainty = 2;
   
   /**
    * manufactured battery capacity (mAh).
    */
-  uint32 manufactured_capacity = 3;
+  google.protobuf.UInt32Value manufactured_capacity = 3;
   
   /**
    * estimated battery capacity (mAh).
    */
-  uint32 estimated_capacity = 4;
+  google.protobuf.UInt32Value estimated_capacity = 4;
   
   /**
    * therapy unavailable state of charge value (mAh)
    */
-  uint32 therapy_unavailable_soc = 5;
+  google.protobuf.UInt32Value therapy_unavailable_soc = 5;
   
   /**
    * battery full state of change value (mAh)
    */
-  uint32 full_soc = 6;
+  google.protobuf.UInt32Value full_soc = 6;
 }

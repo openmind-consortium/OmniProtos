@@ -24,11 +24,6 @@ service DeviceManagerService {
   rpc DisconnectDevice (DisconnectDeviceRequest) returns (google.protobuf.Empty);
   
   /**
-   * Device Status
-   */
-  rpc DeviceStatus (DeviceStatusRequest) returns (DeviceStatusResponse);
-
-  /**
    * Can be used to initiate or end a stream of sensed time domain data events
    */
   rpc TimeDomainStream(SetDataStreamEnable) returns (stream TimeDomainUpdate);
@@ -62,6 +57,11 @@ service DeviceManagerService {
    * Can be used to initiate or end a stream of echo events
    */
   rpc EchoStream(SetDataStreamEnable) returns (stream EchoUpdate);
+
+  /**
+   * Device Status
+   */
+  rpc DeviceStatus (DeviceStatusRequest) returns (DeviceStatusResponse);
 }
 
 message Device {
@@ -636,12 +636,12 @@ message DeviceStatusResponse {
   /**
    * battery level percent
    */
-  uint32 battery_level_percent = 2;
+  google.protobuf.UInt32Value battery_level_percent = 2;
   
   /**
    * battery voltage measurement (mV)
    */
-  uint32 battery_level_voltage = 3;
+  google.protobuf.UInt32Value battery_level_voltage = 3;
   
   /**
    * Additional platform specific details. These are defined in a separate
