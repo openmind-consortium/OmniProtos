@@ -5,6 +5,7 @@ option csharp_namespace = "OpenMind";
 
 import "google/protobuf/any.proto";
 import "google/protobuf/empty.proto";
+import "google/protobuf/wrappers.proto";
 
 service DeviceManagerService {
   /**
@@ -22,7 +23,7 @@ service DeviceManagerService {
    * NOTE (Summit): This will disconnect the bridge also.
    */
   rpc DisconnectDevice (DisconnectDeviceRequest) returns (google.protobuf.Empty);
-
+  
   /**
    * Configure time domain streams
    */
@@ -87,6 +88,11 @@ service DeviceManagerService {
    * Can be used to initiate or end a stream of echo events
    */
   rpc EchoStream(SetDataStreamEnable) returns (stream EchoUpdate);
+
+  /**
+   * Device Status
+   */
+  rpc DeviceStatus (DeviceStatusRequest) returns (DeviceStatusResponse);
 }
 
 message Device {
@@ -408,7 +414,7 @@ message FourierTransformUpdate {
    * of the device.
    */
   string name = 1;
-
+  
   /**
    * 
    */
@@ -913,4 +919,46 @@ message EchoUpdate {
    * 
    */
   uint32 echo_byte = 3;
+}
+
+message DeviceStatusRequest {
+  /**
+   * Scheme-less URI describing the device resource. For example,
+   * '//summit/bridge/xxxxxx/device/yyyyyy' where 'xxxxxx' is the
+   * serial number of the bridge and 'yyyyyy' is the serial number
+   * of the device.
+   */
+  string name = 1;
+}
+
+message DeviceStatusResponse {
+  /**
+   * Scheme-less URI describing the device resource. For example,
+   * '//summit/bridge/xxxxxx/device/yyyyyy' where 'xxxxxx' is the
+   * serial number of the bridge and 'yyyyyy' is the serial number
+   * of the device.
+   */
+  string name = 1;
+  
+  /**
+   * battery level percent
+   */
+  google.protobuf.UInt32Value battery_level_percent = 2;
+  
+  /**
+   * battery voltage measurement (mV)
+   */
+  google.protobuf.UInt32Value battery_level_voltage = 3;
+  
+  /**
+   * Additional platform specific details. These are defined in a separate
+   * protobuf files, one per device manufacturer.
+   */
+  google.protobuf.Any details = 4;
+
+  /**
+   * Additional platform specific error details. These are defined in a separate
+   * protobuf files, one per manufacturer.
+   */
+  google.protobuf.Any error = 5;
 }

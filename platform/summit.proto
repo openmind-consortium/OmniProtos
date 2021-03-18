@@ -735,3 +735,35 @@ message SummitLinearDetectorConfiguration {
    * preceding fixed point terms.                                      */
   fixed32 fractional_fixed_point_value = 10;
 }
+
+message BatteryStatusResponse {
+  /**
+   * battery state of charge (mAh)
+   */
+  google.protobuf.UInt32Value battery_soc = 1;
+  
+  /**
+   * state of charge uncertainty (mAh)
+   */
+  google.protobuf.UInt32Value soc_uncertainty = 2;
+  
+  /**
+   * manufactured battery capacity (mAh).
+   */
+  google.protobuf.UInt32Value manufactured_capacity = 3;
+  
+  /**
+   * estimated battery capacity (mAh).
+   */
+  google.protobuf.UInt32Value estimated_capacity = 4;
+  
+  /**
+   * therapy unavailable state of charge value (mAh)
+   */
+  google.protobuf.UInt32Value therapy_unavailable_soc = 5;
+  
+  /**
+   * battery full state of change value (mAh)
+   */
+  google.protobuf.UInt32Value full_soc = 6;
+}
