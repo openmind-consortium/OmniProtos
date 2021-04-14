@@ -769,7 +769,9 @@ message BatteryStatusResponse {
 }
 
 message SummitSenseConfiguration{
-  //Time Domain
+  /**
+	 Time Domain
+   */
   /**
    * Minus mux input
    */
@@ -805,7 +807,9 @@ message SummitSenseConfiguration{
    */
    bool disabled = 7;
 
-   //FFT
+   /**
+	 FFT
+   */
    /**
    * The FFT size
    */
@@ -848,7 +852,9 @@ message SummitSenseConfiguration{
    */
   int32 binsToStreamOffset = 14;
 
-  //Power Channels
+  /**
+	 Power Channels
+   */
   /**
    * Indicate which bands need to be enabled for the power channels
    */
@@ -859,7 +865,9 @@ message SummitSenseConfiguration{
    */
   repeated PowerChannelConfiguration power_channel_configuration = 16;
 
-  //Misc
+  /**
+	 Misc
+   */
   /**
    * Bridging configuration
    */
@@ -881,7 +889,9 @@ message SummitSenseConfiguration{
   uint32 loop_recording_post_buffer_time = 20;
 
 
-  //Acc
+  /**
+	 Accelerometer
+   */
   /**
    * Accelerometer sample rate
    */
