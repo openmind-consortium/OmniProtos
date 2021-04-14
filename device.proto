@@ -23,6 +23,11 @@ service DeviceManagerService {
    * NOTE (Summit): This will disconnect the bridge also.
    */
   rpc DisconnectDevice (DisconnectDeviceRequest) returns (google.protobuf.Empty);
+
+  /**
+   * Configure Sense
+   */
+  rpc SenseConfiguration (SenseConfigurationRequest) returns (SenseConfigurationResponse);
   
   /**
    * Configure time domain streams
@@ -194,6 +199,44 @@ message DisconnectDeviceRequest {
    * of the device.
    */
   string name = 1;
+}
+
+message SenseConfigurationRequest{
+/**
+   * Scheme-less URI describing the device resource. For example,
+   * '//summit/bridge/xxxxxx/device/yyyyyy' where 'xxxxxx' is the
+   * serial number of the bridge and 'yyyyyy' is the serial number
+   * of the device.
+   */
+  string name = 1;
+
+  /**
+   * Additional platform specific arguments. These are defined in separate
+   * protobuf files, one per device manufacturer.
+   */
+  google.protobuf.Any parameters = 2;
+}
+
+message SenseConfigurationResponse{
+/**
+   * Scheme-less URI describing the device resource. For example,
+   * '//summit/bridge/xxxxxx/device/yyyyyy' where 'xxxxxx' is the
+   * serial number of the bridge and 'yyyyyy' is the serial number
+   * of the device.
+   */
+  string name = 1;
+  
+  /**
+   * Additional platform specific details. These are defined in a separate
+   * protobuf files, one per device manufacturer.
+   */
+  google.protobuf.Any details = 2;
+
+  /**
+   * Additional platform specific error details. These are defined in a separate
+   * protobuf files, one per manufacturer.
+   */
+  google.protobuf.Any error = 3;
 }
 
 enum StreamConfigureStatus {
