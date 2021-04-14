@@ -767,3 +767,123 @@ message BatteryStatusResponse {
    */
   google.protobuf.UInt32Value full_soc = 6;
 }
+
+message SummitSenseConfiguration{
+  //Time Domain
+  /**
+   * Minus mux input
+   */
+  TimeDomainMuxInputs minus = 1;
+  
+  /**
+   * Plus mux input
+   */
+  TimeDomainMuxInputs plus = 2;
+
+  /**
+   * The evoked mode
+   */
+  TimeDomainEvokedResponseEnable evoked_mode = 3;
+
+  /**
+   * Low pass filter stage 1
+   */
+  TimeDomainLowPassFilterStage1 low_pass_filter_stage_1 = 4;
+
+  /**
+   * Low pass filter stage 2
+   */
+  TimeDomainLowPassFilterStage2 low_pass_filter_stage_2 = 5;
+
+  /**
+   * High pass filter
+   */
+  TimeDomainHighPassFilters high_pass_filters = 6;
+
+  /**
+   * Disable the current channel's time domain stream
+   */
+   bool disabled = 7;
+
+   //FFT
+   /**
+   * The FFT size
+   */
+  FastFourierTransformSizes size = 8;
+
+  /**
+   * The FFT interval in milliseconds (50-10000)
+   */
+  int32 interval = 9;
+
+  /**
+   * The FFT window
+   */
+  FastFourierTransformWindowAutoLoads windowLoad = 10;
+
+  /**
+   * Whether or not to enable the FFT window
+   */
+  bool enableWindow = 11;
+
+  /**
+   * The band formation configuration byte. 7 is highest risk of overflow (missing upper 8 bits of power channel).
+   * 0 means no risk of overflow, but lower resolution because lower 8 bits are ignored.
+   *
+   * Default: SHIFT_7
+   */
+  FastFourierTransformWeightMultiplies bandFormationConfig = 12;
+
+  /**
+   * The number of bins to stream. 0 means full FFT, non zero means partial FFT.
+   *
+   * Default: 0
+   */
+  int32 binsToStream = 13;
+
+  /**
+   * The bin offset to use when streaming. 0 means normal - start at bin 0
+   *
+   * Defaukt: 0
+   */
+  int32 binsToStreamOffset = 14;
+
+  //Power Channels
+  /**
+   * Indicate which bands need to be enabled for the power channels
+   */
+  uint32 power_band_enables = 15;
+
+  /**
+   * Power channel configuration for each of the channels, 4 total.
+   */
+  repeated PowerChannelConfiguration power_channel_configuration = 16;
+
+  //Misc
+  /**
+   * Bridging configuration
+   */
+  BridgingConfiguration bridging = 17;
+
+  /**
+   * Configure the stream frame rate (50 ms is recommended). 
+   */
+  StreamingFrameRate streaming_rate = 18;
+
+  /**
+   * Configure loop recording triggers.
+   */
+  LoopRecordingTriggers loop_record_triggers = 19;
+
+  /**
+   * Configure the loop recording post buffer time in seconds.
+   */
+  uint32 loop_recording_post_buffer_time = 20;
+
+
+  //Acc
+  /**
+   * Accelerometer sample rate
+   */
+  AccelerometerSampleRate sample_rate = 21;
+}
