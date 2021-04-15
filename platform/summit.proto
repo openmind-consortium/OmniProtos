@@ -772,7 +772,15 @@ message SummitSenseConfiguration{
   /**
 	 Time Domain
    */
-  repeated SummitTimeDomainChannelConfig data = 1;
+   /**
+	 Time Domain sample rate
+   */
+   uint32 sampling_rate = 1;
+
+   /**
+	 Time Channel Configuration
+   */
+  repeated SummitTimeDomainChannelConfig data = 2;
 
    /**
 	 FFT
@@ -780,22 +788,22 @@ message SummitSenseConfiguration{
    /**
    * The FFT size
    */
-  FastFourierTransformSizes size = 2;
+  FastFourierTransformSizes size = 3;
 
   /**
    * The FFT interval in milliseconds (50-10000)
    */
-  int32 interval = 3;
+  int32 interval = 4;
 
   /**
    * The FFT window
    */
-  FastFourierTransformWindowAutoLoads windowLoad = 4;
+  FastFourierTransformWindowAutoLoads windowLoad = 5;
 
   /**
    * Whether or not to enable the FFT window
    */
-  bool enableWindow = 5;
+  bool enableWindow = 6;
 
   /**
    * The band formation configuration byte. 7 is highest risk of overflow (missing upper 8 bits of power channel).
@@ -803,21 +811,21 @@ message SummitSenseConfiguration{
    *
    * Default: SHIFT_7
    */
-  FastFourierTransformWeightMultiplies bandFormationConfig = 6;
+  FastFourierTransformWeightMultiplies bandFormationConfig = 7;
 
   /**
    * The number of bins to stream. 0 means full FFT, non zero means partial FFT.
    *
    * Default: 0
    */
-  int32 binsToStream = 7;
+  int32 binsToStream = 8;
 
   /**
    * The bin offset to use when streaming. 0 means normal - start at bin 0
    *
    * Defaukt: 0
    */
-  int32 binsToStreamOffset = 8;
+  int32 binsToStreamOffset = 9;
 
   /**
 	 Power Channels
@@ -825,12 +833,12 @@ message SummitSenseConfiguration{
   /**
    * Indicate which bands need to be enabled for the power channels
    */
-  uint32 power_band_enables = 9;
+  uint32 power_band_enables = 10;
 
   /**
    * Power channel configuration for each of the channels, 4 total.
    */
-  repeated PowerChannelConfiguration power_channel_configuration = 10;
+  repeated PowerChannelConfiguration power_channel_configuration = 11;
 
   /**
 	 Misc
@@ -838,22 +846,22 @@ message SummitSenseConfiguration{
   /**
    * Bridging configuration
    */
-  BridgingConfiguration bridging = 11;
+  BridgingConfiguration bridging = 12;
 
   /**
    * Configure the stream frame rate (50 ms is recommended). 
    */
-  StreamingFrameRate streaming_rate = 12;
+  StreamingFrameRate streaming_rate = 13;
 
   /**
    * Configure loop recording triggers.
    */
-  LoopRecordingTriggers loop_record_triggers = 13;
+  LoopRecordingTriggers loop_record_triggers = 14;
 
   /**
    * Configure the loop recording post buffer time in seconds.
    */
-  uint32 loop_recording_post_buffer_time = 14;
+  uint32 loop_recording_post_buffer_time = 15;
 
 
   /**
@@ -862,5 +870,5 @@ message SummitSenseConfiguration{
   /**
    * Accelerometer sample rate
    */
-  AccelerometerSampleRate sample_rate = 15;
+  AccelerometerSampleRate sample_rate = 16;
 }
