@@ -547,23 +547,31 @@ message PowerChannelConfiguration {
    * The power band 0 stop bin.
    */
   uint32 band_0_stop = 2;
+  /**
+   * The power band 0 enabled
+   */
+  bool band_0_enable = 3;
 
   /**
    * The power band 1 start bin.
    */
-  uint32 band_1_start = 3;
+  uint32 band_1_start = 4;
 
   /**
    * The power band 1 stop bin.
    */
-  uint32 band_1_stop = 4;
+  uint32 band_1_stop = 5;
+  /**
+   * The power band 1 enabled
+   */
+  bool band_1_enable = 6;
 }
 
 message SummitPowerStreamConfiguration {
   /**
    * Indicate which bands need to be enabled for the power channels
    */
-  uint32 power_band_enables = 1;
+  repeated bool power_band_enables = 1;
 
   /**
    * Power channel configuration for each of the channels, 4 total.
@@ -780,7 +788,7 @@ message SummitSenseConfiguration{
    /**
 	 Time Channel Configuration
    */
-  repeated SummitTimeDomainChannelConfig data = 2;
+  repeated SummitTimeDomainChannelConfig tdChannelConfigs = 2;
 
    /**
 	 FFT
@@ -838,7 +846,7 @@ message SummitSenseConfiguration{
   /**
    * Power channel configuration for each of the channels, 4 total.
    */
-  repeated PowerChannelConfiguration power_channel_configuration = 11;
+  repeated SummitPowerStreamConfiguration power_channels = 11;
 
   /**
 	 Misc
