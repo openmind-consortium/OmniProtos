@@ -838,15 +838,11 @@ message SummitSenseConfiguration{
   /**
 	 Power Channels
    */
-  /**
-   * Indicate which bands need to be enabled for the power channels
-   */
-  uint32 power_band_enables = 10;
 
   /**
    * Power channel configuration for each of the channels, 4 total.
    */
-  repeated SummitPowerStreamConfiguration power_channels = 11;
+  repeated SummitPowerStreamConfiguration power_channels = 10;
 
   /**
 	 Misc
@@ -854,22 +850,22 @@ message SummitSenseConfiguration{
   /**
    * Bridging configuration
    */
-  BridgingConfiguration bridging = 12;
+  BridgingConfiguration bridging = 11;
 
   /**
    * Configure the stream frame rate (50 ms is recommended). 
    */
-  StreamingFrameRate streaming_rate = 13;
+  StreamingFrameRate streaming_rate = 12;
 
   /**
    * Configure loop recording triggers.
    */
-  LoopRecordingTriggers loop_record_triggers = 14;
+  LoopRecordingTriggers loop_record_triggers = 13;
 
   /**
    * Configure the loop recording post buffer time in seconds.
    */
-  uint32 loop_recording_post_buffer_time = 15;
+  uint32 loop_recording_post_buffer_time = 14;
 
 
   /**
@@ -878,5 +874,5 @@ message SummitSenseConfiguration{
   /**
    * Accelerometer sample rate
    */
-  AccelerometerSampleRate accelerometer_sample_rate = 16;
+  AccelerometerSampleRate accelerometer_sample_rate = 15;
 }
