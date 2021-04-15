@@ -775,7 +775,7 @@ message SummitSenseConfiguration{
    /**
 	 Time Domain sample rate
    */
-   uint32 sampling_rate = 1;
+   uint32 timedomain_sampling_rate = 1;
 
    /**
 	 Time Channel Configuration
@@ -870,5 +870,5 @@ message SummitSenseConfiguration{
   /**
    * Accelerometer sample rate
    */
-  AccelerometerSampleRate sample_rate = 16;
+  AccelerometerSampleRate accelerometer_sample_rate = 16;
 }
