@@ -842,7 +842,7 @@ message SummitSenseConfiguration{
   /**
    * Power channel configuration for each of the channels, 4 total.
    */
-  repeated SummitPowerStreamConfiguration power_channels = 10;
+  repeated PowerChannelConfiguration power_channels = 10;
 
   /**
 	 Misc

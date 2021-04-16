@@ -201,6 +201,12 @@ message DisconnectDeviceRequest {
   string name = 1;
 }
 
+enum SenseConfigureStatus {
+  SENSE_CONFIGURE_STATUS_UNKNOWN = 0;
+  SENSE_CONFIGURE_STATUS_SUCCESS = 1;
+  SENSE_CONFIGURE_STATUS_FAILURE = 2;
+}
+
 message SenseConfigurationRequest{
 /**
    * Scheme-less URI describing the device resource. For example,
@@ -227,10 +233,9 @@ message SenseConfigurationResponse{
   string name = 1;
   
   /**
-   * Additional platform specific details. These are defined in a separate
-   * protobuf files, one per device manufacturer.
+   * Status of the configuration attempt.
    */
-  google.protobuf.Any details = 2;
+  SenseConfigureStatus sense_configure_status = 2;
 
   /**
    * Additional platform specific error details. These are defined in a separate
