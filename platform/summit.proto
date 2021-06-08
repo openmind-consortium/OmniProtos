@@ -822,9 +822,9 @@ message SummitSenseConfiguration{
    */
 
   /**
-   * Power channel configuration for each of the channels, 4 total.
+   * Power channel configuration.
    */
-  repeated PowerChannelConfiguration power_channels = 10;
+  SummitPowerStreamConfiguration power_channels = 10;
 
   /**
 	 Misc
