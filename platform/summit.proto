@@ -537,46 +537,28 @@ enum PowerBandEnables {
   CHANNEL_3_BAND_1_ENABLED = 128; /* Channel 3 Band 1 enabled */
 }
 
-message PowerChannelConfiguration {
+message PowerBandConfiguration {
   /**
-   * The power band 0 start bin.
+   * The power band start bin.
    */
-  uint32 band_0_start = 1;
+  uint32 band_start = 1;
 
   /**
-   * The power band 0 stop bin.
+   * The power band stop bin.
    */
-  uint32 band_0_stop = 2;
-  /**
-   * The power band 0 enabled
-   */
-  bool band_0_enable = 3;
-
-  /**
-   * The power band 1 start bin.
-   */
-  uint32 band_1_start = 4;
-
-  /**
-   * The power band 1 stop bin.
-   */
-  uint32 band_1_stop = 5;
-  /**
-   * The power band 1 enabled
-   */
-  bool band_1_enable = 6;
+  uint32 band_stop = 2;
 }
 
 message SummitPowerStreamConfiguration {
   /**
-   * Indicate which bands need to be enabled for the power channels
+   * Indicate which bands need to be enabled for the power channels, 8 total
    */
   repeated bool power_band_enables = 1;
 
   /**
-   * Power channel configuration for each of the channels, 4 total.
+   * Power configuration for each of the power bands, 8 total.
    */
-  repeated PowerChannelConfiguration power_channel_configuration = 2;
+  repeated PowerBandConfiguration power_band_configuration = 2;
 }
 
 enum BridgingConfiguration {
