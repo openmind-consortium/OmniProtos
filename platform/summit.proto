@@ -784,7 +784,7 @@ message SummitSenseConfiguration{
   /**
    * Power channel configuration.
    */
-	SummitPowerStreamConfiguration power_channels = 4;
+	SummitPowerStreamConfiguration power_channel_config = 4;
 
   /**
 	 Misc
@@ -795,5 +795,5 @@ message SummitSenseConfiguration{
   /**
 	 Accelerometer
    */
-	SummitAccelerometerStreamConfiguration accelerometer_sample_rate = 6;
+	SummitAccelerometerStreamConfiguration accelerometer_config = 6;
 }
