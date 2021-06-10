@@ -770,52 +770,12 @@ message SummitSenseConfiguration{
    /**
 	 Time Channel Configuration
    */
-  repeated SummitTimeDomainChannelConfig tdChannelConfigs = 2;
+	repeated SummitTimeDomainChannelConfig tdChannelConfigs = 2;
 
    /**
 	 FFT
    */
-   /**
-   * The FFT size
-   */
-  FastFourierTransformSizes size = 3;
-
-  /**
-   * The FFT interval in milliseconds (50-10000)
-   */
-  int32 interval = 4;
-
-  /**
-   * The FFT window
-   */
-  FastFourierTransformWindowAutoLoads windowLoad = 5;
-
-  /**
-   * Whether or not to enable the FFT window
-   */
-  bool enableWindow = 6;
-
-  /**
-   * The band formation configuration byte. 7 is highest risk of overflow (missing upper 8 bits of power channel).
-   * 0 means no risk of overflow, but lower resolution because lower 8 bits are ignored.
-   *
-   * Default: SHIFT_7
-   */
-  FastFourierTransformWeightMultiplies bandFormationConfig = 7;
-
-  /**
-   * The number of bins to stream. 0 means full FFT, non zero means partial FFT.
-   *
-   * Default: 0
-   */
-  int32 binsToStream = 8;
-
-  /**
-   * The bin offset to use when streaming. 0 means normal - start at bin 0
-   *
-   * Defaukt: 0
-   */
-  int32 binsToStreamOffset = 9;
+   SummitFastFourierTransformStreamConfiguration fft_config = 3;
 
   /**
 	 Power Channels
@@ -824,37 +784,16 @@ message SummitSenseConfiguration{
   /**
    * Power channel configuration.
    */
-  SummitPowerStreamConfiguration power_channels = 10;
+	SummitPowerStreamConfiguration power_channels = 4;
 
   /**
 	 Misc
    */
-  /**
-   * Bridging configuration
-   */
-  BridgingConfiguration bridging = 11;
-
-  /**
-   * Configure the stream frame rate (50 ms is recommended). 
-   */
-  StreamingFrameRate streaming_rate = 12;
-
-  /**
-   * Configure loop recording triggers.
-   */
-  LoopRecordingTriggers loop_record_triggers = 13;
-
-  /**
-   * Configure the loop recording post buffer time in seconds.
-   */
-  uint32 loop_recording_post_buffer_time = 14;
+	MiscellaneousStreamConfiguration misc_stream_config = 5;
 
 
   /**
 	 Accelerometer
    */
-  /**
-   * Accelerometer sample rate
-   */
-  AccelerometerSampleRate accelerometer_sample_rate = 15;
+	SummitAccelerometerStreamConfiguration accelerometer_sample_rate = 6;
 }
