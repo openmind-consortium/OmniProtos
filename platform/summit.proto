@@ -438,12 +438,12 @@ message SummitTimeDomainChannelConfig {
   /**
    * Low pass filter stage 1
    */
-  TimeDomainLowPassFilterStage1 low_pass_filter_stage_1 = 4;
+  TimeDomainLowPassFilterStage1 low_pass_filter_stage1 = 4;
 
   /**
    * Low pass filter stage 2
    */
-  TimeDomainLowPassFilterStage2 low_pass_filter_stage_2 = 5;
+  TimeDomainLowPassFilterStage2 low_pass_filter_stage2 = 5;
 
   /**
    * High pass filter
