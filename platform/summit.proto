@@ -401,7 +401,7 @@ enum TimeDomainLowPassFilterStage1 {
   LPF_STAGE1_UNKNOWN = 0; /* Required by gRPC */
   LPF_450_Hz = 9;  /* LPF 450 Hz */
   LPF_100_HZ = 18; /* LPF 100 Hz */
-  LPF_50_HZ = 38;  /* LPF 50 Hz  */
+  LPF_50_HZ = 36;  /* LPF 50 Hz  */
 }
 
 enum TimeDomainLowPassFilterStage2 {
@@ -438,12 +438,12 @@ message SummitTimeDomainChannelConfig {
   /**
    * Low pass filter stage 1
    */
-  TimeDomainLowPassFilterStage1 low_pass_filter_stage_1 = 4;
+  TimeDomainLowPassFilterStage1 low_pass_filter_stage1 = 4;
 
   /**
    * Low pass filter stage 2
    */
-  TimeDomainLowPassFilterStage2 low_pass_filter_stage_2 = 5;
+  TimeDomainLowPassFilterStage2 low_pass_filter_stage2 = 5;
 
   /**
    * High pass filter
@@ -495,12 +495,12 @@ message SummitFastFourierTransformStreamConfiguration {
   /**
    * The FFT window
    */
-  FastFourierTransformWindowAutoLoads windowLoad = 3;
+  FastFourierTransformWindowAutoLoads window_load = 3;
 
   /**
    * Whether or not to enable the FFT window
    */
-  bool enableWindow = 4;
+  bool enable_window = 4;
 
   /**
    * The band formation configuration byte. 7 is highest risk of overflow (missing upper 8 bits of power channel).
@@ -508,21 +508,21 @@ message SummitFastFourierTransformStreamConfiguration {
    *
    * Default: SHIFT_7
    */
-  FastFourierTransformWeightMultiplies bandFormationConfig = 5;
+  FastFourierTransformWeightMultiplies band_formation_config = 5;
 
   /**
    * The number of bins to stream. 0 means full FFT, non zero means partial FFT.
    *
    * Default: 0
    */
-  int32 binsToStream = 6;
+  int32 bins_to_stream = 6;
 
   /**
    * The bin offset to use when streaming. 0 means normal - start at bin 0
    *
    * Defaukt: 0
    */
-  int32 binsToStreamOffset = 7;
+  int32 bins_to_stream_offset = 7;
 }
 
 enum PowerBandEnables {
@@ -770,7 +770,7 @@ message SummitSenseConfiguration{
    /**
 	 Time Channel Configuration
    */
-	repeated SummitTimeDomainChannelConfig tdChannelConfigs = 2;
+	repeated SummitTimeDomainChannelConfig td_channel_configs = 2;
 
    /**
 	 FFT
