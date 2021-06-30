@@ -1048,9 +1048,14 @@ message ImpedanceResponse {
    */
     OUT_OF_RANGE_LEAD_PAIR_VALUES = 1;
   /**
+   * When we get null array from the api
+   */
+    NULL_IMPEDANCE = 2;
+	/**
    * No error case 
    */
-	NO_ERROR = 2;
+	NO_ERROR = 3;
+
   }
 
 message ImpedanceRequest {
