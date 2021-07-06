@@ -1035,7 +1035,7 @@ message ImpedanceResponse {
   /**
    * Type of error description
    */
-  ImpedanceErrorDescription impedance_error_description = 4;
+  ImpedanceErrorDescription impedance_error_code = 4;
 }
 
   enum ImpedanceErrorDescription {
