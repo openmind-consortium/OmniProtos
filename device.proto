@@ -1027,7 +1027,7 @@ message ImpedanceResponse {
   /**
    * impedence values 
    */
-  repeated double impedancevalues = 2;
+  repeated double impedance_values = 2;
   /**
    * Error string
    */
@@ -1035,14 +1035,14 @@ message ImpedanceResponse {
   /**
    * Type of error description
    */
-  ImpedanceErrorDescription impedanceErrorDescription = 4;
+  ImpedanceErrorDescription impedance_error_description = 4;
 }
 
   enum ImpedanceErrorDescription {
   /**
-   * Default case. 0 case is not passed properly
+   * Default case. No error case
    */
-	DEFAULT_CASE = 0;
+	NO_ERROR = 0;
   /**
    * When Lead pair values are out of range
    */
@@ -1051,10 +1051,6 @@ message ImpedanceResponse {
    * When we get null array from the api
    */
     NULL_IMPEDANCE = 2;
-	/**
-   * No error case 
-   */
-	NO_ERROR = 3;
 
   }
 
@@ -1069,11 +1065,11 @@ message ImpedanceRequest {
   /**
    * lead points 
    */
-  repeated Leadlist leadlist = 2;
+  repeated Leadlist lead_list = 2;
 }
 
-message Leadlist{
-int32 leadlist1 = 1;  
-int32 leadlist2 = 2;
+message LeadList{
+int32 lead1 = 1;  
+int32 lead2 = 2;
 }
 
