@@ -1031,7 +1031,7 @@ message ImpedanceResponse {
   /**
    * Error string
    */
-  string error = 3;
+  string error_description = 3;
   /**
    * Type of error description
    */
