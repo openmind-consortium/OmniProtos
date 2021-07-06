@@ -1035,10 +1035,10 @@ message ImpedanceResponse {
   /**
    * Type of error description
    */
-  ImpedanceErrorDescription impedance_error_code = 4;
+  ImpedanceErrorCode impedance_error_code = 4;
 }
 
-  enum ImpedanceErrorDescription {
+  enum ImpedanceErrorCode {
   /**
    * Default case. No error case
    */
@@ -1069,7 +1069,7 @@ message ImpedanceRequest {
 }
 
 message LeadList{
-int32 lead1 = 1;  
-int32 lead2 = 2;
+  int32 lead1 = 1;  
+  int32 lead2 = 2;
 }
 
