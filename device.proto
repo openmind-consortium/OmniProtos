@@ -1078,7 +1078,7 @@ message ImpedanceResponse {
   /**
    * Error string
    */
-  string error = 3;
+  string error_description = 3;
   /**
    * Type of error description
    */
@@ -1109,11 +1109,19 @@ message ImpedanceRequest {
    * of the device.
    */
   string name = 1;
+
   /**
    * lead points 
    */
   repeated LeadList lead_list = 2;
-
+  /**
+   * Error string
+   */
+  string error_description = 3;
+    /**
+   * Type of error description
+   */
+  ImpedanceErrorCode impedance_error_code = 4;
 }
 
 message LeadList{
