@@ -1065,7 +1065,7 @@ message ImpedanceRequest {
   /**
    * lead points 
    */
-  repeated Leadlist lead_list = 2;
+  repeated LeadList lead_list = 2;
 }
 
 message LeadList{
