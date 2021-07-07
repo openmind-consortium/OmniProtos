@@ -1078,7 +1078,7 @@ message ImpedanceResponse {
   /**
    * Error string
    */
-  string error_description = 3;
+  string error = 3;
   /**
    * Type of error description
    */
@@ -1113,10 +1113,16 @@ message ImpedanceRequest {
    * lead points 
    */
   repeated LeadList lead_list = 2;
+
 }
 
 message LeadList{
-  int32 lead1 = 1;  
-  int32 lead2 = 2;
+  /**
+   * lead 1
+   */
+int32 lead1 = 1;  
+  /**
+   * lead 1
+   */
+int32 lead2 = 2;
 }
-
