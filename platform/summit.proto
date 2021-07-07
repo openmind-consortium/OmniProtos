@@ -758,6 +758,59 @@ message BatteryStatusResponse {
   google.protobuf.UInt32Value full_soc = 6;
 }
 
+enum FFTStreamChannel {
+  CH0 = 0;  /* Channel 0 */
+  CH1 = 1;  /* Channel 1 */
+  CH2 = 2;  /* Channel 2 */
+  CH3 = 3;  /* Channel 3 */
+}
+
+message SummitSenseEnablesConfiguration{
+ /**
+	 Set all enables to false for SenseEnables: None
+	 None will turn off sense
+   */
+  /**
+	 FFT Stream Channel. Must have corresponding time domain channel (0-3) enabled
+   */
+	FFTStreamChannel fft_stream_channel = 1;
+
+	/**
+	 Enable TimeDomain Sensing on device
+   */
+	bool enable_timedomain = 2;
+
+	/**
+	 Enable FFT Sensing on device. Must enable TimeDomain to enable FFT.
+   */
+	bool enable_fft = 3;
+
+	/**
+	 Enable Power Sensing on device. Must enable TimeDomain and FFT to enable Power.
+   */
+	bool enable_power = 4;
+
+	/**
+	 Enable Linear Detector 0 sensing on device
+   */
+	bool enable_ld0 = 5;
+
+	/**
+	 Enable Linear Detector 1 sensing on device
+   */
+	bool enable_ld1 = 6;
+
+	/**
+	 Enable Adaptive Stim sense on device
+   */
+	bool enable_adaptive_stim = 7;
+
+	/**
+	 Enable Loop Recording sense on device
+   */
+	bool enable_loop_recording = 8;
+}
+
 message SummitSenseConfiguration{
   /**
 	 Time Domain
@@ -796,4 +849,51 @@ message SummitSenseConfiguration{
 	 Accelerometer
    */
 	SummitAccelerometerStreamConfiguration accelerometer_config = 6;
+
+  /**
+    Enable Sense
+   */
+   SummitSenseEnablesConfiguration sense_enables_config = 7;
+}
+
+message SummitStreamEnablesConfiguration{
+	/**
+	 Enable TimeDomain stream. False to disable
+   */
+	bool enable_timedomain = 1;
+
+	/**
+	 Enable FFT stream. False to disable
+   */
+	bool enable_fft = 2;
+
+	/**
+	 Enable Power stream. False to disable
+   */
+	bool enable_power = 3;
+
+	/**
+	 Enable Accelerometry stream. False to disable
+   */
+	bool enable_accelerometry = 4;
+
+	/**
+	 Enable Detector stream. False to disable
+   */
+	bool enable_detector = 5;
+
+	/**
+	 Enable Adaptive State stream. False to disable
+   */
+	bool enable_adaptive_state = 6;
+
+	/**
+	 Enable LoopRecordMarkerEcho stream. False to disable
+   */
+	bool enable_loop_record_marker_echo = 7;
+
+	/**
+	 Enable Time stream. False to disable
+   */
+	bool enable_time = 8;
 }

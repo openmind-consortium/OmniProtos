@@ -30,6 +30,16 @@ service DeviceManagerService {
   rpc SenseConfiguration (SenseConfigurationRequest) returns (SenseConfigurationResponse);
   
   /**
+   * Enable Stream
+   */
+  rpc StreamEnable (StreamConfigureRequest) returns (StreamConfigureResponse);
+
+  /**
+   * Disable Stream
+   */
+  rpc StreamDisable (StreamConfigureRequest) returns (StreamConfigureResponse);
+
+  /**
    * Configure time domain streams
    */
   rpc ConfigureTimeDomainStream (ConfigureTimeDomainStreamRequest) returns (ConfigureTimeDomainStreamResponse);
@@ -253,6 +263,43 @@ enum StreamConfigureStatus {
   STREAM_CONFIGURE_STATUS_UNKNOWN = 0;
   STREAM_CONFIGURE_STATUS_SUCCESS = 1;
   STREAM_CONFIGURE_STATUS_FAILURE = 2;
+}
+
+message StreamConfigureRequest{
+/**
+   * Scheme-less URI describing the device resource. For example,
+   * '//summit/bridge/xxxxxx/device/yyyyyy' where 'xxxxxx' is the
+   * serial number of the bridge and 'yyyyyy' is the serial number
+   * of the device.
+   */
+  string name = 1;
+
+  /**
+   * Additional platform specific arguments. These are defined in separate
+   * protobuf files, one per device manufacturer.
+   */
+  google.protobuf.Any parameters = 2;
+}
+
+message StreamConfigureResponse{
+/**
+   * Scheme-less URI describing the device resource. For example,
+   * '//summit/bridge/xxxxxx/device/yyyyyy' where 'xxxxxx' is the
+   * serial number of the bridge and 'yyyyyy' is the serial number
+   * of the device.
+   */
+  string name = 1;
+  
+  /**
+   * Status of the configuration attempt.
+   */
+  StreamConfigureStatus stream_configure_status = 2;
+
+  /**
+   * Additional platform specific error details. These are defined in a separate
+   * protobuf files, one per manufacturer.
+   */
+  google.protobuf.Any error = 3;
 }
 
 message TimeDomainChannelConfig {
