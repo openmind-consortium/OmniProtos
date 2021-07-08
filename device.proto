@@ -1071,35 +1071,45 @@ message ImpedanceResponse {
    * of the device.
    */
   string name = 1;
+
   /**
    * impedence values 
    */
   repeated double impedance_values = 2;
+
   /**
    * Error string
    */
   string error_description = 3;
+
   /**
    * Type of error description
    */
   ImpedanceErrorCode impedance_error_code = 4;
+
+  /**
+   * Additional platform specific error details. These are defined in a separate
+   * protobuf files, one per manufacturer.
+   */
+  google.protobuf.Any error = 5;
 }
 
-  enum ImpedanceErrorCode {
+enum ImpedanceErrorCode {
   /**
    * Default case. No error case
    */
-	NO_ERROR = 0;
+  NO_ERROR = 0;
+
   /**
    * When Lead pair values are out of range
    */
-    OUT_OF_RANGE_LEAD_PAIR_VALUES = 1;
+  OUT_OF_RANGE_LEAD_PAIR_VALUES = 1;
+
   /**
    * When we get null array from the api
    */
-    NULL_IMPEDANCE = 2;
-
-  }
+  NULL_IMPEDANCE = 2;
+}
 
 message ImpedanceRequest {
   /**
@@ -1120,9 +1130,10 @@ message LeadList{
   /**
    * lead 1
    */
-int32 lead1 = 1;  
+  int32 lead1 = 1;  
+
   /**
    * lead 1
    */
-int32 lead2 = 2;
+  int32 lead2 = 2;
 }
