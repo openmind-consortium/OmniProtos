@@ -108,6 +108,11 @@ service DeviceManagerService {
    * Device Status
    */
   rpc DeviceStatus (DeviceStatusRequest) returns (DeviceStatusResponse);
+  
+  /**
+   * Lead Integrity Test
+   */
+  rpc LeadIntegrityTest (ImpedanceRequest) returns (ImpedanceResponse);
 }
 
 message Device {
@@ -1056,4 +1061,68 @@ message DeviceStatusResponse {
    * protobuf files, one per manufacturer.
    */
   google.protobuf.Any error = 5;
+}
+
+message ImpedanceResponse {
+  /**
+   * Scheme-less URI describing the device resource. For example,
+   * '//summit/bridge/xxxxxx/device/yyyyyy' where 'xxxxxx' is the
+   * serial number of the bridge and 'yyyyyy' is the serial number
+   * of the device.
+   */
+  string name = 1;
+  /**
+   * impedence values 
+   */
+  repeated double impedance_values = 2;
+  /**
+   * Error string
+   */
+  string error_description = 3;
+  /**
+   * Type of error description
+   */
+  ImpedanceErrorCode impedance_error_code = 4;
+}
+
+  enum ImpedanceErrorCode {
+  /**
+   * Default case. No error case
+   */
+	NO_ERROR = 0;
+  /**
+   * When Lead pair values are out of range
+   */
+    OUT_OF_RANGE_LEAD_PAIR_VALUES = 1;
+  /**
+   * When we get null array from the api
+   */
+    NULL_IMPEDANCE = 2;
+
+  }
+
+message ImpedanceRequest {
+  /**
+   * Scheme-less URI describing the device resource. For example,
+   * '//summit/bridge/xxxxxx/device/yyyyyy' where 'xxxxxx' is the
+   * serial number of the bridge and 'yyyyyy' is the serial number
+   * of the device.
+   */
+  string name = 1;
+
+  /**
+   * lead points 
+   */
+  repeated LeadList lead_list = 2;
+}
+
+message LeadList{
+  /**
+   * lead 1
+   */
+int32 lead1 = 1;  
+  /**
+   * lead 1
+   */
+int32 lead2 = 2;
 }
