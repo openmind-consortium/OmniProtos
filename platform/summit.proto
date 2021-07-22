@@ -103,7 +103,7 @@ enum SummitConnectDeviceStatus {
 /**
  * Platform specific device connection details
  */
-message SummitConnctDeviceDetails {
+message SummitConnectDeviceDetails {
   /**
    * Connection status of the device.
    */
