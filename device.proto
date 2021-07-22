@@ -40,36 +40,6 @@ service DeviceManagerService {
   rpc StreamDisable (StreamConfigureRequest) returns (StreamConfigureResponse);
 
   /**
-   * Configure time domain streams
-   */
-  rpc ConfigureTimeDomainStream (ConfigureTimeDomainStreamRequest) returns (ConfigureTimeDomainStreamResponse);
-
-  /**
-   * Configure FFT stream
-   */
-  rpc ConfigureFastFourierTransformStream (ConfigureFastFourierTransformStreamRequest) returns (ConfigureFastFourierTransformStreamResponse);
-
-  /**
-   * Configure power stream
-   */
-  rpc ConfigurePowerStream (ConfigurePowerStreamRequest) returns (ConfigurePowerStreamResponse);
-
-  /**
-   * Configure miscellaneous stream settings
-   */
-  rpc ConfigureMiscellaneousStream (ConfigureMiscellaneousStreamRequest) returns (ConfigureMiscellaneousStreamResponse);
-
-  /**
-   * Configure linear detector
-   */
-  rpc ConfigureLinearDetector (ConfigureLinearDetectorRequest) returns (ConfigureLinearDetectorResponse);
-
-  /**
-   * Configure accelerometer stream settings
-   */
-  rpc ConfigureAccelerometerStream (ConfigureAccelerometerStreamRequest) returns (ConfigureAccelerometerStreamResponse);
-
-  /**
    * Can be used to initiate or end a stream of sensed time domain data events
    */
   rpc TimeDomainStream(SetDataStreamEnable) returns (stream TimeDomainUpdate);
