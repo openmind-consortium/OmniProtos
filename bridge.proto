@@ -112,8 +112,8 @@ message ConnectBridgeRequest {
  */
 enum ConnectBridgeStatus {
   CONNECT_BRIDGE_STATUS_UNSPECIFIED = 0;
-  CONNECTION_SUCCESS = 1;
-  CONNECTION_FAILURE = 2;
+  CONNECTION_BRIDGE_SUCCESS = 1;
+  CONNECTION_BRIDGE_FAILURE = 2;
 }
 
 message ConnectBridgeResponse {

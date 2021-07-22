@@ -145,8 +145,8 @@ message ConnectDeviceRequest {
  */
 enum ConnectDeviceStatus {
   CONNECT_DEVICE_STATUS_UNSPECIFIED = 0;
-  CONNECTION_SUCCESS = 1;
-  CONNECTION_FAILURE = 2;
+  CONNECTION_DEVICE_SUCCESS = 1;
+  CONNECTION_DEVICE_FAILURE = 2;
 }
 
 message ConnectDeviceResponse {
