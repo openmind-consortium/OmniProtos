@@ -3,9 +3,9 @@ package openmind;
 
 option csharp_namespace = "OpenMind";
 
-import "google/protobuf/any.proto";
 import "google/protobuf/empty.proto";
 import "google/protobuf/wrappers.proto";
+import "platform/summit.proto";
 
 service DeviceManagerService {
   /**
@@ -93,12 +93,6 @@ message Device {
    * the serial number of the device.
    */
   string name = 1;
-
-  /**
-   * Additional platform specific details. These are defined in a separate
-   * protobuf files, one per device manufacturer.
-   */
-  google.protobuf.Any details = 2;
 }
 
 message ListDeviceRequest {
@@ -120,7 +114,7 @@ message ListDeviceResponse {
    * Additional platform specific error details. These are defined in a separate
    * protobuf files, one per manufacturer.
    */
-  google.protobuf.Any error = 2;
+  SummitApiError error = 2;
 }
 
 message ConnectDeviceRequest {
@@ -131,12 +125,6 @@ message ConnectDeviceRequest {
    * of the device.
    */
   string name = 1;
-
-  /**
-   * Additional platform specific arguments. These are defined in separate
-   * protobuf files, one per device manufacturer.
-   */
-  google.protobuf.Any parameters = 2;
 }
 
 /**
@@ -167,13 +155,13 @@ message ConnectDeviceResponse {
    * Additional platform specific details. These are defined in a separate
    * protobuf files, one per device manufacturer.
    */
-  google.protobuf.Any details = 3;
+  SummitConnectDeviceDetails details = 3;
 
   /**
    * Additional platform specific error details. These are defined in a separate
    * protobuf files, one per manufacturer.
    */
-  google.protobuf.Any error = 4;
+  SummitApiError error = 4;
 }
 
 message DisconnectDeviceRequest {
@@ -205,7 +193,7 @@ message SenseConfigurationRequest{
    * Additional platform specific arguments. These are defined in separate
    * protobuf files, one per device manufacturer.
    */
-  google.protobuf.Any parameters = 2;
+  SummitSenseConfiguration parameters = 2;
 }
 
 message SenseConfigurationResponse{
@@ -226,7 +214,7 @@ message SenseConfigurationResponse{
    * Additional platform specific error details. These are defined in a separate
    * protobuf files, one per manufacturer.
    */
-  google.protobuf.Any error = 3;
+  SummitApiError error = 3;
 }
 
 enum StreamConfigureStatus {
@@ -248,7 +236,7 @@ message StreamConfigureRequest{
    * Additional platform specific arguments. These are defined in separate
    * protobuf files, one per device manufacturer.
    */
-  google.protobuf.Any parameters = 2;
+  SummitStreamEnablesConfiguration parameters = 2;
 }
 
 message StreamConfigureResponse{
@@ -269,62 +257,7 @@ message StreamConfigureResponse{
    * Additional platform specific error details. These are defined in a separate
    * protobuf files, one per manufacturer.
    */
-  google.protobuf.Any error = 3;
-}
-
-message TimeDomainChannelConfig {
-  /**
-   * Additional platform specific arguments. These are defined in separate
-   * protobuf files, one per device manufacturer.
-   */
-  google.protobuf.Any parameters = 1;
-}
-
-message ConfigureTimeDomainStreamRequest {
-  /**
-   * Scheme-less URI describing the device resource. For example,
-   * '//summit/bridge/xxxxxx/device/yyyyyy' where 'xxxxxx' is the
-   * serial number of the bridge and 'yyyyyy' is the serial number
-   * of the device.
-   */
-  string name = 1;
-
-  /**
-   * Sample rate of the time domain stream
-   */
-  int32 sample_rate = 2;
-
-  /**
-   * Configuration of the individual time domain channels
-   */
-  repeated TimeDomainChannelConfig channels = 3;
-}
-
-message ConfigureTimeDomainStreamResponse {
-  /**
-   * Scheme-less URI describing the device resource. For example,
-   * '//summit/bridge/xxxxxx/device/yyyyyy' where 'xxxxxx' is the
-   * serial number of the bridge and 'yyyyyy' is the serial number
-   * of the device.
-   */
-  string name = 1;
-
-  /**
-   * Status of the configuration attempt.
-   */
-  StreamConfigureStatus configure_status = 2;
-
-  /**
-   * Additional platform specific details. These are defined in a separate
-   * protobuf files, one per device manufacturer.
-   */
-  google.protobuf.Any details = 3;
-
-  /**
-   * Additional platform specific error details. These are defined in a separate
-   * protobuf files, one per manufacturer.
-   */
-  google.protobuf.Any error = 4;
+  SummitApiError error = 3;
 }
 
 message SetDataStreamEnable {
@@ -393,49 +326,6 @@ message TimeDomainUpdate {
   repeated TimeDomainChannelData data = 3;
 }
 
-message ConfigureFastFourierTransformStreamRequest {
-  /**
-   * Scheme-less URI describing the device resource. For example,
-   * '//summit/bridge/xxxxxx/device/yyyyyy' where 'xxxxxx' is the
-   * serial number of the bridge and 'yyyyyy' is the serial number
-   * of the device.
-   */
-  string name = 1;
-
-  /**
-   * Additional platform specific arguments. These are defined in separate
-   * protobuf files, one per device manufacturer.
-   */
-  google.protobuf.Any FastFourierTransformStreamConfiguration = 2;
-}
-
-message ConfigureFastFourierTransformStreamResponse {
-  /**
-   * Scheme-less URI describing the device resource. For example,
-   * '//summit/bridge/xxxxxx/device/yyyyyy' where 'xxxxxx' is the
-   * serial number of the bridge and 'yyyyyy' is the serial number
-   * of the device.
-   */
-  string name = 1;
-
-  /**
-   * Status of the configuration attempt.
-   */
-  StreamConfigureStatus configure_status = 2;
-
-  /**
-   * Additional platform specific details. These are defined in a separate
-   * protobuf files, one per device manufacturer.
-   */
-  google.protobuf.Any details = 3;
-
-  /**
-   * Additional platform specific error details. These are defined in a separate
-   * protobuf files, one per manufacturer.
-   */
-  google.protobuf.Any error = 4;
-}
-
 message TimeDomainChannelData {
   /**
    * 
@@ -496,22 +386,6 @@ message FourierTransformUpdate {
   repeated FourierTransformChannelData data = 3;
 }
 
-message ConfigurePowerStreamRequest {
-  /**
-   * Scheme-less URI describing the device resource. For example,
-   * '//summit/bridge/xxxxxx/device/yyyyyy' where 'xxxxxx' is the
-   * serial number of the bridge and 'yyyyyy' is the serial number
-   * of the device.
-   */
-  string name = 1;
-
-  /**
-   * Additional platform specific arguments. These are defined in separate
-   * protobuf files, one per device manufacturer.
-   */
-  google.protobuf.Any PowerStreamConfiguration = 2;
-}
-
 message FourierTransformChannelData {
   /**
    * 
@@ -559,33 +433,6 @@ message BandPowerUpdate {
   repeated BandPowerChannelData data = 3;
 }
 
-message ConfigurePowerStreamResponse {
-  /**
-   * Scheme-less URI describing the device resource. For example,
-   * '//summit/bridge/xxxxxx/device/yyyyyy' where 'xxxxxx' is the
-   * serial number of the bridge and 'yyyyyy' is the serial number
-   * of the device.
-   */
-  string name = 1;
-
-  /**
-   * Status of the configuration attempt.
-   */
-  StreamConfigureStatus configure_status = 2;
-
-  /**
-   * Additional platform specific details. These are defined in a separate
-   * protobuf files, one per device manufacturer.
-   */
-  google.protobuf.Any details = 3;
-
-  /**
-   * Additional platform specific error details. These are defined in a separate
-   * protobuf files, one per manufacturer.
-   */
-  google.protobuf.Any error = 4;
-}
-
 message ConfigureMiscellaneousStreamRequest {
   /**
    * Scheme-less URI describing the device resource. For example,
@@ -599,7 +446,7 @@ message ConfigureMiscellaneousStreamRequest {
    * Additional platform specific arguments. These are defined in separate
    * protobuf files, one per device manufacturer.
    */
-  google.protobuf.Any MiscellaneousStreamConfiguration = 2;
+  //google.protobuf.Any MiscellaneousStreamConfiguration = 2;
 }
 
 message BandPowerChannelData {
@@ -647,49 +494,6 @@ message InertialUpdate {
    * 
    */
   repeated InertialChannelData data = 3;
-}
-
-message ConfigureMiscellaneousStreamResponse {
-  /**
-   * Scheme-less URI describing the device resource. For example,
-   * '//summit/bridge/xxxxxx/device/yyyyyy' where 'xxxxxx' is the
-   * serial number of the bridge and 'yyyyyy' is the serial number
-   * of the device.
-   */
-  string name = 1;
-
-  /**
-   * Status of the configuration attempt.
-   */
-  StreamConfigureStatus configure_status = 2;
-
-  /**
-   * Additional platform specific details. These are defined in a separate
-   * protobuf files, one per device manufacturer.
-   */
-  google.protobuf.Any details = 3;
-
-  /**
-   * Additional platform specific error details. These are defined in a separate
-   * protobuf files, one per manufacturer.
-   */
-  google.protobuf.Any error = 4;
-}
-
-message ConfigureAccelerometerStreamRequest {
-  /**
-   * Scheme-less URI describing the device resource. For example,
-   * '//summit/bridge/xxxxxx/device/yyyyyy' where 'xxxxxx' is the
-   * serial number of the bridge and 'yyyyyy' is the serial number
-   * of the device.
-   */
-  string name = 1;
-
-  /**
-   * Additional platform specific arguments. These are defined in separate
-   * protobuf files, one per device manufacturer.
-   */
-  google.protobuf.Any AccelerometerStreamConfiguration = 2;
 }
 
 message InertialChannelData {
@@ -796,49 +600,6 @@ message AdaptiveUpdate {
    repeated AdaptiveRampingFlags adaptive_stim_ramping = 13;
 }
 
-message ConfigureAccelerometerStreamResponse {
-  /**
-   * Scheme-less URI describing the device resource. For example,
-   * '//summit/bridge/xxxxxx/device/yyyyyy' where 'xxxxxx' is the
-   * serial number of the bridge and 'yyyyyy' is the serial number
-   * of the device.
-   */
-  string name = 1;
-
-  /**
-   * Status of the configuration attempt.
-   */
-  StreamConfigureStatus configure_status = 2;
-
-  /**
-   * Additional platform specific details. These are defined in a separate
-   * protobuf files, one per device manufacturer.
-   */
-  google.protobuf.Any details = 3;
-
-  /**
-   * Additional platform specific error details. These are defined in a separate
-   * protobuf files, one per manufacturer.
-   */
-  google.protobuf.Any error = 4;
-}
-
-message ConfigureLinearDetectorRequest {
-  /**
-   * Scheme-less URI describing the device resource. For example,
-   * '//summit/bridge/xxxxxx/device/yyyyyy' where 'xxxxxx' is the
-   * serial number of the bridge and 'yyyyyy' is the serial number
-   * of the device.
-   */
-  string name = 1;
-
-  /**
-   * Additional platform specific arguments. These are defined in separate
-   * protobuf files, one per device manufacturer.
-   */
-  repeated google.protobuf.Any LinearDetectorConfiguration = 2;
-}
-
 enum DetectorState {
   NoState = 0;
   lowImmediateDetect = 1;
@@ -922,33 +683,6 @@ message LoopRecordUpdate {
    repeated LoopRecordFlags flags = 4;
 }
 
-message ConfigureLinearDetectorResponse {
-  /**
-   * Scheme-less URI describing the device resource. For example,
-   * '//summit/bridge/xxxxxx/device/yyyyyy' where 'xxxxxx' is the
-   * serial number of the bridge and 'yyyyyy' is the serial number
-   * of the device.
-   */
-  string name = 1;
-
-  /**
-   * Status of the configuration attempt.
-   */
-  StreamConfigureStatus configure_status = 2;
-
-  /**
-   * Additional platform specific details. These are defined in a separate
-   * protobuf files, one per device manufacturer.
-   */
-  google.protobuf.Any details = 3;
-
-  /**
-   * Additional platform specific error details. These are defined in a separate
-   * protobuf files, one per manufacturer.
-   */
-  google.protobuf.Any error = 4;
-}
-
 enum LoopRecordTriggers {
   NoTrigger = 0;
   state0 = 1;
@@ -1024,13 +758,13 @@ message DeviceStatusResponse {
    * Additional platform specific details. These are defined in a separate
    * protobuf files, one per device manufacturer.
    */
-  google.protobuf.Any details = 4;
+  BatteryStatusResponse details = 4;
 
   /**
    * Additional platform specific error details. These are defined in a separate
    * protobuf files, one per manufacturer.
    */
-  google.protobuf.Any error = 5;
+  SummitApiError error = 5;
 }
 
 message ImpedanceResponse {
@@ -1061,14 +795,14 @@ message ImpedanceResponse {
    * Additional platform specific error details. These are defined in a separate
    * protobuf files, one per manufacturer.
    */
-  google.protobuf.Any error = 5;
+  SummitApiError error = 5;
 }
 
 enum ImpedanceErrorCode {
   /**
    * Default case. No error case
    */
-  NO_ERROR = 0;
+  NO_IMPEDANCE_ERROR = 0;
 
   /**
    * When Lead pair values are out of range
