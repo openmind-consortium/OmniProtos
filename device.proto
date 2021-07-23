@@ -114,7 +114,7 @@ message ListDeviceResponse {
    * Additional platform specific error details. These are defined in a separate
    * protobuf files, one per manufacturer.
    */
-  SummitApiError error = 2;
+  SummitError error = 2;
 }
 
 message ConnectDeviceRequest {
@@ -127,16 +127,6 @@ message ConnectDeviceRequest {
   string name = 1;
 }
 
-/**
- * Common connection states for Bridges, additional details provide by manufacturer
- * specific connection status codes.
- */
-enum ConnectDeviceStatus {
-  CONNECT_DEVICE_STATUS_UNSPECIFIED = 0;
-  CONNECTION_DEVICE_SUCCESS = 1;
-  CONNECTION_DEVICE_FAILURE = 2;
-}
-
 message ConnectDeviceResponse {
   /**
    * Scheme-less URI describing the device resource. For example,
@@ -147,21 +137,16 @@ message ConnectDeviceResponse {
   string name = 1;
 
   /**
-   * Status of the connection attempt.
-   */
-  ConnectDeviceStatus connection_status = 2;
-
-  /**
    * Additional platform specific details. These are defined in a separate
    * protobuf files, one per device manufacturer.
    */
-  SummitConnectDeviceDetails details = 3;
+  uint32 connection_status = 2;
 
   /**
    * Additional platform specific error details. These are defined in a separate
    * protobuf files, one per manufacturer.
    */
-  SummitApiError error = 4;
+  SummitError error = 3;
 }
 
 message DisconnectDeviceRequest {
@@ -181,7 +166,7 @@ enum SenseConfigureStatus {
 }
 
 message SenseConfigurationRequest{
-/**
+  /**
    * Scheme-less URI describing the device resource. For example,
    * '//summit/bridge/xxxxxx/device/yyyyyy' where 'xxxxxx' is the
    * serial number of the bridge and 'yyyyyy' is the serial number
@@ -189,11 +174,41 @@ message SenseConfigurationRequest{
    */
   string name = 1;
 
-  /**
-   * Additional platform specific arguments. These are defined in separate
-   * protobuf files, one per device manufacturer.
+   /**
+	 Time Domain sample rate
    */
-  SummitSenseConfiguration parameters = 2;
+   uint32 timedomain_sampling_rate = 2;
+
+   /**
+	 Time Channel Configuration
+   */
+	repeated SummitTimeDomainChannelConfig td_channel_configs = 3;
+
+   /**
+	 FFT
+   */
+   SummitFastFourierTransformStreamConfiguration fft_config = 4;
+
+  /**
+   * Power channel configuration.
+   */
+	SummitPowerStreamConfiguration power_channel_config = 5;
+
+  /**
+	 Misc
+   */
+	MiscellaneousStreamConfiguration misc_stream_config = 6;
+
+
+  /**
+	 Accelerometer
+   */
+	SummitAccelerometerStreamConfiguration accelerometer_config = 7;
+
+  /**
+    Enable Sense
+   */
+   SummitSenseEnablesConfiguration sense_enables_config = 8;
 }
 
 message SenseConfigurationResponse{
@@ -205,16 +220,47 @@ message SenseConfigurationResponse{
    */
   string name = 1;
   
-  /**
-   * Status of the configuration attempt.
+/**
+	 Time Domain sample rate
    */
-  SenseConfigureStatus sense_configure_status = 2;
+   uint32 timedomain_sampling_rate = 2;
+
+   /**
+	 Time Channel Configuration
+   */
+	repeated SummitTimeDomainChannelConfig td_channel_configs = 3;
+
+   /**
+	 FFT
+   */
+   SummitFastFourierTransformStreamConfiguration fft_config = 4;
+
+  /**
+   * Power channel configuration.
+   */
+	SummitPowerStreamConfiguration power_channel_config = 5;
+
+  /**
+	 Misc
+   */
+	MiscellaneousStreamConfiguration misc_stream_config = 6;
+
+
+  /**
+	 Accelerometer
+   */
+	SummitAccelerometerStreamConfiguration accelerometer_config = 7;
+
+  /**
+    Enable Sense
+   */
+   SummitSenseEnablesConfiguration sense_enables_config = 8;
 
   /**
    * Additional platform specific error details. These are defined in a separate
    * protobuf files, one per manufacturer.
    */
-  SummitApiError error = 3;
+  SummitError error = 9;
 }
 
 enum StreamConfigureStatus {
@@ -257,7 +303,7 @@ message StreamConfigureResponse{
    * Additional platform specific error details. These are defined in a separate
    * protobuf files, one per manufacturer.
    */
-  SummitApiError error = 3;
+  SummitError error = 3;
 }
 
 message SetDataStreamEnable {
@@ -755,16 +801,40 @@ message DeviceStatusResponse {
   google.protobuf.UInt32Value battery_level_voltage = 3;
   
   /**
-   * Additional platform specific details. These are defined in a separate
-   * protobuf files, one per device manufacturer.
+   * battery state of charge (mAh)
    */
-  BatteryStatusResponse details = 4;
+  google.protobuf.UInt32Value battery_soc = 4;
+  
+  /**
+   * state of charge uncertainty (mAh)
+   */
+  google.protobuf.UInt32Value soc_uncertainty = 5;
+  
+  /**
+   * manufactured battery capacity (mAh).
+   */
+  google.protobuf.UInt32Value manufactured_capacity = 6;
+  
+  /**
+   * estimated battery capacity (mAh).
+   */
+  google.protobuf.UInt32Value estimated_capacity = 7;
+  
+  /**
+   * therapy unavailable state of charge value (mAh)
+   */
+  google.protobuf.UInt32Value therapy_unavailable_soc = 8;
+  
+  /**
+   * battery full state of change value (mAh)
+   */
+  google.protobuf.UInt32Value full_soc = 9;
 
   /**
    * Additional platform specific error details. These are defined in a separate
    * protobuf files, one per manufacturer.
    */
-  SummitApiError error = 5;
+  SummitError error = 10;
 }
 
 message ImpedanceResponse {
@@ -795,7 +865,7 @@ message ImpedanceResponse {
    * Additional platform specific error details. These are defined in a separate
    * protobuf files, one per manufacturer.
    */
-  SummitApiError error = 5;
+  SummitError error = 5;
 }
 
 enum ImpedanceErrorCode {

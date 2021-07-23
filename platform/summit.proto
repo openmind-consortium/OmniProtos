@@ -29,35 +29,6 @@ enum SummitBeepConfig {
 }
 
 /**
- * Platform specific bridge connection parameters
- */
-message SummitConnectBridgeParameters {
-  /**
-   * Physical connection to use for the connection
-   * (default ANY)
-   */
-  SummitPhysicalLayer physical_layer = 1;
-
-  /**
-   * Telemetry mode to use with the bridge
-   * (default 3)
-   */
-  google.protobuf.UInt32Value telemetry_mode = 2;
-
-  /**
-   * Telemetry uplink/downlink ratio to between device and bridge
-   * (default 4)
-   */
-  google.protobuf.UInt32Value telemetry_ratio = 3;
-
-  /**
-   * Beep config for the bridge
-   * (default DEVICE_DISCOVERED)
-   */
-  SummitBeepConfig beep_config = 4;
-}
-
-/**
  * Possible bridge connection statuses
  */
 enum SummitConnectBridgeStatus {
@@ -69,16 +40,6 @@ enum SummitConnectBridgeStatus {
   FAILED_CTM_VERSION_CHECK = 5;
   FAILED_INCOMPATIBLE_CTM = 6;
   FAILED_CTM_SILENCE = 7;
-}
-
-/**
- * Platform specific bridge connection details
- */
-message SummitConnectBridgeDetails {
-  /**
-   * Connection status of the bridge
-   */
-  SummitConnectBridgeStatus connection_status = 1;
 }
 
 /**
@@ -98,71 +59,6 @@ enum SummitConnectDeviceStatus {
   WARNING_BAD_FLASH_HEADER_CRC = 512;
   WARNING_BAD_PTM_BLOCK_CRC = 1024;
   WARNING_BAD_PTM_BLOCK_READ = 2048;
-}
-
-/**
- * Platform specific device connection details
- */
-message SummitConnectDeviceDetails {
-  /**
-   * Connection status of the device.
-   */
-  uint32 connection_status = 1;
-}
-
-/**
- * Platform specific describe bridge details
- */
-message SummitDescribeBridgeDetails {
-  /**
-   * The type of device that is connected, for Summit it will always be "CTM2"
-   */
-  string module_type = 1;
-
-  /**
-   * The type of connection to the bridge, may be wired or wireless
-   */
-  string wire_type = 2;
-
-  /**
-   * Serial number of the bridge
-   */
-  string serial_number = 3;
-
-  /**
-   * Firmware version of the bridge
-   */
-  uint32 firmware_version = 4;
-
-  /**
-   * Battery level of the bridge in percent
-   */
-  uint32 battery_level = 5;
-
-  /**
-   * Overall battery status of the bridge
-   */
-  string battery_status = 6;
-
-  /**
-   * Telemetry mode of the bridge
-   */
-  string telemetry_mode = 7;
-
-  /**
-   * The uplink/downlink ratio between device and bridge
-   */
-  uint32 telemetry_ratio = 8;
-
-  /**
-   * Physical layer between bridge and computer
-   */
-  SummitPhysicalLayer physical_layer = 9;
-
-  /**
-   * Beep config of the bridge
-   */
-  SummitBeepConfig beep_enables = 10;
 }
 
 /**
@@ -334,49 +230,62 @@ enum SummitBridgeCommandCode {
   PREVIOUS_DEVICE_IDENTIFIED = 30;
 }
 
+enum SummitErrorType {
+  UNDEFINED_TYPE = 0;
+  MASTER_ERROR = 1;
+  API_ERROR = 2;
+  COMMAND_ERROR = 3;
+  INSTRUMENT_ERROR = 4;
+}
+
 /**
  * Platform specific API errors
  */
-message SummitApiError {
+message SummitError {
+  /**
+   * The type of the Summit error
+   */
+   SummitErrorType error_type = 1;
+
   /**
    * Error code for the API call
    */
-  SummitApiErrorCode reject_code = 1;
+  SummitApiErrorCode reject_code = 2;
 
   /**
    * The device command code that caused the error
    */
-  SummitDeviceCommandCode device_command_code = 2;
+  SummitDeviceCommandCode device_command_code = 3;
 
   /**
    * The bridge command code that caused the error
    */
-  SummitBridgeCommandCode bridge_command_code = 3;
+  SummitBridgeCommandCode bridge_command_code = 4;
 
   /**
    * Human readable error string
    */
-  string message = 4;
+  string message = 5;
 
   /**
    * Timestamp of when the packet was sent
    */
-  google.protobuf.Timestamp tx_time = 5;
+  google.protobuf.Timestamp tx_time = 6;
 
   /**
    * Timestamp of when the response was received
    */
-  google.protobuf.Timestamp rx_time = 6;
+  google.protobuf.Timestamp rx_time = 7;
 
   /**
    * Number of attempts to receive a response within timeout
    */
-  int32 transmit_attempts = 7;
+  int32 transmit_attempts = 8;
 
   /**
    * Link status byte from the telemetry layer
    */
-   bytes link_status = 8;
+   bytes link_status = 9;
 }
 
 enum TimeDomainMuxInputs {
@@ -726,38 +635,6 @@ message SummitLinearDetectorConfiguration {
   fixed32 fractional_fixed_point_value = 10;
 }
 
-message BatteryStatusResponse {
-  /**
-   * battery state of charge (mAh)
-   */
-  google.protobuf.UInt32Value battery_soc = 1;
-  
-  /**
-   * state of charge uncertainty (mAh)
-   */
-  google.protobuf.UInt32Value soc_uncertainty = 2;
-  
-  /**
-   * manufactured battery capacity (mAh).
-   */
-  google.protobuf.UInt32Value manufactured_capacity = 3;
-  
-  /**
-   * estimated battery capacity (mAh).
-   */
-  google.protobuf.UInt32Value estimated_capacity = 4;
-  
-  /**
-   * therapy unavailable state of charge value (mAh)
-   */
-  google.protobuf.UInt32Value therapy_unavailable_soc = 5;
-  
-  /**
-   * battery full state of change value (mAh)
-   */
-  google.protobuf.UInt32Value full_soc = 6;
-}
-
 enum FFTStreamChannel {
   CH0 = 0;  /* Channel 0 */
   CH1 = 1;  /* Channel 1 */
@@ -811,53 +688,8 @@ message SummitSenseEnablesConfiguration{
 	bool enable_loop_recording = 8;
 }
 
-message SummitSenseConfiguration{
-  /**
-	 Time Domain
-   */
-   /**
-	 Time Domain sample rate
-   */
-   uint32 timedomain_sampling_rate = 1;
-
-   /**
-	 Time Channel Configuration
-   */
-	repeated SummitTimeDomainChannelConfig td_channel_configs = 2;
-
-   /**
-	 FFT
-   */
-   SummitFastFourierTransformStreamConfiguration fft_config = 3;
-
-  /**
-	 Power Channels
-   */
-
-  /**
-   * Power channel configuration.
-   */
-	SummitPowerStreamConfiguration power_channel_config = 4;
-
-  /**
-	 Misc
-   */
-	MiscellaneousStreamConfiguration misc_stream_config = 5;
-
-
-  /**
-	 Accelerometer
-   */
-	SummitAccelerometerStreamConfiguration accelerometer_config = 6;
-
-  /**
-    Enable Sense
-   */
-   SummitSenseEnablesConfiguration sense_enables_config = 7;
-}
-
 message SummitStreamEnablesConfiguration{
-	/**
+   /**
 	 Enable TimeDomain stream. False to disable
    */
 	bool enable_timedomain = 1;
