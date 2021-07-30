@@ -219,48 +219,12 @@ message SenseConfigurationResponse{
    * of the device.
    */
   string name = 1;
-  
-/**
-	 Time Domain sample rate
-   */
-   uint32 timedomain_sampling_rate = 2;
-
-   /**
-	 Time Channel Configuration
-   */
-	repeated SummitTimeDomainChannelConfig td_channel_configs = 3;
-
-   /**
-	 FFT
-   */
-   SummitFastFourierTransformStreamConfiguration fft_config = 4;
-
-  /**
-   * Power channel configuration.
-   */
-	SummitPowerStreamConfiguration power_channel_config = 5;
-
-  /**
-	 Misc
-   */
-	MiscellaneousStreamConfiguration misc_stream_config = 6;
-
-
-  /**
-	 Accelerometer
-   */
-	SummitAccelerometerStreamConfiguration accelerometer_config = 7;
-
-  /**
-    Enable Sense
-   */
-   SummitSenseEnablesConfiguration sense_enables_config = 8;
 
   /**
    * Additional platform specific error details. These are defined in a separate
    * protobuf files, one per manufacturer.
    */
-  SummitError error = 9;
+  SummitError error = 2;
 }
 
 enum StreamConfigureStatus {
