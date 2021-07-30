@@ -3,9 +3,9 @@ package openmind;
 
 option csharp_namespace = "OpenMind";
 
-import "google/protobuf/any.proto";
 import "google/protobuf/empty.proto";
 import "google/protobuf/wrappers.proto";
+import "platform/summit.proto";
 
 service BridgeManagerService {
   /**
@@ -56,7 +56,7 @@ message Bridge {
    * Additional platform specific details. These are defined in a separate
    * protobuf files, one per device manufacturer.
    */
-  google.protobuf.Any details = 2;
+  //google.protobuf.Any details = 2;
 }
 
 /**
@@ -94,26 +94,30 @@ message ConnectBridgeRequest {
   string name = 1;
 
   /**
-   * Additional platform specific arguments. These are defined in separate
-   * protobuf files, one per device manufacturer.
+   * Telemetry mode of the bridge
    */
-  google.protobuf.Any parameters = 2;
+  string telemetry_mode = 2;
+
+  /**
+   * The uplink/downlink ratio between device and bridge
+   */
+  uint32 telemetry_ratio = 3;
+
+  /**
+   * Physical layer between bridge and computer
+   */
+  SummitPhysicalLayer physical_layer = 4;
+
+  /**
+   * Beep config of the bridge
+   */
+  SummitBeepConfig beep_enables = 5;
 
   /**
    * Number of retry attempts, default 3. A value of
    * of -1 means retry infinitely.
    */
-  google.protobuf.Int32Value retries = 3;
-}
-
-/**
- * Common connection states for Bridges, additional details provide by manufacturer
- * specific connection status codes.
- */
-enum ConnectBridgeStatus {
-  CONNECT_BRIDGE_STATUS_UNSPECIFIED = 0;
-  CONNECTION_SUCCESS = 1;
-  CONNECTION_FAILURE = 2;
+  google.protobuf.Int32Value retries = 6;
 }
 
 message ConnectBridgeResponse {
@@ -125,15 +129,10 @@ message ConnectBridgeResponse {
   string name = 1;  
 
   /**
-   * Status of the connection attempt.
-   */
-  ConnectBridgeStatus connection_status = 2;
-
-  /**
    * Additional platform specific details. These are defined in a separate
    * protobuf files, one per device manufacturer.
    */
-  google.protobuf.Any details = 3;
+  SummitConnectBridgeStatus connection_status = 2;
 }
 
 message DescribeBridgeRequest {
@@ -143,12 +142,6 @@ message DescribeBridgeRequest {
    * 'xxxxxxxxx' is the serial number of the bridge.
    */
   string name = 1;  
-
-  /**
-   * Additional platform specific arguments. These are defined in separate
-   * protobuf files, one per device manufacturer.
-   */
-  google.protobuf.Any parameters = 2;
 }
 
 message DescribeBridgeResponse {
@@ -160,16 +153,60 @@ message DescribeBridgeResponse {
   string name = 1;  
 
   /**
-   * Additional platform specific bridge information. These are defined in a separate
-   * protobuf files, one per device manufacturer.
+   * The type of device that is connected, for Summit it will always be "CTM2"
    */
-  google.protobuf.Any details = 2;
+  string module_type = 2;
+
+  /**
+   * The type of connection to the bridge, may be wired or wireless
+   */
+  string wire_type = 3;
+
+  /**
+   * Serial number of the bridge
+   */
+  string serial_number = 4;
+
+  /**
+   * Firmware version of the bridge
+   */
+  uint32 firmware_version = 5;
+
+  /**
+   * Battery level of the bridge in percent
+   */
+  uint32 battery_level = 6;
+
+  /**
+   * Overall battery status of the bridge
+   */
+  string battery_status = 7;
+
+  /**
+   * Telemetry mode of the bridge
+   */
+  string telemetry_mode = 8;
+
+  /**
+   * The uplink/downlink ratio between device and bridge
+   */
+  uint32 telemetry_ratio = 9;
+
+  /**
+   * Physical layer between bridge and computer
+   */
+  SummitPhysicalLayer physical_layer = 10;
+
+  /**
+   * Beep config of the bridge
+   */
+  SummitBeepConfig beep_enables = 11;
 
   /**
    * Additional platform specific error details. These are defined in a separate
    * protobuf files, one per manufacturer.
    */
-  google.protobuf.Any error = 3;
+  SummitError error = 12;
 }
 
 message DisconnectBridgeRequest {
@@ -219,10 +256,10 @@ message ConfigureBeepRequest {
   string name = 1;
 
   /**
-   * Additional platform specific arguments. These are defined in separate
-   * protobuf files, one per device manufacturer.
+   * Beep config for the bridge
+   * (default NONE)
    */
-  google.protobuf.Any parameters = 2;
+  SummitBeepConfig beep_config = 2;
 }
 
 message ConfigureBeepResponse {
@@ -233,15 +270,10 @@ message ConfigureBeepResponse {
    */
   string name = 1;
 
-  /**
-   * Additional platform specific bridge information. These are defined in a separate
-   * protobuf files, one per device manufacturer.
-   */
-  google.protobuf.Any details = 2;
 
   /**
    * Additional platform specific error details. These are defined in a separate
    * protobuf files, one per manufacturer.
    */
-  google.protobuf.Any error = 3;
+  SummitError error = 2;
 }
