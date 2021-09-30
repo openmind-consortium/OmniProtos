@@ -1,0 +1,13 @@
+syntax = "proto3";
+package openmind;
+
+option csharp_namespace = "OpenMind";
+
+service TelemetryService {
+  /**
+   * TODO (BNR): We need endpoints for:
+   *             1. Version number - should respond with the server version
+   *             2. Supported devices - should respond with "Medtronic Summit RC+S"
+   *             3. Inspect Repository - should respond with the cached bridges/devices
+   */
+}
