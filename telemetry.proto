@@ -68,31 +68,19 @@ message SupportedDevicesResponse {
 }
 
 message InspectRepositoryRequest{
-  /**
-   * Scheme-less URI describing the device resource. For example,
-   * '//summit/bridge/xxxxxx/device/yyyyyy' where 'xxxxxx' is the
-   * serial number of the bridge and 'yyyyyy' is the serial number
-   * of the device.
-   */
-  string name = 1;
 }
+
 message InspectRepositoryResponse{
-  /**
-   * Scheme-less URI describing the device resource. For example,
-   * '//summit/bridge/xxxxxx/device/yyyyyy' where 'xxxxxx' is the
-   * serial number of the bridge and 'yyyyyy' is the serial number
-   * of the device.
-   */
-  string name = 1;
-  /**
-   * cached bridges
-   */
-  string cached_bridges = 2;
 
   /**
-   * cached devices
+   * repeated cached bridges
    */
-  string cached_devices = 3;
+  repeated CachedBridges cached_bridges = 2;
+
+  /**
+   * repeated cached devices
+   */
+  repeated CachedDevices cached_devices = 3;
 }
 
 message CachedBridges{
