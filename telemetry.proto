@@ -14,7 +14,7 @@ service TelemetryService {
   /**
   * List supported devices.
   */
-  rpc SupportedDevices (SupportedDevicesRequest) returns (SupportedDeviceResponse);
+  rpc SupportedDevices (SupportedDevicesRequest) returns (SupportedDevicesResponse);
 }
 
 message SupportedDevicesRequest {
