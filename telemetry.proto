@@ -56,7 +56,7 @@ message SupportedDevicesResponse {
   /**
    * String with supported devices.
    */
-  string supported_devices = 1;
+  repeated string supported_devices = 1;
 
 }
 
