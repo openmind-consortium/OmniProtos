@@ -17,6 +17,22 @@ service TelemetryService {
   rpc SupportedDevices (SupportedDevicesRequest) returns (SupportedDevicesResponse);
 }
 
+message VersionNumberRequest {
+  /**
+   * Scheme-less URI describing the bridge resource.
+   * For example, '//summit/bridge/xxxxxxxxx' where
+   * 'xxxxxxxxx' is the serial number of the bridge.
+   */
+  string name = 1;
+}
+
+message VersionNumberResponse {
+  /**
+   String with the version number for the Summit Server 
+   */
+  string version_number = 1;
+}
+
 message SupportedDevicesRequest {
   /**
    * Scheme-less URI describing the bridge resource.
