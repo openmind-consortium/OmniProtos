@@ -25,29 +25,14 @@ service TelemetryService {
   rpc InspectRepository (InspectRepositoryRequest) returns (InspectRepositoryResponse);
 }
 
-message VersionNumberRequest {
-  /**
-   * Scheme-less URI describing the bridge resource.
-   * For example, '//summit/bridge/xxxxxxxxx' where
-   * 'xxxxxxxxx' is the serial number of the bridge.
-   */
-  string name = 1;
-}
+message VersionNumberRequest {}
 
 message VersionNumberResponse {
   
   /**
-   * Scheme-less URI describing the device resource. For example,
-   * '//summit/bridge/xxxxxx/device/yyyyyy' where 'xxxxxx' is the
-   * serial number of the bridge and 'yyyyyy' is the serial number
-   * of the device.
-   */
-  string name = 1;
-
-  /**
    String with the version number for the Summit Server 
    */
-  string version_number = 2;
+  string version_number = 1;
 }
 
 message SupportedDevicesRequest {}
