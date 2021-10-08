@@ -51,26 +51,8 @@ message InspectRepositoryRequest{
 message InspectRepositoryResponse{
 
   /**
-   * repeated cached bridges
+   * List of URI's in repository
    */
-  repeated CachedBridges cached_bridges = 2;
+  repeated string repo_uri = 1;
 
-  /**
-   * repeated cached devices
-   */
-  repeated CachedDevices cached_devices = 3;
-}
-
-message CachedBridges{
-  /**
-   * bridge
-   */
-  string bridge = 1;  
-}
-
-message CachedDevices{
-  /**
-   * device
-   */
-  string device = 1;  
 }
