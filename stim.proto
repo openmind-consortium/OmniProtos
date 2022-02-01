@@ -1,0 +1,70 @@
+syntax = "proto3";
+package openmind;
+
+option csharp_namespace = "OpenMind";
+
+service StimService {
+  /**
+  * Change the amplitude 
+  */
+  rpc StimChangeStepAmp (StimChangeStepAmpRequest) returns (StimChangeStepAmpResponse); 
+  /**
+  * Change the pulse width 
+  */
+  rpc StimChangeStepPW (StimChangeStepPWRequest) returns (StimChangeStepPWResponse);
+  /**
+  * Change the stimulation frequency 
+  */
+  rpc StimChangeStepFrequency (StimChangeStepFrequencyRequest) returns (StimChangeStepFrequencyResponse);
+  /**
+  * Turn on therapy 
+  */  
+  rpc StimChangeTherapyOn (StimChangeTherapyOnRequest) returns (StimChangeTherapyOnResponse); 
+  /**
+  * Turn off therapy 
+  */
+  rpc StimChangeTherapyOff (StimChangeTherapyOffRequest) returns (StimChangeTherapyOffResponse);
+  /**
+  * Change active group 
+  */
+  rpc StimChangeActiveGroup (StimChangeActiveGroupRequest) returns (StimChangeActiveGroupResponse);
+  /**
+  * Read the active group info 
+  */
+  rpc ReadGeneralInfo (ReadGeneralInfoRequest) returns (ReadGeneralInfoResponse); 
+  /**
+  * Read the stimulation settings
+  */
+  rpc ReadStimGroup (ReadStimGroupRequest) returns (ReadStimGroupResponse);
+}
+
+message VersionNumberRequest {}
+
+message VersionNumberResponse {
+  
+  /**
+   String with the version number for the Summit Server 
+   */
+  string version_number = 1;
+}
+
+message SupportedDevicesRequest {}
+
+message SupportedDevicesResponse {
+  /**
+   * List with supported devices.
+   */
+  repeated string supported_devices = 1;
+
+}
+
+message InspectRepositoryRequest{}
+
+message InspectRepositoryResponse{
+
+  /**
+   * List of URI's in repository
+   */
+  repeated string repo_uri = 1;
+
+}
