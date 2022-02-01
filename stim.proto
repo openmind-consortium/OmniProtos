@@ -38,33 +38,117 @@ service StimService {
   rpc ReadStimGroup (ReadStimGroupRequest) returns (ReadStimGroupResponse);
 }
 
-message VersionNumberRequest {}
+message StimChangeStepAmpRequest {
 
-message VersionNumberResponse {
+  // The program to apply the amplitude change to
+  uint32 program_number = 1;
+
+  // The change in amplitude to apply in milliamps, 0.1 resolution
+  double amp_delta_milliamps = 2;
+
+  /** Output buffer that will be written with the new 
+  * stimulation amplitude in milliamps. Null if a critical 
+  error occurs or if an invalid parameter was sent.
+  */
+  repeated double new_stim_amplitude = 3;
+
+}
+
+message StimChangeStepAmpResponse {
+  // TODO 
+}
+
+message StimChangeStepPWRequest {
+
+  // The program to apply the pulse width change to
+  uint32 program_number = 1;
+
+  // The change in pulsewidth to apply in microseconds, 10 microsecond resolution
+  uint32 pw_delta_microseconds = 2;
+
+  /** Output buffer that will be written with the new stimulation 
+  * pulse width in microseconds. Null if a critical error occurs 
+  * or if an invalid parameter was sent.
+  */
+  repeated int32 new_stim_pulse_width = 3;
+
+}
+
+message StimChangeStepPWResponse {
+  // TODO 
+}
+
+message StimChangeStepFrequencyRequest {
+
+  // The change in stimulation period to apply, resolution is in 0.1 Hz
+  double freq_delta = 1;
+
+  // Boolean indicating if a sensing friendly rate should be enforced or not
+  bool enforce_sense_friendly = 2;
+
+  /** Output buffer that will be written with the new stimulation  
+  * frequency in Hz, 0.1Hz resolution. Null if a critical error 
+  * occurs or if an invalid parameter was sent.
+  */
+  repeated double new_stim_frequency = 3;
+}
+
+message StimChangeStepFrequencyResponse {
+  // TODO 
+}
+
+message StimChangeTherapyOnRequest {}
+
+message StimChangeTherapyOnResponse {
+ // TODO 
+}
+
+message StimChangeTherapyOffRequest {
   
-  /**
-   String with the version number for the Summit Server 
-   */
-  string version_number = 1;
-}
-
-message SupportedDevicesRequest {}
-
-message SupportedDevicesResponse {
-  /**
-   * List with supported devices.
-   */
-  repeated string supported_devices = 1;
+  /** Indicates if soft start parameters should be used 
+  * to ramp down stim if true, or if should just jump to 
+  * off if false
+  */
+  bool with_ramp = 1; 
 
 }
 
-message InspectRepositoryRequest{}
+message StimChangeTherapyOffResponse {
+ // TODO 
+}
 
-message InspectRepositoryResponse{
+enum GroupNumber {
+  Group0 = 0;
+  Group1 = 1;
+  Group2 = 2;
+  Group3 = 3;
+}
 
-  /**
-   * List of URI's in repository
-   */
-  repeated string repo_uri = 1;
+message StimChangeActiveGroupRequest {
 
+  // The new stimulation group to activate
+  GroupNumber new_group_num = 1; 
+
+}
+
+message StimChangeActiveGroupResponse {
+  // TODO 
+}
+
+message ReadGeneralInfoRequest {
+  // TODO 
+  repeated GeneralInterrogateData the_general_data = 1; 
+}
+
+message ReadGeneralInfoResponse {
+ //TODO
+}
+
+message ReadStimGroupRequest {
+  GroupNumber group_index = 1; 
+  repeated TherapyGroup theTherapyGroup = 2; 
+}
+
+message ReadStimGroupResponse {
+  // TODO 
 }
