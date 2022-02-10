@@ -3,6 +3,8 @@ package openmind;
 
 option csharp_namespace = "OpenMind";
 
+import "summit.proto";
+
 service StimService {
   /**
   * Change the amplitude 
@@ -40,67 +42,106 @@ service StimService {
 
 message StimChangeStepAmpRequest {
 
-  // The program to apply the amplitude change to
+  /** 
+  * The program to apply the amplitude change to
+  */ 
   uint32 program_number = 1;
 
-  // The change in amplitude to apply in milliamps, 0.1 resolution
+  /** 
+  * The change in amplitude to apply in milliamps, 0.1 resolution
+  */ 
   double amp_delta_milliamps = 2;
-
-  /** Output buffer that will be written with the new 
-  * stimulation amplitude in milliamps. Null if a critical 
-  error occurs or if an invalid parameter was sent.
-  */
-  repeated double new_stim_amplitude = 3;
 
 }
 
 message StimChangeStepAmpResponse {
-  // TODO 
+
+  /** 
+  * Output buffer that will be written with the new 
+  * stimulation amplitude in milliamps. Null if a critical 
+  * error occurs or if an invalid parameter was sent.
+  */
+  repeated double new_stim_amplitude = 1;
+
+  /**
+  * Additional platform specific error details. These are defined in a separate
+  * protobuf files, one per manufacturer.
+  */
+  SummitError error = 2;
+
 }
 
 message StimChangeStepPWRequest {
 
-  // The program to apply the pulse width change to
+  /** 
+  * The program to apply the pulse width change to
+  */ 
   uint32 program_number = 1;
 
-  // The change in pulsewidth to apply in microseconds, 10 microsecond resolution
+  /** 
+  * The change in pulsewidth to apply in microseconds, 10 microsecond resolution
+  */ 
   uint32 pw_delta_microseconds = 2;
-
-  /** Output buffer that will be written with the new stimulation 
-  * pulse width in microseconds. Null if a critical error occurs 
-  * or if an invalid parameter was sent.
-  */
-  repeated int32 new_stim_pulse_width = 3;
 
 }
 
 message StimChangeStepPWResponse {
-  // TODO 
+
+  /** 
+  * Output buffer that will be written with the new stimulation 
+  * pulse width in microseconds. Null if a critical error occurs 
+  * or if an invalid parameter was sent.
+  */
+  repeated int32 new_stim_pulse_width = 1;
+
+  /**
+  * Additional platform specific error details. These are defined in a separate
+  * protobuf files, one per manufacturer.
+  */
+  SummitError error = 2;
+
 }
 
 message StimChangeStepFrequencyRequest {
 
-  // The change in stimulation period to apply, resolution is in 0.1 Hz
+  /** 
+  * The change in stimulation period to apply, resolution is in 0.1 Hz
+  */ 
   double freq_delta = 1;
 
-  // Boolean indicating if a sensing friendly rate should be enforced or not
+  /** 
+  * Boolean indicating if a sensing friendly rate should be enforced or not
+  */ 
   bool enforce_sense_friendly = 2;
+
+}
+
+message StimChangeStepFrequencyResponse {
 
   /** Output buffer that will be written with the new stimulation  
   * frequency in Hz, 0.1Hz resolution. Null if a critical error 
   * occurs or if an invalid parameter was sent.
   */
-  repeated double new_stim_frequency = 3;
-}
+  repeated double new_stim_frequency = 1;
 
-message StimChangeStepFrequencyResponse {
-  // TODO 
+  /**
+  * Additional platform specific error details. These are defined in a separate
+  * protobuf files, one per manufacturer.
+  */
+  SummitError error = 2;
+
 }
 
 message StimChangeTherapyOnRequest {}
 
 message StimChangeTherapyOnResponse {
- // TODO 
+
+  /**
+  * Additional platform specific error details. These are defined in a separate
+  * protobuf files, one per manufacturer.
+  */
+  SummitError error = 1;
+
 }
 
 message StimChangeTherapyOffRequest {
@@ -114,41 +155,81 @@ message StimChangeTherapyOffRequest {
 }
 
 message StimChangeTherapyOffResponse {
- // TODO 
+
+  /**
+  * Additional platform specific error details. These are defined in a separate
+  * protobuf files, one per manufacturer.
+  */
+  SummitError error = 1;
+
 }
 
 enum GroupNumber {
+
   Group0 = 0;
   Group1 = 1;
   Group2 = 2;
   Group3 = 3;
+
 }
 
 message StimChangeActiveGroupRequest {
 
-  // The new stimulation group to activate
+  /** 
+  * The new stimulation group to activate
+  */ 
   GroupNumber new_group_num = 1; 
 
 }
 
 message StimChangeActiveGroupResponse {
-  // TODO 
+  /**
+  * Additional platform specific error details. These are defined in a separate
+  * protobuf files, one per manufacturer.
+  */
+  SummitError error = 1;
+
 }
 
-message ReadGeneralInfoRequest {
-  // TODO 
-  repeated GeneralInterrogateData the_general_data = 1; 
-}
+message ReadGeneralInfoRequest {}
 
 message ReadGeneralInfoResponse {
- //TODO
+
+  /** 
+  * Output buffer that will be written with the INS 
+  * general information. Null if an error occured.
+  */
+  repeated GeneralInterrogateData the_general_data = 1; 
+
+  /**
+  * Additional platform specific error details. These are defined in a separate
+  * protobuf files, one per manufacturer.
+  */
+  SummitError error = 2;
+
 }
 
 message ReadStimGroupRequest {
+
+  /** 
+  * Indicates which group to read from the INS
+  */
   GroupNumber group_index = 1; 
-  repeated TherapyGroup theTherapyGroup = 2; 
+
 }
 
 message ReadStimGroupResponse {
-  // TODO 
+
+  /**
+  * Output buffer that will be written with the therapy 
+  * group read from the INS. Null if an error occurs.
+  */ 
+  repeated TherapyGroup theTherapyGroup = 1; 
+
+  /**
+  * Additional platform specific error details. These are defined in a separate
+  * protobuf files, one per manufacturer.
+  */
+  SummitError error = 2;
+
 }
