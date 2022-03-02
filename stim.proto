@@ -233,3 +233,174 @@ message ReadStimGroupResponse {
   SummitError error = 2;
 
 }
+
+message TherapyGroup{
+
+  /** Gets or sets the amplitude resolution. */ 
+  bytes AmplitudeResolution0_2mA = 1; 
+
+  /** Reserved field */ 
+  bytes Reserved1 = 2; 
+
+  /** Reserved field */ 
+  bytes Reserved2 = 3; 
+
+  /** Gets or sets the pulse width lower limit (10 us per LSB) */ 
+  bytes PulseWidthLowerLimit = 4; 
+
+  /** Gets or sets the pulse width upper limit (10 us per LSB) */ 
+  bytes PulseWidthUpperLimit = 5; 
+
+  /** Gets or sets the rate period */ 
+  google.protobuf.UInt16Value RatePeriod = 6; 
+
+  /** Gets or sets the rate period lower limit */ 
+  google.protobuf.UInt16Value RatePeriodLowerLimit = 7; 
+
+  /** Gets or sets the rate period upper limit */ 
+  google.protobuf.UInt16Value RatePeriodUpperLimit = 8; 
+
+  /** Gets or sets a value indicating whether */ 
+  bool CyclingEnabled = 9; 
+
+  /** Gets or sets the cycle on time */ 
+  CycleTimeShort CycleOnTime = 10; 
+
+  /** Gets or sets the cycle off time */ 
+  CycleTimeShort CycleOffTime = 11; 
+
+  /** Gets or sets reserved 3 byte */ 
+  bytes Reserved3 = 12; 
+
+  /** Gets or sets the ramp time */ 
+  bytes RampTime = 13; 
+
+  /** Gets or sets the ramping feature definition */ 
+  RampingTypes RampRepeat = 14; 
+
+  /** Gets or sets the programs */ 
+  repeated TherapyProgram Programs = 15; 
+
+  /** Gets or sets the rate multiplier */ 
+  bytes	ReservedRateMultiplier = 16; 
+
+  /** Gets or sets the is enabled */ 
+  ProgramEnables IsEnabled = 17; 
+
+  /** Gets or sets the amplitude */ 
+  bytes Amplitude = 18;  
+
+  /** Gets or sets the width of the pulse */ 
+  bytes PulseWidth = 19; 
+
+  /** Gets or sets the electrodes */
+  TherapyElectrodes Electrodes = 20; 
+
+}
+
+/** Class representing a CycleTime */ 
+message CycleTimeShort{
+
+  /** Gets or Sets the time */ 
+  google.protobuf.UInt16Value Time = 1; 
+
+  /** Gets or Sets the units */ 
+  CyclingUnits Units = 2; 
+
+}
+
+/** Defines the units of the cycling value */ 
+enum CyclingUnits{
+
+  UNITS_100_MS = 0; /* Each Cycling Value LSB is 100ms */
+  UNITS_1_MS = 1; /* Each Cycling Value LSB is 1ms */
+  UNITS_10_MS = 2; /* Each Cycling Value LSB is 10ms */
+
+}
+
+/** Enables for Ramping */ 
+enum RampingTypes{
+
+  NONE = 0; /* None */ 
+  UP_ENABLED = 1; /* Enable Ramp Up */ 
+  DOWN_ENABLED = 2; /* Enable Ramp Down */ 
+  REPEAT_RAMP_UP = 4; /* Enable Ramp Up Repeat */ 
+
+}
+
+/** Class representing a Therapy Program Setting */ 
+message TherapyProgram{
+
+  /** Gets or sets the misc settings */ 
+  TherapyMiscProgSettings MiscSettings = 1; 
+
+}
+
+/** Class representing miscellaneous program settings: 
+* program level cycling and active recharge ratio */ 
+message TherapyMiscProgSettings{
+
+  /* Gets or sets the cycling enabled flag */ 
+  bool CyclingEnable = 1; 
+
+  /* Gets or sets the Unused */ 
+  bytes Unused = 2; 
+
+  /* Gets or sets the Unused2 */ 
+  bytes Unused2 = 3; 
+
+  /* Gets or sets the Active Recharge Ratio */ 
+  ActiveRechargeRatios ActiveRechargeRatio = 4; 
+
+}
+
+/** Therapy amplitude ratios */ 
+enum ActiveRechargeRatios{
+
+  PASSIVE_ONLY = 0; /* Passive Recharge Only */ 
+  ACTIVE_0_5 = 5; /* Active Recharge, amplitude ratio 0.5x */ 
+  ACTIVE_0_6 = 6; /* Active Recharge, amplitude ratio 0.6x */ 
+  ACTIVE_0_7 = 7; /* Active Recharge, amplitude ratio 0.7x */ 
+  ACTIVE_0_8 = 8; /* Active Recharge, amplitude ratio 0.8x */ 
+  ACTIVE_0_9 = 9; /* Active Recharge, amplitude ratio 0.9x */ 
+  ACTIVE_1_0 = 10; /* Active Recharge, amplitude ratio 1.0x */ 
+  ACTIVE_1_1 = 11; /* Active Recharge, amplitude ratio 1.1x */ 
+  ACTIVE_1_2 = 12; /* Active Recharge, amplitude ratio 1.2x */ 
+  ACTIVE_1_3 = 13; /* Active Recharge, amplitude ratio 1.3x */ 
+  ACTIVE_1_4 = 14; /* Active Recharge, amplitude ratio 1.4x */ 
+  ACTIVE_1_5 = 15; /* Active Recharge, amplitude ratio 1.5x */ 
+
+}
+
+/** The Program Enable Values */ 
+enum ProgramEnables{
+
+  VERSION_0_ENABLED = 0; /* The version0 and enabled */ 
+  VERSION_1_ENABLED = 1; /* The version1 and enabled */ 
+  VERSION_2_ENABLED = 2; /* The version2 and enabled */ 
+  VERSION_NULL = 3; /* The version null and enabled */ 
+  VERSION_0_DISABLED = 16; /* The version0 and disabled */ 
+  VERSION_1_DISABLED = 17; /* The version1 and disabled */ 
+  VERSION_2_DISABLED = 18; /* The version2 and disabled */ 
+  VERSION_NULL_DISABLED = 19; /* The version null and enabled */ 
+
+}
+
+/** An Enumerable list of the class Electrode */ 
+message TherapyElectrodes{
+
+  /* Gets the number of elements contained in the T:System.Collections.Generic.ICollection`1 */ 
+  int32 Count = 1; 
+
+  /* Gets a value indicating whether the T:System.Collections.Generic.ICollection`1 is read-only */ 
+  bool IsReadOnly = 2; 
+
+  /* Gets or sets the Electrode at the specified index */ 
+  Electrode This = 3; 
+
+}
+
+
+message Electrode{
+
+}
