@@ -499,3 +499,73 @@ enum TherapyStatus{
   TRANSITION_TO_LEAD_INTEGRITY = 5; /* The transition to lead integrity */ 
 
 }
+
+/** Interrogate Data */ 
+message GeneralInterrogateData{
+
+  /* Gets or sets the type */ 
+  InterrogateTypes Type = 1; 
+
+  /* Gets or sets the implant date */ 
+  TimeOfDay ImplantDate = 2; 
+
+  /* Gets or sets the device time */
+  TimeOfDay DeviceTime = 3; 
+
+  /* Gets or sets the therapy status data */ 
+  TherapyStatusByte TherapyStatusData = 4; 
+
+  /* Gets or sets a value indicating whether this instance is therapy unavailable */ 
+  bool IsTherapyUnavailable = 5; 
+
+  /* Gets or sets a value indicating whether this instance is in CP session */ 
+  bool IsInCPSession = 6; 
+
+  /* Gets or sets the battery status (0-100%) */ 
+  bytes BatteryStatus = 7; 
+
+  /* Gets or sets the device serial number */ 
+  repeated bytes DeviceSerialNumber = 8; 
+
+  /* Gets or sets the hybrid serial number */ 
+  repeated bytes HybridSerialNumber = 9; 
+
+  /* Gets or sets the Tel-M Device ID */ 
+  repeated bytes TelMDeviceId = 10; 
+
+  /* Gets or sets a value indicating whether this instance 
+  * is mri mode on. This will always be off */ 
+  bool IsMriModeOn = 11; 
+
+  /* Gets or sets a value indicating whether this instance is overvoltage */ 
+  bool IsOvervoltage = 12; 
+
+  /* Gets a value indicating whether the device is giving an early replacement indication */ 
+  bool IsEri = 13; 
+
+  /* Gets a value indicating whether the device is at end of service */ 
+  bool IsEos = 14; 
+
+  /* Gets the days until end of service */ 
+  google.protobuf.UInt16Value DaysUntilEos = 15; 
+
+}
+
+/** Interrogate Command Subtypes */ 
+enum InterrogateTypes{
+
+  GENERAL = 1; /* General Interrogate */ 
+  OOR = 2; /* OOR Interrogate */ 
+
+}
+
+/** Time of Day */ 
+message TimeOfDay{
+
+  /* Gets or sets the seconds */ 
+  google.protobuf.UInt32Value Seconds = 1; 
+
+  /* Gets or sets the real time */ 
+  google.protobuf.Timestamp RealTime = 2; 
+
+}
