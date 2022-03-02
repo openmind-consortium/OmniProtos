@@ -281,20 +281,32 @@ message TherapyGroup{
   /** Gets or sets the programs */ 
   repeated TherapyProgram Programs = 15; 
 
-  /** Gets or sets the rate multiplier */ 
-  bytes	ReservedRateMultiplier = 16; 
+  /** Gets or sets the therapy mode */ 
+  TherapyStatus Mode = 16; 
 
-  /** Gets or sets the is enabled */ 
-  ProgramEnables IsEnabled = 17; 
+  /** Gets or sets the valid flag for the device level parameters */ 
+  bool Valid = 17; 
 
-  /** Gets or sets the amplitude */ 
-  bytes Amplitude = 18;  
+  /** No comment */ 
+  GroupNumber Index = 18; 
 
-  /** Gets or sets the width of the pulse */ 
-  bytes PulseWidth = 19; 
+  /** The rate in Hz */ 
+  double RateInHz = 19; 
 
-  /** Gets or sets the electrodes */
-  TherapyElectrodes Electrodes = 20; 
+  /** The upper limit rate in Hz */ 
+  double RateUpperLimitInHz = 20; 
+
+  /** The lower limit rate in Hz */ 
+  double RateLowerLimitInHz = 21; 
+
+  /** The pulse width upper limit in microseconds */ 
+  int PulseWidthUpperLimitInMicroseconds = 22; 
+
+  /** The pulse width lower limit in microseconds */ 
+  int PulseWidthLowerLimitInMicroseconds = 23; 
+
+  /** Gets the device level parameters */ 
+  repeated bytes DeviceLevelParameters = 24; 
 
 }
 
@@ -333,6 +345,39 @@ message TherapyProgram{
 
   /** Gets or sets the misc settings */ 
   TherapyMiscProgSettings MiscSettings = 1; 
+
+  /** Gets or sets the rate multiplier */ 
+  byte ReservedRateMultiplier = 2; 
+
+  /** Gets or sets the is enabled */ 
+  ProgramEnables IsEnabled = 3; 
+
+  /** Gets or sets the amplitude */ 
+  byte Amplitude = 4; 
+
+  /** Gets or sets the width of the pulse */ 
+  byte PulseWidth = 5; 
+
+  /** Gets or sets the electrodes */ 
+  TherapyElectrodes Electrodes = 6; 
+
+  /** Gets or sets the Reserved */ 
+  repeated bytes Reserved = 7; 
+
+  /** Gets or sets a value indicating whether the set of amp, pw, and electrodes is valid */ 
+  bool SubValid = 8; 
+
+  /** Gets or sets the Reserved2 */ 
+  repeated bytes Reserved2 = 9; 
+
+  /** Gets or sets the valid flag */ 
+  bool Valid = 10; 
+
+  /** Get the amplitude in milliamps */ 
+  double AmplitudeInMilliamps = 11; 
+
+  /** Get the pulse width in milliamps */ 
+  uint32 PulseWidthInMicroseconds = 12; 
 
 }
 
@@ -398,9 +443,59 @@ message TherapyElectrodes{
   /* Gets or sets the Electrode at the specified index */ 
   Electrode This = 3; 
 
+  /* Gets or sets the Reserved */ 
+  repeated bytes Reserved = 4; 
+
+  /* Gets or sets a value indicating whether the set of amp, pw, and electrodes is valid */ 
+  bool SubValid = 5; 
+
+  /* Gets or sets the Reserved2 */ 
+  repeated bytes Reserved2 = 5; 
+
+  /* Gets or sets the valid flag */ 
+  bool Valid = 6; 
+
+  /* Get the amplitude in milliamps */ 
+  double AmplitudeInMilliamps = 7; 
+
+  /* Get the pulse width in milliamps */ 
+  int PulseWidthInMicroseconds = 8; 
+
 }
 
-
+/* Class defining the properties of a stimulation electrode */ 
 message Electrode{
+
+  /* Gets or sets the value field */ 
+  bytes value = 1; 
+
+  /* Gets or sets the electrode type 0x01 = Anode, 0x00 = Cathode */ 
+  ElectrodeTypes ElectrodeType = 2; 
+
+  /* Gets or sets the reserved 1 field */ 
+  bytes Reserved1 = 3; 
+
+  /* Gets or sets a value indicating whether the electrode is off */ 
+  bool IsOff = 4; 
+
+}
+
+/* Is the Electrode an Anode or Cathode */ 
+enum ElectrodeTypes{
+
+  CATHODE = 0; /* Electrode is a Cathode */ 
+  ANODE = 1 ; /* Electrode is an Anode */ 
+
+}
+
+/** Therapy Status */ 
+enum TherapyStatus{
+
+  OFF = 0; /* Off */ 
+  ON = 1; /* On */ 
+  LEAD_INTEGRITY = 2; /* Lead Integrity */ 
+  TRANSITION_TO_OFF = 3; /* The transition to off */
+  TRANSITION_TO_ACTIVE = 4; /* The transition to active */ 
+  TRANSITION_TO_LEAD_INTEGRITY = 5; /* The transition to lead integrity */ 
 
 }
