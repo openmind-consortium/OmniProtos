@@ -83,6 +83,47 @@ service DeviceManagerService {
    * Lead Integrity Test
    */
   rpc LeadIntegrityTest (ImpedanceRequest) returns (ImpedanceResponse);
+
+  /**
+  * Change the amplitude 
+  */
+  rpc StimChangeStepAmp (StimChangeStepAmpRequest) returns (StimChangeStepAmpResponse); 
+
+  /**
+  * Change the pulse width 
+  */
+  rpc StimChangeStepPW (StimChangeStepPWRequest) returns (StimChangeStepPWResponse);
+
+  /**
+  * Change the stimulation frequency 
+  */
+  rpc StimChangeStepFrequency (StimChangeStepFrequencyRequest) returns (StimChangeStepFrequencyResponse);
+
+  /**
+  * Turn on therapy 
+  */  
+  rpc StimChangeTherapyOn (StimChangeTherapyOnRequest) returns (StimChangeTherapyOnResponse); 
+
+  /**
+  * Turn off therapy 
+  */
+  rpc StimChangeTherapyOff (StimChangeTherapyOffRequest) returns (StimChangeTherapyOffResponse);
+
+  /**
+  * Change active group 
+  */
+  rpc StimChangeActiveGroup (StimChangeActiveGroupRequest) returns (StimChangeActiveGroupResponse);
+
+  /**
+  * Read the active group info 
+  */
+  rpc ReadGeneralInfo (ReadGeneralInfoRequest) returns (ReadGeneralInfoResponse); 
+
+  /**
+  * Read the stimulation settings
+  */
+  rpc ReadStimGroup (ReadStimGroupRequest) returns (ReadStimGroupResponse);
+  
 }
 
 message Device {
@@ -874,41 +915,6 @@ message LeadList{
    * lead 1
    */
   int32 lead2 = 2;
-}
-
-service StimService {
-  /**
-  * Change the amplitude 
-  */
-  rpc StimChangeStepAmp (StimChangeStepAmpRequest) returns (StimChangeStepAmpResponse); 
-  /**
-  * Change the pulse width 
-  */
-  rpc StimChangeStepPW (StimChangeStepPWRequest) returns (StimChangeStepPWResponse);
-  /**
-  * Change the stimulation frequency 
-  */
-  rpc StimChangeStepFrequency (StimChangeStepFrequencyRequest) returns (StimChangeStepFrequencyResponse);
-  /**
-  * Turn on therapy 
-  */  
-  rpc StimChangeTherapyOn (StimChangeTherapyOnRequest) returns (StimChangeTherapyOnResponse); 
-  /**
-  * Turn off therapy 
-  */
-  rpc StimChangeTherapyOff (StimChangeTherapyOffRequest) returns (StimChangeTherapyOffResponse);
-  /**
-  * Change active group 
-  */
-  rpc StimChangeActiveGroup (StimChangeActiveGroupRequest) returns (StimChangeActiveGroupResponse);
-  /**
-  * Read the active group info 
-  */
-  rpc ReadGeneralInfo (ReadGeneralInfoRequest) returns (ReadGeneralInfoResponse); 
-  /**
-  * Read the stimulation settings
-  */
-  rpc ReadStimGroup (ReadStimGroupRequest) returns (ReadStimGroupResponse);
 }
 
 message StimChangeStepAmpRequest {
