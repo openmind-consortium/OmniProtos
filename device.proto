@@ -939,7 +939,7 @@ message StimChangeStepAmpResponse {
   * stimulation amplitude in milliamps. Null if a critical 
   * error occurs or if an invalid parameter was sent.
   */
-  repeated double new_stim_amplitude = 1;
+  double new_stim_amplitude = 1;
 
   /**
   * Additional platform specific error details. These are defined in a separate
@@ -970,7 +970,7 @@ message StimChangeStepPWResponse {
   * pulse width in microseconds. Null if a critical error occurs 
   * or if an invalid parameter was sent.
   */
-  repeated int32 new_stim_pulse_width = 1;
+  int32 new_stim_pulse_width = 1;
 
   /**
   * Additional platform specific error details. These are defined in a separate
@@ -1000,7 +1000,7 @@ message StimChangeStepFrequencyResponse {
   * frequency in Hz, 0.1Hz resolution. Null if a critical error 
   * occurs or if an invalid parameter was sent.
   */
-  repeated double new_stim_frequency = 1;
+  double new_stim_frequency = 1;
 
   /**
   * Additional platform specific error details. These are defined in a separate
