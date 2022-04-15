@@ -920,15 +920,23 @@ message LeadList{
 
 message StimChangeStepAmpRequest {
 
+  /**
+  * Scheme-less URI describing the device resource. For example,
+  * '//summit/bridge/xxxxxx/device/yyyyyy' where 'xxxxxx' is the
+  * serial number of the bridge and 'yyyyyy' is the serial number
+  * of the device.
+  */
+  string name = 1;
+
   /** 
   * The program to apply the amplitude change to
   */ 
-  uint32 program_number = 1;
+  bytes program_number = 2;
 
   /** 
   * The change in amplitude to apply in milliamps, 0.1 resolution
   */ 
-  double amp_delta_milliamps = 2;
+  double amp_delta_milliamps = 3;
 
 }
 
@@ -951,15 +959,23 @@ message StimChangeStepAmpResponse {
 
 message StimChangeStepPWRequest {
 
+  /**
+  * Scheme-less URI describing the device resource. For example,
+  * '//summit/bridge/xxxxxx/device/yyyyyy' where 'xxxxxx' is the
+  * serial number of the bridge and 'yyyyyy' is the serial number
+  * of the device.
+  */
+  string name = 1;
+
   /** 
   * The program to apply the pulse width change to
   */ 
-  uint32 program_number = 1;
+  int32 program_number = 2;
 
   /** 
   * The change in pulsewidth to apply in microseconds, 10 microsecond resolution
   */ 
-  uint32 pw_delta_microseconds = 2;
+  int32 pw_delta_microseconds = 3;
 
 }
 
@@ -982,15 +998,23 @@ message StimChangeStepPWResponse {
 
 message StimChangeStepFrequencyRequest {
 
+  /**
+  * Scheme-less URI describing the device resource. For example,
+  * '//summit/bridge/xxxxxx/device/yyyyyy' where 'xxxxxx' is the
+  * serial number of the bridge and 'yyyyyy' is the serial number
+  * of the device.
+  */
+  string name = 1;
+
   /** 
   * The change in stimulation period to apply, resolution is in 0.1 Hz
   */ 
-  double freq_delta = 1;
+  double freq_delta = 2;
 
   /** 
   * Boolean indicating if a sensing friendly rate should be enforced or not
   */ 
-  bool enforce_sense_friendly = 2;
+  bool enforce_sense_friendly = 3;
 
 }
 
@@ -1010,7 +1034,17 @@ message StimChangeStepFrequencyResponse {
 
 }
 
-message StimChangeTherapyOnRequest {}
+message StimChangeTherapyOnRequest {
+
+  /**
+  * Scheme-less URI describing the device resource. For example,
+  * '//summit/bridge/xxxxxx/device/yyyyyy' where 'xxxxxx' is the
+  * serial number of the bridge and 'yyyyyy' is the serial number
+  * of the device.
+  */
+  string name = 1;
+
+}
 
 message StimChangeTherapyOnResponse {
 
@@ -1023,12 +1057,20 @@ message StimChangeTherapyOnResponse {
 }
 
 message StimChangeTherapyOffRequest {
+
+  /**
+  * Scheme-less URI describing the device resource. For example,
+  * '//summit/bridge/xxxxxx/device/yyyyyy' where 'xxxxxx' is the
+  * serial number of the bridge and 'yyyyyy' is the serial number
+  * of the device.
+  */
+  string name = 1;
   
   /** Indicates if soft start parameters should be used 
   * to ramp down stim if true, or if should just jump to 
   * off if false
   */
-  bool with_ramp = 1; 
+  bool with_ramp = 2; 
 
 }
 
@@ -1053,10 +1095,18 @@ enum GroupNumber {
 
 message StimChangeActiveGroupRequest {
 
+  /**
+  * Scheme-less URI describing the device resource. For example,
+  * '//summit/bridge/xxxxxx/device/yyyyyy' where 'xxxxxx' is the
+  * serial number of the bridge and 'yyyyyy' is the serial number
+  * of the device.
+  */
+  string name = 1;
+
   /** 
   * The new stimulation group to activate
   */ 
-  GroupNumber new_group_num = 1; 
+  GroupNumber new_group_num = 2; 
 
 }
 
@@ -1069,7 +1119,17 @@ message StimChangeActiveGroupResponse {
 
 }
 
-message ReadGeneralInfoRequest {}
+message ReadGeneralInfoRequest {
+
+/**
+  * Scheme-less URI describing the device resource. For example,
+  * '//summit/bridge/xxxxxx/device/yyyyyy' where 'xxxxxx' is the
+  * serial number of the bridge and 'yyyyyy' is the serial number
+  * of the device.
+  */
+  string name = 1;
+
+}
 
 message ReadGeneralInfoResponse {
 
@@ -1089,10 +1149,18 @@ message ReadGeneralInfoResponse {
 
 message ReadStimGroupRequest {
 
+  /**
+  * Scheme-less URI describing the device resource. For example,
+  * '//summit/bridge/xxxxxx/device/yyyyyy' where 'xxxxxx' is the
+  * serial number of the bridge and 'yyyyyy' is the serial number
+  * of the device.
+  */
+  string name = 1;
+
   /** 
   * Indicates which group to read from the INS
   */
-  GroupNumber group_index = 1; 
+  GroupNumber group_index = 2; 
 
 }
 
@@ -1102,7 +1170,7 @@ message ReadStimGroupResponse {
   * Output buffer that will be written with the therapy 
   * group read from the INS. Null if an error occurs.
   */ 
-  repeated TherapyGroup theTherapyGroup = 1; 
+  TherapyGroup theTherapyGroup = 1; 
 
   /**
   * Additional platform specific error details. These are defined in a separate
