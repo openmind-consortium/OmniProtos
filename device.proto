@@ -1133,17 +1133,57 @@ message ReadGeneralInfoRequest {
 
 message ReadGeneralInfoResponse {
 
-  /** 
-  * Output buffer that will be written with the INS 
-  * general information. Null if an error occured.
-  */
-  repeated GeneralInterrogateData the_general_data = 1; 
+  /* Gets or sets the type */ 
+  InterrogateTypes Type = 1; 
+
+  /* Gets or sets the implant date */ 
+  TimeOfDay ImplantDate = 2; 
+
+  /* Gets or sets the device time */
+  TimeOfDay DeviceTime = 3; 
+
+  /* Gets or sets the therapy status data */ 
+  TherapyStatusByte TherapyStatusData = 4; 
+
+  /* Gets or sets a value indicating whether this instance is therapy unavailable */ 
+  bool IsTherapyUnavailable = 5; 
+
+  /* Gets or sets a value indicating whether this instance is in CP session */ 
+  bool IsInCPSession = 6; 
+
+  /* Gets or sets the battery status (0-100%) */ 
+  bytes BatteryStatus = 7; 
+
+  /* Gets or sets the device serial number */ 
+  repeated bytes DeviceSerialNumber = 8; 
+
+  /* Gets or sets the hybrid serial number */ 
+  repeated bytes HybridSerialNumber = 9; 
+
+  /* Gets or sets the Tel-M Device ID */ 
+  repeated bytes TelMDeviceId = 10; 
+
+  /* Gets or sets a value indicating whether this instance 
+  * is mri mode on. This will always be off */ 
+  bool IsMriModeOn = 11; 
+
+  /* Gets or sets a value indicating whether this instance is overvoltage */ 
+  bool IsOvervoltage = 12; 
+
+  /* Gets a value indicating whether the device is giving an early replacement indication */ 
+  bool IsEri = 13; 
+
+  /* Gets a value indicating whether the device is at end of service */ 
+  bool IsEos = 14; 
+
+  /* Gets the days until end of service */ 
+  uint32 DaysUntilEos = 15; 
 
   /**
   * Additional platform specific error details. These are defined in a separate
   * protobuf files, one per manufacturer.
   */
-  SummitError error = 2;
+  SummitError error = 16;
 
 }
 
@@ -1212,7 +1252,7 @@ message ReadStimGroupResponse {
   repeated TherapyProgram Programs = 15; 
 
   /** Gets or sets the therapy mode */ 
-  TherapyStatus Mode = 16; 
+  TherapyStatusTypes Mode = 16; 
 
   /** Gets or sets the valid flag for the device level parameters */ 
   bool Valid = 17; 
@@ -1424,8 +1464,19 @@ enum ElectrodeTypes{
 
 }
 
+/** Therapy Status Byte **/
+message TherapyStatusByte{
+
+  /** Gets or sets the therapy status **/ 
+  TherapyStatusTypes TherapyStatus = 1; 
+
+  /** Gets or sets the active group **/
+  GroupNumber ActiveGroup = 2; 
+
+}
+
 /** Therapy Status */ 
-enum TherapyStatus{
+enum TherapyStatusTypes{
 
   OFF = 0; /* Off */ 
   ON = 1; /* On */ 
@@ -1433,57 +1484,6 @@ enum TherapyStatus{
   TRANSITION_TO_OFF = 3; /* The transition to off */
   TRANSITION_TO_ACTIVE = 4; /* The transition to active */ 
   TRANSITION_TO_LEAD_INTEGRITY = 5; /* The transition to lead integrity */ 
-
-}
-
-/** Interrogate Data */ 
-message GeneralInterrogateData{
-
-  /* Gets or sets the type */ 
-  InterrogateTypes Type = 1; 
-
-  /* Gets or sets the implant date */ 
-  TimeOfDay ImplantDate = 2; 
-
-  /* Gets or sets the device time */
-  TimeOfDay DeviceTime = 3; 
-
-  /* Gets or sets the therapy status data */ 
-  TherapyStatus TherapyStatusData = 4; 
-
-  /* Gets or sets a value indicating whether this instance is therapy unavailable */ 
-  bool IsTherapyUnavailable = 5; 
-
-  /* Gets or sets a value indicating whether this instance is in CP session */ 
-  bool IsInCPSession = 6; 
-
-  /* Gets or sets the battery status (0-100%) */ 
-  bytes BatteryStatus = 7; 
-
-  /* Gets or sets the device serial number */ 
-  repeated bytes DeviceSerialNumber = 8; 
-
-  /* Gets or sets the hybrid serial number */ 
-  repeated bytes HybridSerialNumber = 9; 
-
-  /* Gets or sets the Tel-M Device ID */ 
-  repeated bytes TelMDeviceId = 10; 
-
-  /* Gets or sets a value indicating whether this instance 
-  * is mri mode on. This will always be off */ 
-  bool IsMriModeOn = 11; 
-
-  /* Gets or sets a value indicating whether this instance is overvoltage */ 
-  bool IsOvervoltage = 12; 
-
-  /* Gets a value indicating whether the device is giving an early replacement indication */ 
-  bool IsEri = 13; 
-
-  /* Gets a value indicating whether the device is at end of service */ 
-  bool IsEos = 14; 
-
-  /* Gets the days until end of service */ 
-  uint32 DaysUntilEos = 15; 
 
 }
 
