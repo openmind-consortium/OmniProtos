@@ -128,7 +128,7 @@ service DeviceManagerService {
   /** 
   * Writes a state-table entry for embedded adaptive stimulation algorithm 
   */
-  rpc WriteAdaptiveState {WriteAdaptiveStateRequest} returns (WriteAdaptiveStateResponse);
+  rpc WriteAdaptiveState (WriteAdaptiveStateRequest) returns (WriteAdaptiveStateResponse);
   
 }
 
@@ -1516,27 +1516,27 @@ message AdaptiveState {
 	/**
 	* Program 0 amplitude target (.1 mA per LSB)
 	*/
-	byte Prog0Amp = 1;
+	bytes Prog0Amp = 1;
 	 
 	/**
 	* Program 1 amplitude target (.1 mA per LSB)
 	*/
-	byte Prog1Amp = 2;
+	bytes Prog1Amp = 2;
 
 	/**
 	* Program 2 amplitude target (.1 mA per LSB)
 	*/
-	byte Prog2Amp = 3;
+	bytes Prog2Amp = 3;
 
 	/**
 	* Program 3 amplitude target (.1 mA per LSB)
 	*/
-	byte ProglAmp = 4;
+	bytes ProglAmp = 4;
 
 	/**
 	* Gets or sets the rate period target (10 us / LSB) Use OxFFFF for HOLD 
 	*/
-	uint16 RateTarget = 5;
+	uint32 RateTarget = 5;
 
 	/**
 	* Returns true if is valid
@@ -1574,7 +1574,7 @@ message WriteAdaptiveStateRequest {
 	/** 
 	* The state to write to
 	*/
-	byte stateNum = 1;
+	bytes stateNum = 1;
 
 	/** 
 	* The state-table entry with designated parameter setpoints
