@@ -124,6 +124,11 @@ service DeviceManagerService {
   * Read the stimulation settings
   */
   rpc ReadStimGroup (ReadStimGroupRequest) returns (ReadStimGroupResponse);
+
+  /** 
+  * Writes a state-table entry for embedded adaptive stimulation algorithm 
+  */
+  rpc WriteAdaptiveState {WriteAdaptiveStateRequest} returns (WriteAdaptiveStateResponse);
   
 }
 
@@ -1503,5 +1508,89 @@ message TimeOfDay{
 
   /* Gets or sets the real time */ 
   google.protobuf.Timestamp RealTime = 2; 
+
+}
+
+// Message representing an adaptive therapy state
+message AdaptiveState {
+	/**
+	* Program 0 amplitude target (.1 mA per LSB)
+	*/
+	byte Prog0Amp = 1;
+	 
+	/**
+	* Program 1 amplitude target (.1 mA per LSB)
+	*/
+	byte Prog1Amp = 2;
+
+	/**
+	* Program 2 amplitude target (.1 mA per LSB)
+	*/
+	byte Prog2Amp = 3;
+
+	/**
+	* Program 3 amplitude target (.1 mA per LSB)
+	*/
+	byte ProglAmp = 4;
+
+	/**
+	* Gets or sets the rate period target (10 us / LSB) Use OxFFFF for HOLD 
+	*/
+	uint16 RateTarget = 5;
+
+	/**
+	* Returns true if is valid
+	*/
+	bool IsValid = 6;
+
+	/**
+	* Get the program 0 amp in milliamps
+	*/
+	double Prog0AmpInMilliamps = 7;
+
+	/**
+	* Get the program 1 amp in milliamps
+	*/
+	double Prog1AmpInMilliamps = 8;
+
+	/**
+	* Get the program 2 amp in milliamps
+	*/
+	double Prog2AmpInMilliamps = 9;
+
+	/**
+	* Get the program 3 amp in milliamps
+	*/
+	double Prog3AmpInMilliamps = 10;
+
+	/**
+	* Get the rate target in Hz
+	*/
+	double RateTargetInHz = 11;
+}
+
+// Message format for WriteAdaptiveState Requests
+message WriteAdaptiveStateRequest {
+	/** 
+	* The state to write to
+	*/
+	byte stateNum = 1;
+
+	/** 
+	* The state-table entry with designated parameter setpoints
+	*/
+	AdaptiveState theAdaptiveState = 2;
+
+	/** 
+	* 
+	*/
+	bool enforceSenseFriendly = 3;
+}
+
+// Message format for WriteAdaptiveState Responses
+message WriteAdaptiveStateResponse {
+	/**
+	* TODO
+	*/
 
 }
