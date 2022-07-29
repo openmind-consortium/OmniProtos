@@ -1531,7 +1531,7 @@ message AdaptiveState {
 	/**
 	* Program 3 amplitude target (.1 mA per LSB)
 	*/
-	bytes ProglAmp = 4;
+	bytes Prog3Amp = 4;
 
 	/**
 	* Gets or sets the rate period target (10 us / LSB) Use OxFFFF for HOLD 
@@ -1571,20 +1571,27 @@ message AdaptiveState {
 
 // Message format for WriteAdaptiveState Requests
 message WriteAdaptiveStateRequest {
+    /**
+    * Scheme-less URI describing the device resource.
+    * For example, '//summit/bridge/xxxxxxxxx/device/yyyyyyyyy' where
+    * 'xxxxxxxxx' is the serial number of the bridge and 'yyyyyyyyy' is
+    * the serial number of the device.
+    */
+    string name = 1;
 	/** 
-	* The state to write to
+	* The state to write to - actually a bytes primitive, but storing as int32 
 	*/
-	bytes stateNum = 1;
+	int32 stateNum = 2;
 
 	/** 
 	* The state-table entry with designated parameter setpoints
 	*/
-	AdaptiveState theAdaptiveState = 2;
+	AdaptiveState theAdaptiveState = 3;
 
 	/** 
 	* 
 	*/
-	bool enforceSenseFriendly = 3;
+	bool enforceSenseFriendly = 4;
 }
 
 // Message format for WriteAdaptiveState Responses
@@ -1593,5 +1600,5 @@ message WriteAdaptiveStateResponse {
 	* Additional platform specific error details. These are defined in a separate
 	* protobuf files, one per manufacturer.
 	*/
-	SummitError error = 1;
+	SummitError error = 2;
 }
