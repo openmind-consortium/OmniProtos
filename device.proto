@@ -1514,36 +1514,6 @@ message TimeOfDay{
 // Message representing an adaptive therapy state
 message AdaptiveState {
 	/**
-	* Program 0 amplitude target (.1 mA per LSB)
-	*/
-	bytes Prog0Amp = 1;
-	 
-	/**
-	* Program 1 amplitude target (.1 mA per LSB)
-	*/
-	bytes Prog1Amp = 2;
-
-	/**
-	* Program 2 amplitude target (.1 mA per LSB)
-	*/
-	bytes Prog2Amp = 3;
-
-	/**
-	* Program 3 amplitude target (.1 mA per LSB)
-	*/
-	bytes Prog3Amp = 4;
-
-	/**
-	* Gets or sets the rate period target (10 us / LSB) Use OxFFFF for HOLD 
-	*/
-	uint32 RateTarget = 5;
-
-	/**
-	* Returns true if is valid
-	*/
-	bool IsValid = 6;
-
-	/**
 	* Get the program 0 amp in milliamps
 	*/
 	double Prog0AmpInMilliamps = 7;
