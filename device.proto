@@ -931,7 +931,7 @@ message StimChangeStepAmpRequest {
   /** 
   * The program to apply the amplitude change to
   */ 
-  bytes program_number = 2;
+  int32 program_number = 2;
 
   /** 
   * The change in amplitude to apply in milliamps, 0.1 resolution
