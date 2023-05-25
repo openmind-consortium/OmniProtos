@@ -125,6 +125,7 @@ service DeviceManagerService {
   */
   rpc ReadStimGroup (ReadStimGroupRequest) returns (ReadStimGroupResponse);
   
+  rpc ReadSenseState (ReadSenseStateRequest) returns (ReadSenseStateResponse);
 }
 
 message Device {
@@ -1504,4 +1505,12 @@ message TimeOfDay{
   /* Gets or sets the real time */ 
   google.protobuf.Timestamp RealTime = 2; 
 
+}
+
+message ReadSenseStateRequest{
+	string name = 1;
+}
+
+message ReadSenseStateResponse{
+	string name = 1;
 }
