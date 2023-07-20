@@ -729,3 +729,11 @@ message SummitStreamEnablesConfiguration{
    */
 	bool enable_time = 8;
 }
+
+
+enum AdaptiveTherapyModes
+{
+Disabled = 0;  /*adaptive therapy is Disabled*/
+Operative = 1; /*adaptive therapy is Operative*/
+Embedded = 2;  /*adaptive therapy is Embedded*/
+}
