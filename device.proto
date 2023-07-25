@@ -126,7 +126,7 @@ service DeviceManagerService {
   rpc ReadStimGroup (ReadStimGroupRequest) returns (ReadStimGroupResponse);
 
     /**
-  * Read the stimulation settings
+  * Change the adaptive mode 
   */
   rpc WriteAdaptiveMode (WriteAdaptiveModeRequest) returns (WriteAdaptiveModeResponse);
 
