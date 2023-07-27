@@ -1521,10 +1521,10 @@ message WriteAdaptiveDeltasRequest {
   string name = 1;
 
   /*set the desired rate of change between adaptive state amplitude setpoints for each of the 4 programs */
-  AdaptiveDeltas program1 = 1;
-  AdaptiveDeltas program2 = 2;
-  AdaptiveDeltas program3 = 3;
-  AdaptiveDeltas program4 = 4;
+  AdaptiveDeltas program0 = 2; /*index value here is meaningless*/
+  AdaptiveDeltas program1 = 3;
+  AdaptiveDeltas program2 = 4;
+  AdaptiveDeltas program3 = 5;
 }
 
 message WriteAdaptiveDeltasResponse {
