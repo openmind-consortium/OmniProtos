@@ -125,6 +125,11 @@ service DeviceManagerService {
   */
   rpc ReadStimGroup (ReadStimGroupRequest) returns (ReadStimGroupResponse);
   
+
+   /**
+  * Read current sensing state
+  */
+  rpc ReadSensingState (ReadSensingStateRequest) returns (ReadSensingStateResponse);
 }
 
 message Device {
@@ -1286,6 +1291,32 @@ message ReadStimGroupResponse {
 
 }
 
+message ReadSensingStateRequest{
+
+  /**
+  * Scheme-less URI describing the device resource. For example,
+  * '//summit/bridge/xxxxxx/device/yyyyyy' where 'xxxxxx' is the
+  * serial number of the bridge and 'yyyyyy' is the serial number
+  * of the device.
+  */
+  string name = 1;
+
+}
+
+
+message ReadSensingStateResponse{
+
+  SensingStates State = 1;
+  
+  bytes FftStreamChannel = 2;
+
+  AccelerometerSampleRate AccelRate = 3;
+
+  SummitError error = 4;
+
+}
+
+
 /** Class representing a CycleTime */ 
 message CycleTimeShort{
 
@@ -1503,5 +1534,20 @@ message TimeOfDay{
 
   /* Gets or sets the real time */ 
   google.protobuf.Timestamp RealTime = 2; 
+
+}
+
+
+enum SensingStates{
+  
+  NO_SENSE = 0; /* None enabled */
+  LFP = 1; /* Time Domain */
+  FFT = 2; /* FFT */
+  POWER = 4; /* Power */
+  UNUSED = 8; /* Unused */
+  DETECTION_LD0 = 16; /* LD0 */
+  DETECTION_LD1 = 32; /* LD1 */
+  LOOP_RECORDING = 64; /* Loop Recording */
+  ADAPTIVE_STIM = 128; /* Adaptive */
 
 }
