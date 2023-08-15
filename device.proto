@@ -129,6 +129,16 @@ service DeviceManagerService {
   * Write the Adaptive Deltas
   */
   rpc WriteAdaptiveDeltas (WriteAdaptiveDeltasRequest) returns (WriteAdaptiveDeltasResponse);
+
+  /**
+  * Change the adaptive mode 
+  */
+  rpc WriteAdaptiveMode (WriteAdaptiveModeRequest) returns (WriteAdaptiveModeResponse);
+
+  /**
+  * Read current sensing state
+  */
+  rpc ReadSensingState (ReadSensingStateRequest) returns (ReadSensingStateResponse);
 }
 
 message Device {
@@ -1290,6 +1300,32 @@ message ReadStimGroupResponse {
 
 }
 
+message ReadSensingStateRequest{
+
+  /**
+  * Scheme-less URI describing the device resource. For example,
+  * '//summit/bridge/xxxxxx/device/yyyyyy' where 'xxxxxx' is the
+  * serial number of the bridge and 'yyyyyy' is the serial number
+  * of the device.
+  */
+  string name = 1;
+
+}
+
+
+message ReadSensingStateResponse{
+
+  SensingStates State = 1;
+  
+  bytes FftStreamChannel = 2;
+
+  AccelerometerSampleRate AccelRate = 3;
+
+  SummitError error = 4;
+
+}
+
+
 /** Class representing a CycleTime */ 
 message CycleTimeShort{
 
@@ -1510,6 +1546,28 @@ message TimeOfDay{
 
 }
 
+message WriteAdaptiveModeRequest{
+  /**
+* Scheme-less URI describing the device resource. For example,
+* '//summit/bridge/xxxxxx/device/yyyyyy' where 'xxxxxx' is the
+* serial number of the bridge and 'yyyyyy' is the serial number
+* of the device.
+*/
+string Name = 1;
+
+/** the adaptive therapy mode */ 
+AdaptiveTherapyModes AdaptiveTherapyMode = 2;
+}
+
+message WriteAdaptiveModeResponse{
+/**
+* Additional platform specific error details. These are defined in a separate
+* protobuf files, one per manufacturer.
+*/
+SummitError error = 1;
+}
+
+
 message WriteAdaptiveDeltasRequest {
 
  /**
@@ -1533,4 +1591,16 @@ message WriteAdaptiveDeltasResponse {
   * protobuf files, one per manufacturer.
   */
   SummitError error = 1;
+}
+
+enum SensingStates{
+  NO_SENSE = 0; /* None enabled */
+  LFP = 1; /* Time Domain */
+  FFT = 2; /* FFT */
+  POWER = 4; /* Power */
+  UNUSED = 8; /* Unused */
+  DETECTION_LD0 = 16; /* LD0 */
+  DETECTION_LD1 = 32; /* LD1 */
+  LOOP_RECORDING = 64; /* Loop Recording */
+  ADAPTIVE_STIM = 128; /* Adaptive */
 }
