@@ -1315,7 +1315,7 @@ message ReadSensingStateRequest{
 
 message ReadSensingStateResponse{
 
-  SensingStates State = 1;
+  SensingEnables State = 1;
   
   bytes FftStreamChannel = 2;
 
@@ -1567,7 +1567,6 @@ message WriteAdaptiveModeResponse{
 SummitError error = 1;
 }
 
-
 message WriteAdaptiveDeltasRequest {
 
  /**
@@ -1604,3 +1603,4 @@ enum SensingStates{
   LOOP_RECORDING = 64; /* Loop Recording */
   ADAPTIVE_STIM = 128; /* Adaptive */
 }
+
