@@ -730,10 +730,27 @@ message SummitStreamEnablesConfiguration{
 	bool enable_time = 8;
 }
 
-
 enum AdaptiveTherapyModes
 {
 Disabled = 0;  /*adaptive therapy is Disabled*/
 Operative = 1; /*adaptive therapy is Operative*/
 Embedded = 2;  /*adaptive therapy is Embedded*/
+}
+
+
+message AdaptiveDeltas{
+
+  /*set the rise and fall ramping rate for an adaptive program in steps per time interval
+    example) 0x00002000 corresponds to a amplitude change of 0.0125 mA per 100 ms
+  */
+
+  /**
+	 rise ramp rate, set in steps per interval
+   */ 
+  uint32 rise = 1;
+  
+  /**
+    fall ramp rate, set in steps per interval
+    */
+  uint32 fall = 2;
 }

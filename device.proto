@@ -126,6 +126,11 @@ service DeviceManagerService {
   rpc ReadStimGroup (ReadStimGroupRequest) returns (ReadStimGroupResponse);
 
   /**
+  * Write the Adaptive Deltas
+  */
+  rpc WriteAdaptiveDeltas (WriteAdaptiveDeltasRequest) returns (WriteAdaptiveDeltasResponse);
+
+  /**
   * Change the adaptive mode 
   */
   rpc WriteAdaptiveMode (WriteAdaptiveModeRequest) returns (WriteAdaptiveModeResponse);
@@ -1560,6 +1565,32 @@ message WriteAdaptiveModeResponse{
 * protobuf files, one per manufacturer.
 */
 SummitError error = 1;
+}
+
+
+message WriteAdaptiveDeltasRequest {
+
+ /**
+  * Scheme-less URI describing the device resource. For example,
+  * '//summit/bridge/xxxxxx/device/yyyyyy' where 'xxxxxx' is the
+  * serial number of the bridge and 'yyyyyy' is the serial number
+  * of the device.
+  */ 
+  string name = 1;
+
+  /*set the desired rate of change between adaptive state amplitude setpoints for each of the 4 programs */
+  AdaptiveDeltas program0 = 2; /*index value here is meaningless*/
+  AdaptiveDeltas program1 = 3;
+  AdaptiveDeltas program2 = 4;
+  AdaptiveDeltas program3 = 5;
+}
+
+message WriteAdaptiveDeltasResponse {
+  /**
+  * Additional platform specific error details. These are defined in a separate
+  * protobuf files, one per manufacturer.
+  */
+  SummitError error = 1;
 }
 
 enum SensingStates{
