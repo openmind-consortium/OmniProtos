@@ -1591,16 +1591,3 @@ message WriteAdaptiveDeltasResponse {
   */
   SummitError error = 1;
 }
-
-enum SensingStates{
-  NO_SENSE = 0; /* None enabled */
-  LFP = 1; /* Time Domain */
-  FFT = 2; /* FFT */
-  POWER = 4; /* Power */
-  UNUSED = 8; /* Unused */
-  DETECTION_LD0 = 16; /* LD0 */
-  DETECTION_LD1 = 32; /* LD1 */
-  LOOP_RECORDING = 64; /* Loop Recording */
-  ADAPTIVE_STIM = 128; /* Adaptive */
-}
-
