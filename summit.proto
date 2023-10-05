@@ -754,3 +754,13 @@ message AdaptiveDeltas{
     */
   uint32 fall = 2;
 }
+
+message AdaptiveState
+{
+	double Prog0Amp = 1;
+	double Prog1Amp = 2;
+	double Prog2Amp = 3;
+	double Prog3Amp = 4;
+	double RateTargetInHz = 5;
+	//bool Valid = 5;
+}
