@@ -136,6 +136,11 @@ service DeviceManagerService {
   rpc WriteAdaptiveMode (WriteAdaptiveModeRequest) returns (WriteAdaptiveModeResponse);
 
   /**
+  * Change the adaptive detection parameters
+  */
+  rpc WriteAdaptiveDetectionParameters (WriteAdaptiveDetectionParametersRequest) returns (WriteAdaptiveDetectionParametersResponse);
+
+  /**
   * Read current sensing state
   */
   rpc ReadSensingState (ReadSensingStateRequest) returns (ReadSensingStateResponse);
@@ -1560,6 +1565,31 @@ AdaptiveTherapyModes AdaptiveTherapyMode = 2;
 }
 
 message WriteAdaptiveModeResponse{
+/**
+* Additional platform specific error details. These are defined in a separate
+* protobuf files, one per manufacturer.
+*/
+SummitError error = 1;
+}
+
+
+message WriteAdaptiveDetectionParametersRequest{
+  /**
+* Scheme-less URI describing the device resource. For example,
+* '//summit/bridge/xxxxxx/device/yyyyyy' where 'xxxxxx' is the
+* serial number of the bridge and 'yyyyyy' is the serial number
+* of the device.
+*/
+string Name = 1;
+
+/*Which detector to apply the parameters to, either 0 or 1*/ 
+uint32 detectorNumber = 2;
+
+/*The object containin g th edesired LFP detector Settings*/ 
+LinearDiscriminantConfiguration theDetectorConfig = 2;
+}
+
+message WriteAdaptiveDetectionParametersResponse{
 /**
 * Additional platform specific error details. These are defined in a separate
 * protobuf files, one per manufacturer.

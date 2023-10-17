@@ -539,12 +539,7 @@ message SummitAccelerometerStreamConfiguration {
   AccelerometerSampleRate sample_rate = 1;
 }
 
-enum DetectorNumber {
-  DETECTOR_O = 0;
-  DETECTOR_1 = 1;
-}
-
-enum DetectionEnables {
+enum DetectionEnable {
   /* No enables are set. This means that single threshold detect mode is used */
   DETECTION_DISABLED = 0;
   
@@ -572,67 +567,46 @@ enum DetectionInputs {
 
 message LinearDiscriminantFeature {
   /* Gets or sets the normalization subtract term for each input/feature of the LD */
-  fixed32 normalization_subtract_vector = 1;
+  uint32 normalization_subtract_vector = 1;
 
   /* Gets or sets the normalization multiply term for each input/feature of the LD */
-  fixed32 NormalizationMultiplyVector = 2;
+  uint32 NormalizationMultiplyVector = 2;
 
   /* Gets or sets the weight vector multiply term for each input/feature of the LD */
-  fixed32 weight_vector = 3;
+  uint32 weight_vector = 3;
 }
 
-message SummitLinearDetectorConfiguration {
-  /**
-   * Which detector to apply the parameters to
-   */
-  DetectorNumber detector_number = 1;
+message LinearDiscriminantConfiguration {
+  /*the detection enable: single/dual band mode, normalization used*/
+  DetectionEnable detectionEnables = 1;
 
-  /* The detection enable: single/dual band mode, normalization        *
-   * used/not used and overall detector enable                         */
-  DetectionEnables detection_enable = 2;
+  /*the detection inputs(power channels) a minimum of 1 and a max of 4*/
+  DetectionInputs detectionInputs = 2;
+  
+  /*the detector's update rate*/
+  uint32 updateRate = 3;
 
-  /* Gets or sets the detector's update rate. Each power feature input *
-   * will be summed on each FFT interval and the averaged power value  *
-   * will be evaluated for detection state change when the LD Update   *
-   * rate count is met.                                                */
-  uint32 update_rate = 3;
+  /*the onsetDuration in update rate tic counts*/
+  uint32 onsetDuration = 4;
 
-  /* Gets or sets the onsetDuration in update rate tic counts. Number  *
-   * of consecutive LD Update Rate counts that a Rising detect signal  *
-   * must exceed a Bias threshold before a detection state change is   *
-   * declared if not already in the detect state. In dual detect mode, *
-   * each Bias threshold has an independent onset counter to be        *
-   * compared against the Onset detect duration value                  */
-  uint32 onset_duration = 4;
+  /*Duration of the termination*/
+  uint32 terminationDuration = 5;
 
-  /* Gets or sets the terminationDuration in update rate tic counts.   *
-   * Number of consecutive LD Update Rate counts that a Falling detect *
-   * signal must be below a Bias threshold before a detection state    *
-   * change is declared if already in the detect state. In dual detect *
-   * mode, each Bias threshold has an independent termination counter  *
-   * to be compared against the Termination detect duration value.     */
-  uint32 termination_duration = 5;
+  /*the hold off time*/
+  uint32 holdoffTime = 6;
+  
+  /*The blanking duration upon state change*/
+  uint32 blankingDurationUponStateChange = 7;
 
-  /* Gets or sets the duration in update rate tics that the detector   *
-   * will hold off evaluation after enablement.                        */
-  uint32 holdoff_time = 6;
-
-  /* Gets or sets the blanking duration upon state change (in fft      *
-   * interval counts).                                                 */
-  uint32 blanking_duration_upon_state_change = 7;
-
-  /* Gets or sets the features used to process each of the 4 inputs.   *
-   * (Normalization multiply, weight multiply, and normalization       *
-   * subtract)                                                         */
+  /*The features used to process each of the 4 inputs*/
   repeated LinearDiscriminantFeature features = 8;
 
-  /* Gets or sets the bias term for the LD (only one bias is used for  *
-   * single mode).                                                     */
-  repeated fixed32 bias_term = 9;
+  /*The bias term(s) for the LD in 32bit fixed point*/
+  repeated uint32 bias = 9;
 
-  /* Gets or sets the fractional fixed point value (0-30) used for the *
-   * preceding fixed point terms.                                      */
-  fixed32 fractional_fixed_point_value = 10;
+  /*the fractional fixed point value*/
+  uint32 fractionalFixedPointValue = 10;
+
 }
 
 enum FFTStreamChannel {
