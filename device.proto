@@ -1586,7 +1586,7 @@ string Name = 1;
 uint32 detectorNumber = 2;
 
 /*The object containin g th edesired LFP detector Settings*/ 
-LinearDiscriminantConfiguration theDetectorConfig = 2;
+LinearDiscriminantConfiguration theDetectorConfig = 3;
 }
 
 message WriteAdaptiveDetectionParametersResponse{
