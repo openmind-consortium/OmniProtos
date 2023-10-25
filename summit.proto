@@ -567,13 +567,13 @@ enum DetectionInputs {
 
 message LinearDiscriminantFeature {
   /* Gets or sets the normalization subtract term for each input/feature of the LD */
-  uint32 normalization_subtract_vector = 1;
+  uint32 NormalizationSubtractVector = 1;
 
   /* Gets or sets the normalization multiply term for each input/feature of the LD */
   uint32 NormalizationMultiplyVector = 2;
 
   /* Gets or sets the weight vector multiply term for each input/feature of the LD */
-  uint32 weight_vector = 3;
+  uint32 WeightVector = 3;
 }
 
 message LinearDiscriminantConfiguration {
