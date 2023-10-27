@@ -539,30 +539,30 @@ message SummitAccelerometerStreamConfiguration {
   AccelerometerSampleRate sample_rate = 1;
 }
 
-enum DetectionEnable {
+enum DetectionEnables {
   /* No enables are set. This means that single threshold detect mode is used */
-  DETECTION_DISABLED = 0;
+  DetectionDisabled = 0;
   
   /* Enable dual threshold (band) detect. If this bit is not set, single      *
    * detect mode is used.                                                     */
-  DUAL_THRESHOLD_ENABLED = 1;
+  DualThresholdEnabled = 1;
   
   /* Blank both LDs based on a state change from this LD. The blank duration  *
    * specified for each LD is used (if 0 duration is set, then no blanking    *
    * will occur). If this bit is not set, only this LD is blanked.            */
-  BLANK_BOTH = 2;
+  BlankBoth = 2;
 }
 
 enum DetectionInputs {
-  NO_DETECTION_INPUTS = 0;  /* No inputs are chosen */
-  CHANNEL_0_BAND_0 = 1;   /* Power channel 0 band 0 */
-  Channel_0_Band_1 = 2;   /* Power channel 0 band 1 */
-  Channel_1_Band_0 = 4;   /* Power channel 1 band 0 */
-  Channel_1_Band_1 = 8;   /* Power channel 1 band 1 */
-  Channel_2_Band_0 = 16;  /* Power channel 2 band 0 */
-  Channel_2_Band_1 = 32;  /* Power channel 2 band 1 */
-  Channel_3_Band_0 = 64;  /* Power channel 3 band 0 */
-  Channel_3_Band_1 = 128; /* Power channel 3 band 1 */
+  NoDetectionInputs = 0;  /* No inputs are chosen */
+  Channel0Band0 = 1;   /* Power channel 0 band 0 */
+  Channel0Band1 = 2;   /* Power channel 0 band 1 */
+  Channel1Band0 = 4;   /* Power channel 1 band 0 */
+  Channel1Band1 = 8;   /* Power channel 1 band 1 */
+  Channel2Band0 = 16;  /* Power channel 2 band 0 */
+  Channel2Band1 = 32;  /* Power channel 2 band 1 */
+  Channel3Band0 = 64;  /* Power channel 3 band 0 */
+  Channel3Band1 = 128; /* Power channel 3 band 1 */
 }
 
 message LinearDiscriminantFeature {
@@ -578,34 +578,34 @@ message LinearDiscriminantFeature {
 
 message LinearDiscriminantConfiguration {
   /*the detection enable: single/dual band mode, normalization used*/
-  DetectionEnable detectionEnables = 1;
+  DetectionEnables DetectionEnables = 1;
 
   /*the detection inputs(power channels) a minimum of 1 and a max of 4*/
-  DetectionInputs detectionInputs = 2;
+  DetectionInputs DetectionInputs = 2;
   
   /*the detector's update rate*/
-  uint32 updateRate = 3;
+  uint32 UpdateRate = 3;
 
   /*the onsetDuration in update rate tic counts*/
-  uint32 onsetDuration = 4;
+  uint32 OnsetDuration = 4;
 
   /*Duration of the termination*/
-  uint32 terminationDuration = 5;
+  uint32 TerminationDuration = 5;
 
   /*the hold off time*/
-  uint32 holdoffTime = 6;
+  uint32 HoldoffTime = 6;
   
   /*The blanking duration upon state change*/
-  uint32 blankingDurationUponStateChange = 7;
+  uint32 BlankingDurationUponStateChange = 7;
 
   /*The features used to process each of the 4 inputs*/
-  repeated LinearDiscriminantFeature features = 8;
+  repeated LinearDiscriminantFeature Features = 8;
 
   /*The bias term(s) for the LD in 32bit fixed point*/
-  repeated uint32 bias = 9;
+  repeated uint32 Bias = 9;
 
   /*the fractional fixed point value*/
-  uint32 fractionalFixedPointValue = 10;
+  uint32 FractionalFixedPointValue = 10;
 
 }
 

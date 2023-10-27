@@ -1583,10 +1583,10 @@ message WriteAdaptiveDetectionParametersRequest{
 string Name = 1;
 
 /*Which detector to apply the parameters to, either 0 or 1*/ 
-uint32 detectorNumber = 2;
+uint32 DetectorNumber = 2;
 
 /*The object containin g th edesired LFP detector Settings*/ 
-LinearDiscriminantConfiguration theDetectorConfig = 3;
+LinearDiscriminantConfiguration TheDetectorConfig = 3;
 }
 
 message WriteAdaptiveDetectionParametersResponse{
@@ -1594,7 +1594,7 @@ message WriteAdaptiveDetectionParametersResponse{
 * Additional platform specific error details. These are defined in a separate
 * protobuf files, one per manufacturer.
 */
-SummitError error = 1;
+SummitError Error = 1;
 }
 
 message WriteAdaptiveDeltasRequest {
