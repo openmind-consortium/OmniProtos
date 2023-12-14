@@ -762,5 +762,4 @@ message AdaptiveState
 	double Prog2Amp = 3;
 	double Prog3Amp = 4;
 	double RateTargetInHz = 5;
-	bool Valid = 6;
 }
