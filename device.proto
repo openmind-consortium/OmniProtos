@@ -136,11 +136,6 @@ service DeviceManagerService {
   rpc WriteAdaptiveMode (WriteAdaptiveModeRequest) returns (WriteAdaptiveModeResponse);
 
   /**
-  * Change the adaptive mode 
-  */
-  rpc WriteAdaptiveState (WriteAdaptiveStateRequest) returns (WriteAdaptiveStateResponse);
-
-  /**
   * Read current sensing state
   */
   rpc ReadSensingState (ReadSensingStateRequest) returns (ReadSensingStateResponse);
