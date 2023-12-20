@@ -136,6 +136,11 @@ service DeviceManagerService {
   rpc WriteAdaptiveMode (WriteAdaptiveModeRequest) returns (WriteAdaptiveModeResponse);
 
   /**
+  * Forces the adaptive stimulation table into a specific state
+  */
+  rpc WriteAdaptiveGoToState (WriteAdaptiveGoToStateRequest) returns (WriteAdaptiveGoToStateResponse);
+
+  /**
   * Read current sensing state
   */
   rpc ReadSensingState (ReadSensingStateRequest) returns (ReadSensingStateResponse);
