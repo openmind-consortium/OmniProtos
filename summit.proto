@@ -737,6 +737,107 @@ Operative = 1; /*adaptive therapy is Operative*/
 Embedded = 2;  /*adaptive therapy is Embedded*/
 }
 
+// this exists as AdaptiveRampingFlags in device.proto, merge these enums in future edit
+// add _ to end to temporarally solve naming conflict, then fix later at a later date in a fix branch.
+//flag enum
+enum AdaptiveTherapyStatusFlags_{
+  NoStatusFlags = 0;  /*None*/ 
+  Prog0AmpRamping_=1;  /*The prog 0 is ramping*/ 
+  Prog1AmpRamping_=2;  /*The prog 1 is ramping*/ 
+  Prog2AmpRamping_=4;  /*The prog 2 is ramping*/  
+  Prog3AmpRamping_=8;  /*The prog 3 is ramping*/ 
+}
+
+message LinearDiscriminantStatus{
+  /* The averaged power feature inputs*/
+  repeated uint32 FeatureInputs = 1;
+
+  /*Output linear discriminant output (32bit fixed point)*/
+  uint32 Output = 2;
+
+  /*low threashold bias value (32bit fixed point)*/
+  uint32 LowThreshold = 3;
+
+  /*High threashold bias value (32bit fixed point)*/
+  uint32 HighThreshold = 4;
+
+  /*fixed decimal point used in calculations*/
+  uint32 FixedDecimalPoint = 5; 
+}
+
+//flag enum
+//this exists as SensingEnables in device.proto. add _ to end and deleted repeated enum later, then remove this comment.
+enum SenseStates_{
+  SenseStatesNone = 0;
+  LfpSense=1;
+  Fft=2;
+  Power=4;
+  DetectionLd0=16;    
+  DetectionLd1=32;
+  LoopRecording=64;
+  AdaptiveStim=128;
+}
+
+//flag enum
+enum DetectionOutputStatus{
+  DetectNone=0;                 /*The none*/
+  LowImmediateDetect=1;         /*The low Boundary is in immediate detect*/
+  HighImmediateDetect=2;        /*The High Boundary is in immediate detect*/
+  LowDetect=4;                  /*The low Boundary is in detect*/
+  HighDetect=8;                 /*The High Boundary is in detect*/
+  OutputOverRange=16;           /*The Id Output is over range and the LD output is held at last valid computed value*/
+  Blanked=32;                   /*THe LD is being blanked currently due to ust having entered a new state*/
+  InputOverRange=64;            /*A power channel input to the LD is over range and the LD output is held at the last valid value*/
+  InHoldoff=128;                /*The LD is on a hold off state to allow fo rit to stablize(LD detect output not valid)*/
+}
+
+
+message DetectionAdaptivePacket{
+/*the Current Adaptive State(0-8) , 0x0F indicates hold-off state*/
+uint32 CurrentAdaptiveState = 1;
+
+/*the Previous Adaptive State(0-8) , 0x0F indicates hold-off state*/
+uint32 PreviousAdaptiveState = 2;
+
+/*Current program Amplitudes (.1mA per LSB) */
+repeated uint32  CurrentProgramAmplitudes = 3;
+
+/*The stim rate period (10us per LSB)*/
+uint32 StimRatePeriod = 4;
+
+/*the stim flags - if any amplitude are ramping currently*/
+repeated AdaptiveTherapyStatusFlags_ StimFlags = 5; //flag enum
+
+/* LD0 status */
+LinearDiscriminantStatus Ld0Status = 6;
+
+/* LD1 status */
+LinearDiscriminantStatus Ld1Status = 7;
+
+/*the number of times the current state has been entered*/
+uint32 StateEntryCount = 8;
+
+/*the time spent in this state since th elast time state was cleared*/
+uint32 StateTime = 9;
+
+/*the closed loop status*/ 
+repeated SenseStates_ SensingStatus = 10; //flag enum
+
+/*bool is in holdoff on startup*/
+bool IsInHoldOffOnStartup = 11;
+
+/*the LD0 detection status*/
+repeated DetectionOutputStatus Ld0DetectionStatus = 12; //flag enum
+
+/*the LD1 detection status*/
+repeated DetectionOutputStatus Ld1DetectionStatus = 13; //flag enum
+
+/*current program amplitudes in milliamps*/
+repeated double CurrentProgramAmplitudesInMilliamps = 14;
+
+/*the stim rate in Hz*/
+double StimRateInHz = 15;
+}
 
 message AdaptiveDeltas{
 
