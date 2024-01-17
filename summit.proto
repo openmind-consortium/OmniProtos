@@ -547,22 +547,21 @@ enum DetectionEnables {
    * detect mode is used.                                                     */
   DualThresholdEnabled = 1;
   
-  /* Blank both LDs based on a state change from this LD. The blank duration  *
-   * specified for each LD is used (if 0 duration is set, then no blanking    *
-   * will occur). If this bit is not set, only this LD is blanked.            */
+  /* Blank both LDs based on a state change from this LD. */
   BlankBoth = 2;
 }
 
+//flag enum
 enum DetectionInputs {
   NoDetectionInputs = 0;  /* No inputs are chosen */
-  Channel0Band0 = 1;   /* Power channel 0 band 0 */
-  Channel0Band1 = 2;   /* Power channel 0 band 1 */
-  Channel1Band0 = 4;   /* Power channel 1 band 0 */
-  Channel1Band1 = 8;   /* Power channel 1 band 1 */
-  Channel2Band0 = 16;  /* Power channel 2 band 0 */
-  Channel2Band1 = 32;  /* Power channel 2 band 1 */
-  Channel3Band0 = 64;  /* Power channel 3 band 0 */
-  Channel3Band1 = 128; /* Power channel 3 band 1 */
+  Ch0Band0 = 1;   /* Power channel 0 band 0 */
+  Ch0Band1 = 2;   /* Power channel 0 band 1 */
+  Ch1Band0 = 4;   /* Power channel 1 band 0 */
+  Ch1Band1 = 8;   /* Power channel 1 band 1 */
+  Ch2Band0 = 16;  /* Power channel 2 band 0 */
+  Ch2Band1 = 32;  /* Power channel 2 band 1 */
+  Ch3Band0 = 64;  /* Power channel 3 band 0 */
+  Ch3Band1 = 128; /* Power channel 3 band 1 */
 }
 
 message LinearDiscriminantFeature {
@@ -576,37 +575,36 @@ message LinearDiscriminantFeature {
   uint32 WeightVector = 3;
 }
 
-message LinearDiscriminantConfiguration {
-  /*the detection enable: single/dual band mode, normalization used*/
-  DetectionEnables DetectionEnables = 1;
+message LinearDiscriminantConfiguration
+{
+  /* the enable byte for a linear discriminant detection */
+  DetectionEnables DetectionEnable = 1;
 
-  /*the detection inputs(power channels) a minimum of 1 and a max of 4*/
-  DetectionInputs DetectionInputs = 2;
-  
-  /*the detector's update rate*/
+  /* byte used to determine which power channels are used as input features for LD*/
+  repeated DetectionInputs DetectionInputs = 2;   //flag enum
+
+  /*the LD's update rate - set in FFT interval counts*/
   uint32 UpdateRate = 3;
 
-  /*the onsetDuration in update rate tic counts*/
+  /* the onsetDuration in update rate tic counts*/
   uint32 OnsetDuration = 4;
 
-  /*Duration of the termination*/
+  /* the terminationDuration in update rate tic counts*/
   uint32 TerminationDuration = 5;
 
-  /*the hold off time*/
+  /* duration in update rate tic counts that the detector will hold off eval after being enabled*/
   uint32 HoldoffTime = 6;
-  
-  /*The blanking duration upon state change*/
+
+  /*blanking duration upon state change*/
   uint32 BlankingDurationUponStateChange = 7;
 
-  /*The features used to process each of the 4 inputs*/
-  repeated LinearDiscriminantFeature Features = 8;
+  /* the features used to process each of the 4 inputs*/
+  repeated LinearDiscriminantFeature Features = 8; //list
 
-  /*The bias term(s) for the LD in 32bit fixed point*/
-  repeated uint32 Bias = 9;
+  /* sets the bias term for the LD (only one used in single mode)*/
+  repeated uint32 BiasTerm = 9; //list
 
-  /*the fractional fixed point value*/
-  uint32 FractionalFixedPointValue = 10;
-
+  uint32 FractionalFixedPointValue = 10; 
 }
 
 enum FFTStreamChannel {
@@ -706,9 +704,9 @@ message SummitStreamEnablesConfiguration{
 
 enum AdaptiveTherapyModes
 {
-Disabled = 0;  /*adaptive therapy is Disabled*/
-Operative = 1; /*adaptive therapy is Operative*/
-Embedded = 2;  /*adaptive therapy is Embedded*/
+  Disabled = 0;  /*adaptive therapy is Disabled*/
+  Operative = 1; /*adaptive therapy is Operative*/
+  Embedded = 2;  /*adaptive therapy is Embedded*/
 }
 
 
