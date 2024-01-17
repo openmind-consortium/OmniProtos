@@ -1344,7 +1344,7 @@ message ReadSensingStateRequest{
 
 message ReadSensingStateResponse{
 
-  SensingEnables State = 1;
+  repeated SensingEnables State = 1;
   
   bytes FftStreamChannel = 2;
 
