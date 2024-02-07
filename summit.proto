@@ -757,9 +757,9 @@ message AdaptiveDeltas{
 
 message AdaptiveState
 {
-	double Prog0Amp = 1;
-	double Prog1Amp = 2;
-	double Prog2Amp = 3;
-	double Prog3Amp = 4;
+	double Prog0AmpInMilliamps = 1;
+	double Prog1AmpInMilliamps = 2;
+	double Prog2AmpInMilliamps = 3;
+	double Prog3AmpInMilliamps = 4;
 	double RateTargetInHz = 5;
 }

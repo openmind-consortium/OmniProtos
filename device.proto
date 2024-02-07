@@ -1605,11 +1605,11 @@ message WriteAdaptiveStateRequest {
   * serial number of the bridge and 'yyyyyy' is the serial number
   * of the device.
   */ 
-  string name = 1;
+  string Name = 1;
 
-  uint32 stateNum = 2; 
+  uint32 StateNum = 2; 
 
-  AdaptiveState adaptiveState = 3;
+  AdaptiveState AdaptiveState = 3;
 
 }
 
@@ -1618,5 +1618,5 @@ message WriteAdaptiveStateResponse {
   * Additional platform specific error details. These are defined in a separate
   * protobuf files, one per manufacturer.
   */
-  SummitError error = 1;
+  SummitError Error = 1;
 }
