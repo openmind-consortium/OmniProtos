@@ -627,30 +627,30 @@ message DetectionConfiguration
   repeated SenseValids SenseValids = 2; //flag enum
 
   /* byte used to determine which power channels are used as input features for LD*/
-  repeated DetectionInputs DetectionInputs = 2;   //flag enum
+  repeated DetectionInputs DetectionInputs = 3;   //flag enum
 
   /*the LD's update rate - set in FFT interval counts*/
-  uint32 UpdateRate = 3;
+  uint32 UpdateRate = 4;
 
   /* the onsetDuration in update rate tic counts*/
-  uint32 OnsetDuration = 4;
+  uint32 OnsetDuration = 5;
 
   /* the terminationDuration in update rate tic counts*/
-  uint32 TerminationDuration = 5;
+  uint32 TerminationDuration = 6;
 
   /* duration in update rate tic counts that the detector will hold off eval after being enabled*/
-  uint32 HoldoffTime = 6;
+  uint32 HoldoffTime = 7;
 
   /*blanking duration upon state change*/
-  uint32 BlankingDurationUponStateChange = 7;
+  uint32 BlankingDurationUponStateChange = 8;
 
   /* the features used to process each of the 4 inputs*/
-  repeated LinearDiscriminantFeature Features = 8; //list
+  repeated LinearDiscriminantFeature Features = 9; //list
 
   /* sets the bias term for the LD (only one used in single mode)*/
-  repeated uint32 BiasTerm = 9; //list
+  repeated uint32 BiasTerm = 10; //list
 
-  uint32 FractionalFixedPointValue = 10; 
+  uint32 FractionalFixedPointValue = 11; 
 }
 
 enum FFTStreamChannel {
