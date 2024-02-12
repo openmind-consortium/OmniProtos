@@ -126,6 +126,11 @@ service DeviceManagerService {
   rpc ReadStimGroup (ReadStimGroupRequest) returns (ReadStimGroupResponse);
 
   /**
+  * Read the Adaptive Detection Status
+  */
+  rpc ReadAdaptiveDetectionStatus (ReadAdaptiveDetectionStatusRequest) returns (ReadAdaptiveDetectionStatusResponse);
+
+  /**
   * Write the Adaptive Deltas
   */
   rpc WriteAdaptiveDeltas (WriteAdaptiveDeltasRequest) returns (WriteAdaptiveDeltasResponse);
@@ -1304,6 +1309,28 @@ message ReadStimGroupResponse {
   SummitError error = 25;
 
 }
+
+message ReadAdaptiveDetectionStatusRequest {
+
+  /**
+  * Scheme-less URI describing the device resource. For example,
+  * '//summit/bridge/xxxxxx/device/yyyyyy' where 'xxxxxx' is the
+  * serial number of the bridge and 'yyyyyy' is the serial number
+  * of the device.
+  */
+  string Name = 1;
+}
+
+message ReadAdaptiveDetectionStatusResponse{
+
+  /*contains information about the adaptive detection status*/
+  DetectionAdaptivePacket DetectionAdaptivePacket  = 1;
+
+  /*summit error packet*/
+  SummitError Error = 2;
+}
+
+
 
 message ReadSensingStateRequest{
 
