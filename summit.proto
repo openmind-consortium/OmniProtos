@@ -607,6 +607,52 @@ message LinearDiscriminantConfiguration
   uint32 FractionalFixedPointValue = 10; 
 }
 
+//flag enum
+enum SenseValids
+{
+  SenseValidsNone = 0;   /*None*/
+  SdcConfig = 1;         /*SDC Config*/
+  FftConfig = 2;         /*FFT Config*/
+  PowerConfig = 4;       /*Power Config*/
+  MiscConfig = 8;        /*Misc. Config*/
+  Ld0Config = 16;        /*LD0 Config*/
+  Ld1Config = 32;        /*LD1 Config*/
+}
+
+message DetectionConfiguration
+{
+  //list of linear Discriminant Configureation objects.
+  repeated LinearDiscriminantConfiguration Lds = 1;
+
+  repeated SenseValids SenseValids = 2; //flag enum
+
+  /* byte used to determine which power channels are used as input features for LD*/
+  repeated DetectionInputs DetectionInputs = 2;   //flag enum
+
+  /*the LD's update rate - set in FFT interval counts*/
+  uint32 UpdateRate = 3;
+
+  /* the onsetDuration in update rate tic counts*/
+  uint32 OnsetDuration = 4;
+
+  /* the terminationDuration in update rate tic counts*/
+  uint32 TerminationDuration = 5;
+
+  /* duration in update rate tic counts that the detector will hold off eval after being enabled*/
+  uint32 HoldoffTime = 6;
+
+  /*blanking duration upon state change*/
+  uint32 BlankingDurationUponStateChange = 7;
+
+  /* the features used to process each of the 4 inputs*/
+  repeated LinearDiscriminantFeature Features = 8; //list
+
+  /* sets the bias term for the LD (only one used in single mode)*/
+  repeated uint32 BiasTerm = 9; //list
+
+  uint32 FractionalFixedPointValue = 10; 
+}
+
 enum FFTStreamChannel {
   CH0 = 0;  /* Channel 0 */
   CH1 = 1;  /* Channel 1 */
