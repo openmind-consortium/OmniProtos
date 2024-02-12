@@ -873,3 +873,12 @@ message AdaptiveDeltas{
     */
   uint32 fall = 2;
 }
+
+message AdaptiveState
+{
+	double Prog0AmpInMilliamps = 1;
+	double Prog1AmpInMilliamps = 2;
+	double Prog2AmpInMilliamps = 3;
+	double Prog3AmpInMilliamps = 4;
+	double RateTargetInHz = 5;
+}

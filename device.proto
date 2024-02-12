@@ -146,6 +146,11 @@ service DeviceManagerService {
   rpc WriteAdaptiveMode (WriteAdaptiveModeRequest) returns (WriteAdaptiveModeResponse);
 
   /**
+  * Writes the adptive state
+  */
+  rpc WriteAdaptiveState (WriteAdaptiveStateRequest) returns (WriteAdaptiveStateResponse);
+
+  /**
   * Change the adaptive detection parameters
   */
   rpc WriteAdaptiveDetectionParameters (WriteAdaptiveDetectionParametersRequest) returns (WriteAdaptiveDetectionParametersResponse);
@@ -1676,4 +1681,28 @@ message WriteAdaptiveDeltasResponse {
   * protobuf files, one per manufacturer.
   */
   SummitError error = 1;
+}
+
+message WriteAdaptiveStateRequest {
+
+ /**
+  * Scheme-less URI describing the device resource. For example,
+  * '//summit/bridge/xxxxxx/device/yyyyyy' where 'xxxxxx' is the
+  * serial number of the bridge and 'yyyyyy' is the serial number
+  * of the device.
+  */ 
+  string Name = 1;
+
+  uint32 StateNum = 2; 
+
+  AdaptiveState AdaptiveState = 3;
+
+}
+
+message WriteAdaptiveStateResponse {
+  /**
+  * Additional platform specific error details. These are defined in a separate
+  * protobuf files, one per manufacturer.
+  */
+  SummitError Error = 1;
 }
