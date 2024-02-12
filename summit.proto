@@ -539,100 +539,72 @@ message SummitAccelerometerStreamConfiguration {
   AccelerometerSampleRate sample_rate = 1;
 }
 
-enum DetectorNumber {
-  DETECTOR_O = 0;
-  DETECTOR_1 = 1;
-}
-
 enum DetectionEnables {
   /* No enables are set. This means that single threshold detect mode is used */
-  DETECTION_DISABLED = 0;
+  DetectionDisabled = 0;
   
   /* Enable dual threshold (band) detect. If this bit is not set, single      *
    * detect mode is used.                                                     */
-  DUAL_THRESHOLD_ENABLED = 1;
+  DualThresholdEnabled = 1;
   
-  /* Blank both LDs based on a state change from this LD. The blank duration  *
-   * specified for each LD is used (if 0 duration is set, then no blanking    *
-   * will occur). If this bit is not set, only this LD is blanked.            */
-  BLANK_BOTH = 2;
+  /* Blank both LDs based on a state change from this LD. */
+  BlankBoth = 2;
 }
 
+//flag enum
 enum DetectionInputs {
-  NO_DETECTION_INPUTS = 0;  /* No inputs are chosen */
-  CHANNEL_0_BAND_0 = 1;   /* Power channel 0 band 0 */
-  Channel_0_Band_1 = 2;   /* Power channel 0 band 1 */
-  Channel_1_Band_0 = 4;   /* Power channel 1 band 0 */
-  Channel_1_Band_1 = 8;   /* Power channel 1 band 1 */
-  Channel_2_Band_0 = 16;  /* Power channel 2 band 0 */
-  Channel_2_Band_1 = 32;  /* Power channel 2 band 1 */
-  Channel_3_Band_0 = 64;  /* Power channel 3 band 0 */
-  Channel_3_Band_1 = 128; /* Power channel 3 band 1 */
+  NoDetectionInputs = 0;  /* No inputs are chosen */
+  Ch0Band0 = 1;   /* Power channel 0 band 0 */
+  Ch0Band1 = 2;   /* Power channel 0 band 1 */
+  Ch1Band0 = 4;   /* Power channel 1 band 0 */
+  Ch1Band1 = 8;   /* Power channel 1 band 1 */
+  Ch2Band0 = 16;  /* Power channel 2 band 0 */
+  Ch2Band1 = 32;  /* Power channel 2 band 1 */
+  Ch3Band0 = 64;  /* Power channel 3 band 0 */
+  Ch3Band1 = 128; /* Power channel 3 band 1 */
 }
 
 message LinearDiscriminantFeature {
   /* Gets or sets the normalization subtract term for each input/feature of the LD */
-  fixed32 normalization_subtract_vector = 1;
+  uint32 NormalizationSubtractVector = 1;
 
   /* Gets or sets the normalization multiply term for each input/feature of the LD */
-  fixed32 NormalizationMultiplyVector = 2;
+  uint32 NormalizationMultiplyVector = 2;
 
   /* Gets or sets the weight vector multiply term for each input/feature of the LD */
-  fixed32 weight_vector = 3;
+  uint32 WeightVector = 3;
 }
 
-message SummitLinearDetectorConfiguration {
-  /**
-   * Which detector to apply the parameters to
-   */
-  DetectorNumber detector_number = 1;
+message LinearDiscriminantConfiguration
+{
+  /* the enable byte for a linear discriminant detection */
+  DetectionEnables DetectionEnable = 1;
 
-  /* The detection enable: single/dual band mode, normalization        *
-   * used/not used and overall detector enable                         */
-  DetectionEnables detection_enable = 2;
+  /* byte used to determine which power channels are used as input features for LD*/
+  repeated DetectionInputs DetectionInputs = 2;   //flag enum
 
-  /* Gets or sets the detector's update rate. Each power feature input *
-   * will be summed on each FFT interval and the averaged power value  *
-   * will be evaluated for detection state change when the LD Update   *
-   * rate count is met.                                                */
-  uint32 update_rate = 3;
+  /*the LD's update rate - set in FFT interval counts*/
+  uint32 UpdateRate = 3;
 
-  /* Gets or sets the onsetDuration in update rate tic counts. Number  *
-   * of consecutive LD Update Rate counts that a Rising detect signal  *
-   * must exceed a Bias threshold before a detection state change is   *
-   * declared if not already in the detect state. In dual detect mode, *
-   * each Bias threshold has an independent onset counter to be        *
-   * compared against the Onset detect duration value                  */
-  uint32 onset_duration = 4;
+  /* the onsetDuration in update rate tic counts*/
+  uint32 OnsetDuration = 4;
 
-  /* Gets or sets the terminationDuration in update rate tic counts.   *
-   * Number of consecutive LD Update Rate counts that a Falling detect *
-   * signal must be below a Bias threshold before a detection state    *
-   * change is declared if already in the detect state. In dual detect *
-   * mode, each Bias threshold has an independent termination counter  *
-   * to be compared against the Termination detect duration value.     */
-  uint32 termination_duration = 5;
+  /* the terminationDuration in update rate tic counts*/
+  uint32 TerminationDuration = 5;
 
-  /* Gets or sets the duration in update rate tics that the detector   *
-   * will hold off evaluation after enablement.                        */
-  uint32 holdoff_time = 6;
+  /* duration in update rate tic counts that the detector will hold off eval after being enabled*/
+  uint32 HoldoffTime = 6;
 
-  /* Gets or sets the blanking duration upon state change (in fft      *
-   * interval counts).                                                 */
-  uint32 blanking_duration_upon_state_change = 7;
+  /*blanking duration upon state change*/
+  uint32 BlankingDurationUponStateChange = 7;
 
-  /* Gets or sets the features used to process each of the 4 inputs.   *
-   * (Normalization multiply, weight multiply, and normalization       *
-   * subtract)                                                         */
-  repeated LinearDiscriminantFeature features = 8;
+  /* the features used to process each of the 4 inputs*/
+  repeated LinearDiscriminantFeature Features = 8; //list
 
-  /* Gets or sets the bias term for the LD (only one bias is used for  *
-   * single mode).                                                     */
-  repeated fixed32 bias_term = 9;
+  /* sets the bias term for the LD (only one used in single mode)*/
+  repeated uint32 BiasTerm = 9; //list
 
-  /* Gets or sets the fractional fixed point value (0-30) used for the *
-   * preceding fixed point terms.                                      */
-  fixed32 fractional_fixed_point_value = 10;
+  uint32 FractionalFixedPointValue = 10; 
 }
 
 enum FFTStreamChannel {
@@ -732,9 +704,9 @@ message SummitStreamEnablesConfiguration{
 
 enum AdaptiveTherapyModes
 {
-Disabled = 0;  /*adaptive therapy is Disabled*/
-Operative = 1; /*adaptive therapy is Operative*/
-Embedded = 2;  /*adaptive therapy is Embedded*/
+  Disabled = 0;  /*adaptive therapy is Disabled*/
+  Operative = 1; /*adaptive therapy is Operative*/
+  Embedded = 2;  /*adaptive therapy is Embedded*/
 }
 
 
