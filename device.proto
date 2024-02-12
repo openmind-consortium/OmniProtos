@@ -131,6 +131,11 @@ service DeviceManagerService {
   rpc ReadStimGroup (ReadStimGroupRequest) returns (ReadStimGroupResponse);
 
   /**
+  * Read the Adaptive Detection Status
+  */
+  rpc ReadAdaptiveDetectionStatus (ReadAdaptiveDetectionStatusRequest) returns (ReadAdaptiveDetectionStatusResponse);
+
+  /**
   * Write the Adaptive Deltas
   */
   rpc WriteAdaptiveDeltas (WriteAdaptiveDeltasRequest) returns (WriteAdaptiveDeltasResponse);
@@ -139,6 +144,11 @@ service DeviceManagerService {
   * Change the adaptive mode 
   */
   rpc WriteAdaptiveMode (WriteAdaptiveModeRequest) returns (WriteAdaptiveModeResponse);
+
+  /**
+  * Change the adaptive detection parameters
+  */
+  rpc WriteAdaptiveDetectionParameters (WriteAdaptiveDetectionParametersRequest) returns (WriteAdaptiveDetectionParametersResponse);
 
   /**
   * Read current sensing state
@@ -1329,6 +1339,28 @@ message ReadStimGroupResponse {
 
 }
 
+message ReadAdaptiveDetectionStatusRequest {
+
+  /**
+  * Scheme-less URI describing the device resource. For example,
+  * '//summit/bridge/xxxxxx/device/yyyyyy' where 'xxxxxx' is the
+  * serial number of the bridge and 'yyyyyy' is the serial number
+  * of the device.
+  */
+  string Name = 1;
+}
+
+message ReadAdaptiveDetectionStatusResponse{
+
+  /*contains information about the adaptive detection status*/
+  DetectionAdaptivePacket DetectionAdaptivePacket  = 1;
+
+  /*summit error packet*/
+  SummitError Error = 2;
+}
+
+
+
 message ReadSensingStateRequest{
 
   /**
@@ -1594,6 +1626,31 @@ message WriteAdaptiveModeResponse{
 * protobuf files, one per manufacturer.
 */
 SummitError error = 1;
+}
+
+
+message WriteAdaptiveDetectionParametersRequest{
+  /**
+* Scheme-less URI describing the device resource. For example,
+* '//summit/bridge/xxxxxx/device/yyyyyy' where 'xxxxxx' is the
+* serial number of the bridge and 'yyyyyy' is the serial number
+* of the device.
+*/
+string Name = 1;
+
+/*Which detector to apply the parameters to, either 0 or 1*/ 
+uint32 DetectorNumber = 2;
+
+/*The object containin g th edesired LFP detector Settings*/ 
+LinearDiscriminantConfiguration TheDetectorConfig = 3;
+}
+
+message WriteAdaptiveDetectionParametersResponse{
+/**
+* Additional platform specific error details. These are defined in a separate
+* protobuf files, one per manufacturer.
+*/
+SummitError Error = 1;
 }
 
 message WriteAdaptiveDeltasRequest {
