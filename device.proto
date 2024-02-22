@@ -151,6 +151,11 @@ service DeviceManagerService {
   rpc WriteAdaptiveState (WriteAdaptiveStateRequest) returns (WriteAdaptiveStateResponse);
 
   /**
+  * Ignores the detector and forces the adaptive stimulation table into a specific state, only usable in the "Operative" adaptive mode
+  */
+  rpc WriteAdaptiveGoToState (WriteAdaptiveGoToStateRequest) returns (WriteAdaptiveGoToStateResponse);
+
+  /**
   * Change the adaptive detection parameters
   */
   rpc WriteAdaptiveDetectionParameters (WriteAdaptiveDetectionParametersRequest) returns (WriteAdaptiveDetectionParametersResponse);
@@ -1700,6 +1705,26 @@ message WriteAdaptiveStateRequest {
 }
 
 message WriteAdaptiveStateResponse {
+  /**
+  * Additional platform specific error details. These are defined in a separate
+  * protobuf files, one per manufacturer.
+  */
+  SummitError Error = 1;
+}
+
+message WriteAdaptiveGoToStateRequest {
+ /**
+  * Scheme-less URI describing the device resource. For example,
+  * '//summit/bridge/xxxxxx/device/yyyyyy' where 'xxxxxx' is the
+  * serial number of the bridge and 'yyyyyy' is the serial number
+  * of the device.
+  */ 
+  string Name = 1;
+
+  uint32 StateNum = 2; 
+}
+
+message WriteAdaptiveGoToStateResponse {
   /**
   * Additional platform specific error details. These are defined in a separate
   * protobuf files, one per manufacturer.
