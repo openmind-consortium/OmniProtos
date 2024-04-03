@@ -116,6 +116,11 @@ service DeviceManagerService {
   rpc StimChangeActiveGroup (StimChangeActiveGroupRequest) returns (StimChangeActiveGroupResponse);
 
   /**
+  * Read Adaptive Detection Settings
+  */
+  rpc ReadAdaptiveDetectionSettings (ReadAdaptiveDetectionSettingsRequest) returns (ReadAdaptiveDetectionSettingsResponse);
+
+  /**
   * Read the active group info 
   */
   rpc ReadGeneralInfo (ReadGeneralInfoRequest) returns (ReadGeneralInfoResponse); 
@@ -126,6 +131,11 @@ service DeviceManagerService {
   rpc ReadStimGroup (ReadStimGroupRequest) returns (ReadStimGroupResponse);
 
   /**
+  * Read the Adaptive Detection Status
+  */
+  rpc ReadAdaptiveDetectionStatus (ReadAdaptiveDetectionStatusRequest) returns (ReadAdaptiveDetectionStatusResponse);
+
+  /**
   * Write the Adaptive Deltas
   */
   rpc WriteAdaptiveDeltas (WriteAdaptiveDeltasRequest) returns (WriteAdaptiveDeltasResponse);
@@ -134,6 +144,21 @@ service DeviceManagerService {
   * Change the adaptive mode 
   */
   rpc WriteAdaptiveMode (WriteAdaptiveModeRequest) returns (WriteAdaptiveModeResponse);
+
+  /**
+  * Writes the adptive state
+  */
+  rpc WriteAdaptiveState (WriteAdaptiveStateRequest) returns (WriteAdaptiveStateResponse);
+
+  /**
+  * Ignores the detector and forces the adaptive stimulation table into a specific state, only usable in the "Operative" adaptive mode
+  */
+  rpc WriteAdaptiveGoToState (WriteAdaptiveGoToStateRequest) returns (WriteAdaptiveGoToStateResponse);
+
+  /**
+  * Change the adaptive detection parameters
+  */
+  rpc WriteAdaptiveDetectionParameters (WriteAdaptiveDetectionParametersRequest) returns (WriteAdaptiveDetectionParametersResponse);
 
   /**
   * Read current sensing state
@@ -1138,6 +1163,30 @@ message StimChangeActiveGroupResponse {
 
 }
 
+message ReadAdaptiveDetectionSettingsRequest {
+
+/**
+  * Scheme-less URI describing the device resource. For example,
+  * '//summit/bridge/xxxxxx/device/yyyyyy' where 'xxxxxx' is the
+  * serial number of the bridge and 'yyyyyy' is the serial number
+  * of the device.
+  */
+  string Name = 1;
+}
+
+message ReadAdaptiveDetectionSettingsResponse {
+  /**
+  * Additional platform specific error details. These are defined in a separate
+  * protobuf files, one per manufacturer.
+  */
+
+  /* output buffer that will be written with the configs of the two LFO feature Detectors */ 
+  DetectionConfiguration DetectionConfiguration = 1;
+
+  SummitError Error = 2;
+
+}
+
 message ReadGeneralInfoRequest {
 
 /**
@@ -1305,6 +1354,28 @@ message ReadStimGroupResponse {
 
 }
 
+message ReadAdaptiveDetectionStatusRequest {
+
+  /**
+  * Scheme-less URI describing the device resource. For example,
+  * '//summit/bridge/xxxxxx/device/yyyyyy' where 'xxxxxx' is the
+  * serial number of the bridge and 'yyyyyy' is the serial number
+  * of the device.
+  */
+  string Name = 1;
+}
+
+message ReadAdaptiveDetectionStatusResponse{
+
+  /*contains information about the adaptive detection status*/
+  DetectionAdaptivePacket DetectionAdaptivePacket  = 1;
+
+  /*summit error packet*/
+  SummitError Error = 2;
+}
+
+
+
 message ReadSensingStateRequest{
 
   /**
@@ -1320,7 +1391,7 @@ message ReadSensingStateRequest{
 
 message ReadSensingStateResponse{
 
-  SensingEnables State = 1;
+  repeated SensingEnables State = 1;
   
   bytes FftStreamChannel = 2;
 
@@ -1592,6 +1663,31 @@ message WriteAdaptiveModeResponse{
 SummitError error = 1;
 }
 
+
+message WriteAdaptiveDetectionParametersRequest{
+  /**
+* Scheme-less URI describing the device resource. For example,
+* '//summit/bridge/xxxxxx/device/yyyyyy' where 'xxxxxx' is the
+* serial number of the bridge and 'yyyyyy' is the serial number
+* of the device.
+*/
+string Name = 1;
+
+/*Which detector to apply the parameters to, either 0 or 1*/ 
+uint32 DetectorNumber = 2;
+
+/*The object containin g th edesired LFP detector Settings*/ 
+LinearDiscriminantConfiguration TheDetectorConfig = 3;
+}
+
+message WriteAdaptiveDetectionParametersResponse{
+/**
+* Additional platform specific error details. These are defined in a separate
+* protobuf files, one per manufacturer.
+*/
+SummitError Error = 1;
+}
+
 message WriteAdaptiveDeltasRequest {
 
  /**
@@ -1615,4 +1711,48 @@ message WriteAdaptiveDeltasResponse {
   * protobuf files, one per manufacturer.
   */
   SummitError error = 1;
+}
+
+message WriteAdaptiveStateRequest {
+
+ /**
+  * Scheme-less URI describing the device resource. For example,
+  * '//summit/bridge/xxxxxx/device/yyyyyy' where 'xxxxxx' is the
+  * serial number of the bridge and 'yyyyyy' is the serial number
+  * of the device.
+  */ 
+  string Name = 1;
+
+  uint32 StateNum = 2; 
+
+  AdaptiveState AdaptiveState = 3;
+
+}
+
+message WriteAdaptiveStateResponse {
+  /**
+  * Additional platform specific error details. These are defined in a separate
+  * protobuf files, one per manufacturer.
+  */
+  SummitError Error = 1;
+}
+
+message WriteAdaptiveGoToStateRequest {
+ /**
+  * Scheme-less URI describing the device resource. For example,
+  * '//summit/bridge/xxxxxx/device/yyyyyy' where 'xxxxxx' is the
+  * serial number of the bridge and 'yyyyyy' is the serial number
+  * of the device.
+  */ 
+  string Name = 1;
+
+  uint32 StateNum = 2; 
+}
+
+message WriteAdaptiveGoToStateResponse {
+  /**
+  * Additional platform specific error details. These are defined in a separate
+  * protobuf files, one per manufacturer.
+  */
+  SummitError Error = 1;
 }
