@@ -885,17 +885,18 @@ message AdaptiveSettings
 
 	/* Adaptive state definitions */
 	AdaptiveState State0 = 2;
-	AdaptiveState State2 = 3;
-	AdaptiveState State3 = 4;
-	AdaptiveState State4 = 5;
-	AdaptiveState State5 = 6;
-	AdaptiveState State6 = 7;
-	AdaptiveState State7 = 8;
-	AdaptiveState State8 = 9;
+	AdaptiveState State1 = 3;
+	AdaptiveState State2 = 4;
+	AdaptiveState State3 = 5;
+	AdaptiveState State4 = 6;
+	AdaptiveState State5 = 7;
+	AdaptiveState State6 = 8;
+	AdaptiveState State7 = 9;
+	AdaptiveState State8 = 10;
 
-	repeated AdaptiveDeltas Deltas = 10;
-	repeated AdaptiveDeltas DeltaUpperLimits = 11;
-	AdaptiveTherapyState CurrentState = 12;
-	AdaptiveTherapyStatus AdaptiveStatus = 13;
-	AdaptiveTherapyModes AdaptiveMode = 14;
+	repeated AdaptiveDeltas Deltas = 11;
+	repeated AdaptiveDeltas DeltaUpperLimits = 12;
+	AdaptiveTherapyState CurrentState = 13;
+	AdaptiveTherapyStatus AdaptiveStatus = 14;
+	AdaptiveTherapyModes AdaptiveMode = 15;
 }
