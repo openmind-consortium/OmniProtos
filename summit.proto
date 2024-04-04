@@ -868,7 +868,7 @@ enum AdaptiveTherapyState
 	State6 = 6; 
 	State7 = 7;
 	State8 = 8; 
-	NoState = 15;  	
+	StateNotSet = 15;  	
 }
 
 enum AdaptiveTherapyStatus
