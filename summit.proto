@@ -878,7 +878,7 @@ enum AdaptiveTherapyStatus
 	EmbeddedActive = 2;
 }
 
-message AdaptiveStimSettingsPacket
+message AdaptiveSettings
 {
 	/* Initial state whose settings will be delivered when adaptive therapy is first enabled */
 	AdaptiveState InitialState = 1;

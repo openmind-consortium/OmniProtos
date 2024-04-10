@@ -1415,7 +1415,7 @@ message ReadAdaptiveStimSettingsRequest{
 
 message ReadAdaptiveStimSettingsResponse{
 	
-	AdaptiveStimSettingsPacket AdaptiveStimSettings = 1;
+	AdaptiveSettings AdaptiveStimSettings = 1;
 
 	SummitError Error = 2;
 
