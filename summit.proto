@@ -855,6 +855,7 @@ message AdaptiveState
 	double Prog2AmpInMilliamps = 3;
 	double Prog3AmpInMilliamps = 4;
 	double RateTargetInHz = 5;
+	bool isValid = 6;
 }
 
 enum AdaptiveTherapyState 
@@ -895,8 +896,10 @@ message AdaptiveSettings
 	AdaptiveState State8 = 10;
 
 	repeated AdaptiveDeltas Deltas = 11;
-	repeated AdaptiveDeltas DeltaUpperLimits = 12;
-	AdaptiveTherapyState CurrentState = 13;
-	AdaptiveTherapyStatus AdaptiveStatus = 14;
-	AdaptiveTherapyModes AdaptiveMode = 15;
+	bool DeltasValid = 12;
+	repeated AdaptiveDeltas DeltaUpperLimits = 13;
+	bool DeltaLimitsValid  = 14;
+	AdaptiveTherapyState CurrentState = 15;
+	AdaptiveTherapyStatus AdaptiveStatus = 16;
+	AdaptiveTherapyModes AdaptiveMode = 17;
 }
