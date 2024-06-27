@@ -164,6 +164,11 @@ service DeviceManagerService {
   * Read current sensing state
   */
   rpc ReadSensingState (ReadSensingStateRequest) returns (ReadSensingStateResponse);
+
+  /**
+  * Read adaptive stimulation controller settings
+  */
+  rpc ReadAdaptiveStimSettings (ReadAdaptiveStimSettingsRequest) returns (ReadAdaptiveStimSettingsResponse);
 }
 
 message Device {
@@ -1393,6 +1398,26 @@ message ReadSensingStateResponse{
   AccelerometerSampleRate AccelRate = 3;
 
   SummitError error = 4;
+
+}
+
+message ReadAdaptiveStimSettingsRequest{
+
+  /**
+  * Scheme-less URI describing the device resource. For example,
+  * '//summit/bridge/xxxxxx/device/yyyyyy' where 'xxxxxx' is the
+  * serial number of the bridge and 'yyyyyy' is the serial number
+  * of the device.
+  */
+  string Name = 1;
+
+}
+
+message ReadAdaptiveStimSettingsResponse{
+	
+	AdaptiveSettings AdaptiveStimSettings = 1;
+
+	SummitError Error = 2;
 
 }
 

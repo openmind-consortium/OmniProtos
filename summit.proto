@@ -855,4 +855,51 @@ message AdaptiveState
 	double Prog2AmpInMilliamps = 3;
 	double Prog3AmpInMilliamps = 4;
 	double RateTargetInHz = 5;
+	bool isValid = 6;
+}
+
+enum AdaptiveTherapyState 
+{
+	State0 = 0; 
+	State1 = 1;
+	State2 = 2; 
+	State3 = 3;  
+	State4 = 4; 
+	State5 = 5;  
+	State6 = 6; 
+	State7 = 7;
+	State8 = 8; 
+	StateNotSet = 15;  	
+}
+
+enum AdaptiveTherapyStatus
+{
+	Inactive = 0;
+	OperativeActive = 1;
+	EmbeddedActive = 2;
+}
+
+message AdaptiveSettings
+{
+	/* Initial state whose settings will be delivered when adaptive therapy is first enabled */
+	AdaptiveState InitialState = 1;
+
+	/* Adaptive state definitions */
+	AdaptiveState State0 = 2;
+	AdaptiveState State1 = 3;
+	AdaptiveState State2 = 4;
+	AdaptiveState State3 = 5;
+	AdaptiveState State4 = 6;
+	AdaptiveState State5 = 7;
+	AdaptiveState State6 = 8;
+	AdaptiveState State7 = 9;
+	AdaptiveState State8 = 10;
+
+	repeated AdaptiveDeltas Deltas = 11;
+	bool DeltasValid = 12;
+	repeated AdaptiveDeltas DeltaUpperLimits = 13;
+	bool DeltaLimitsValid  = 14;
+	AdaptiveTherapyState CurrentState = 15;
+	AdaptiveTherapyStatus AdaptiveStatus = 16;
+	AdaptiveTherapyModes AdaptiveMode = 17;
 }
