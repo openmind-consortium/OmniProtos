@@ -1731,7 +1731,6 @@ message WriteAdaptiveStateRequest {
   uint32 StateNum = 2; 
 
   AdaptiveState AdaptiveState = 3;
-
 }
 
 message WriteAdaptiveStateResponse {
