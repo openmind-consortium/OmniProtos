@@ -161,6 +161,11 @@ service DeviceManagerService {
   rpc WriteAdaptiveDetectionParameters (WriteAdaptiveDetectionParametersRequest) returns (WriteAdaptiveDetectionParametersResponse);
 
   /**
+  * Clears indicated adaptive stimulation settings, either the full table or an individual entry.
+  */
+  rpc WriteAdaptiveClearSettings (WriteAdaptiveClearSettingsRequest) returns (WriteAdaptiveClearSettingsResponse);
+
+  /**
   * Read current sensing state
   */
   rpc ReadSensingState (ReadSensingStateRequest) returns (ReadSensingStateResponse);
@@ -1750,6 +1755,28 @@ message WriteAdaptiveGoToStateRequest {
 }
 
 message WriteAdaptiveGoToStateResponse {
+  /**
+  * Additional platform specific error details. These are defined in a separate
+  * protobuf files, one per manufacturer.
+  */
+  SummitError Error = 1;
+}
+
+message WriteAdaptiveClearSettingsRequest {
+ /**
+  * Scheme-less URI describing the device resource. For example,
+  * '//summit/bridge/xxxxxx/device/yyyyyy' where 'xxxxxx' is the
+  * serial number of the bridge and 'yyyyyy' is the serial number
+  * of the device.
+  */ 
+  string Name = 1;
+
+  AdaptiveClearTypes ClearType = 2; 
+
+  uint32 ClearState = 3;
+}
+
+message WriteAdaptiveClearSettingsResponse {
   /**
   * Additional platform specific error details. These are defined in a separate
   * protobuf files, one per manufacturer.
