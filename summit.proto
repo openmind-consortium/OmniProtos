@@ -903,9 +903,3 @@ message AdaptiveSettings
 	AdaptiveTherapyStatus AdaptiveStatus = 16;
 	AdaptiveTherapyModes AdaptiveMode = 17;
 }
-
-enum AdaptiveClearTypes
-{
-	All = 0;
-	State = 1;
-}
